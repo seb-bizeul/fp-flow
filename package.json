@@ -1,0 +1,40 @@
+{
+  "name": "@sbizeul/fp-flow",
+  "version": "0.0.1",
+  "description": "Collection of algebraic data types to use with Flow",
+  "main": "fp-flow.js",
+  "scripts": {
+    "test": "babel-tape-runner __tests__/*.test.js | tap-spec",
+    "build": "rollup --config rollup.config.js"
+  },
+  "keywords": [
+    "adt",
+    "algebraic data types",
+    "monad",
+    "fp",
+    "functional programming",
+    "maybe",
+    "either",
+    "remote data",
+    "io"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fast-deep-equal": "^2.0.1",
+    "ramda": "^0.25.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-flow": "^6.23.0",
+    "babel-tape-runner": "^2.0.1",
+    "flow-bin": "^0.78.0",
+    "rollup": "^0.64.1",
+    "rollup-plugin-commonjs": "^9.1.5",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "tap-spec": "^5.0.0",
+    "tape": "^4.9.1",
+    "webpack": "^4.16.5"
+  }
+}
