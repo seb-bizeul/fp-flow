@@ -1,0 +1,79 @@
+// @flow
+import type { Maybe } from './maybe'
+
+export type Right<A> = {
+  +value: A,
+  +tag: 'Right'
+}
+
+export type Left<E> = {
+  +value: E,
+  +tag: 'Left'
+}
+
+export type Either<E, A> =
+  | Left<E>
+  | Right<A>
+
+
+declare export var pure: <E, A>(x: A) => Either<E, A>
+
+declare export var right: <E, A>(x: A) => Either<E, A>
+
+declare export var of: <E, A>(x: A) => Either<E, A>
+
+declare export var left: <E, A>(x: E) => Either<E, A>
+
+declare export var tryCatch: <E, A>(l: any => E, x: any => A) => Either<E, A>
+
+declare export var fromNullable: <E, A>(x: A) => Either<E, A>
+
+declare export var fromMaybe: <E, A>(x: Maybe<A>) => Either<E, A>
+
+declare export var toMaybe: <E, A>(x: Either<E, A>) => Maybe<A>
+
+declare export var map:
+  & (<E, A, B>(f: (A => B), x: Either<E, A>) => Either<E, B>)
+  & (<E, A, B>(f: (A => B)) => (x: Either<E, A>) => Either<E, B>)
+
+declare export var mapLeft:
+  & (<E, F, A>(f: (E => F), x: Either<E, A>) => Either<F, A>)
+  & (<E, F, A>(f: (E => F)) => (x: Either<E, A>) => Either<F, A>)
+
+declare export var bimap:
+  & (<E, F, A, B>(l: (E => F), r: (A => B), x: Either<E, A>) => Either<F, B>)
+  & (<E, F, A, B>(l: E => F, r: A => B) => (x: Either<E, A>) => Either<F, B>)
+  & (<E, F, A, B>(l: E => F) => (r: A => B, x: Either<E, A>) => Either<F, B>)
+
+declare export var chain:
+  & (<E, A, B>(f: (A => Either<E, B>), x: Either<E, A>) => Either<E, B>)
+  & (<E, A, B>(f: A => Either<E, B>) => (x: Either<E, A>) => Either<E, B>)
+
+declare export var flatMap:
+  & (<E, A, B>(f: (A => Either<E, B>), x: Either<E, A>) => Either<E, B>)
+  & (<E, A, B>(f: A => Either<E, B>) => (x: Either<E, A>) => Either<E, B>)
+
+declare export var bind:
+  & (<E, A, B>(f: (A => Either<E, B>), x: Either<E, A>) => Either<E, B>)
+  & (<E, A, B>(f: A => Either<E, B>) => (x: Either<E, A>) => Either<E, B>)
+
+declare export var ap:
+  & (<E, A, B>(f: (Either<E, A => B>), x: Either<E, A>) => Either<E, B>)
+  & (<E, A, B>(f: Either<E, A => B>) => (x: Either<E, A>) => Either<E, B>)
+
+declare export var fold:
+  & (<E, F, A, B>(left: (E => F), right: (A => B), x: Either<E, A>) => Either<F, B>)
+  & (<E, F, A, B>(left: E => F, right: A => B) => (x: Either<E, A>) => Either<F, B>)
+  & (<E, F, A, B>(left: E => F) => (right: (A => B), x: Either<E, A>) => Either<F, B>)
+
+declare export var unsafeGet: <E, A>(x: Either<E, A>) => A
+
+declare export var getOrElse:
+  & (<E, A>(f: (E) => A, x: Either<E, A>) => A)
+  & (<E, A>(f: (E) => A) => (x: Either<E, A>) => A)
+
+declare export var isLeft: <E, A>(x: Either<E, A>) => boolean
+
+declare export var isRight: <E, A>(x: Either<E, A>) => boolean
+
+declare export var equals: <E, A>(x: Either<E, A>, y: Either<E, A>) => boolean
