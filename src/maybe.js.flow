@@ -1,0 +1,78 @@
+// @flow
+export type Just<A> = {
+  +value: A,
+  +tag: 'Just'
+}
+
+export type Nothing = {
+  +tag: 'Nothing'
+}
+
+export type Maybe<A> =
+  | Just<A>
+  | Nothing
+
+declare export var pure: <A>(x: A) => Maybe<A>
+
+declare export var just: <A>(x: A) => Maybe<A>
+
+declare export var of: <A>(x: A) => Maybe<A>
+
+declare export var nothing: <A>() => Maybe<A>
+
+declare export var fromNullable: <A>(x: A) => Maybe<A>
+
+declare export var map:
+  & (<A, B>(f: (A => B), x: Maybe<A>) => Maybe<B>)
+  & (<A, B>(f: (A) => B) => (x: Maybe<A>) => Maybe<B>)
+
+declare export var map2:
+  & (<A, B>(f: (A => B), m1: Maybe<A>, m2: Maybe<A>) => Maybe<B>[])
+  & (<A, B>(f: (A) => B) => (m1: Maybe<A>, m2: Maybe<A>) => Maybe<B>[])
+  & (<A, B>(f: (A) => B) => (m1: Maybe<A>) => (m2: Maybe<A>) => Maybe<B>[])
+
+declare export var map3:
+  & (<A, B>(f: (A => B), m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>) => Maybe<B>[])
+  & (<A, B>(f: (A) => B, m1: Maybe<A>, m2: Maybe<A>) => (m3: Maybe<A>) => Maybe<B>[])
+  & (<A, B>(f: (A) => B, m1: Maybe<A>) => (m2: Maybe<A>, m3: Maybe<A>) => Maybe<B>[])
+  & (<A, B>(f: (A) => B) => (m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>) => Maybe<B>[])
+
+declare export var map4:
+  & (<A, B>(f: (A => B), m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>, m4: Maybe<A>) => Maybe<B>[])
+  & (<A, B>(f: (A) => B, m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>) => (m4: Maybe<A>) => Maybe<B>[])
+  & (<A, B>(f: (A) => B, m1: Maybe<A>, m2: Maybe<A>) => (m3: Maybe<A>, m4: Maybe<A>) => Maybe<B>[])
+  & (<A, B>(f: (A) => B, m1: Maybe<A>) => (m2: Maybe<A>, m3: Maybe<A>, m4: Maybe<A>) => Maybe<B>[])
+  & (<A, B>(f: (A) => B) => (m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>, m4: Maybe<A>) => Maybe<B>[])
+
+declare export var chain:
+  & (<A, B>(f: (A => Maybe<B>), x: Maybe<A>) => Maybe<B>)
+  & (<A, B>(f: (A) => Maybe<B>) => (x: Maybe<A>) => Maybe<B>)
+
+declare export var flatMap:
+  & (<A, B>(f: (A => Maybe<B>), x: Maybe<A>) => Maybe<B>)
+  & (<A, B>(f: (A) => Maybe<B>) => (x: Maybe<A>) => Maybe<B>)
+
+declare export var bind:
+  & (<A, B>(f: (A => Maybe<B>), x: Maybe<A>) => Maybe<B>)
+  & (<A, B>(f: (A) => Maybe<B>) => (x: Maybe<A>) => Maybe<B>)
+
+declare export var ap:
+  & (<A, B>(f: Maybe<A => B>, x: Maybe<A>) => Maybe<B>)
+  & (<A, B>(f: Maybe<A => B>) => (x: Maybe<A>) => Maybe<B>)
+
+declare export var fold:
+  & (<A, B>(n: () => B, j: A => B, x: Maybe<A>) => Maybe<B>)
+  & (<A, B>(n: () => B, j: A => B) => (x: Maybe<A>) => Maybe<B>)
+  & (<A, B>(n: () => B) => (j: A => B) => (x: Maybe<A>) => Maybe<B>)
+
+declare export var unsafeGet: <A>(x: Maybe<A>) => A
+
+declare export var getOrElse:
+  & (<A>(f: () => A, x: Maybe<A>) => A)
+  & (<A>(f: () => A) => (x: Maybe<A>) => A)
+
+declare export var isJust: <A>(x: Maybe<A>) => boolean
+
+declare export var isNothing: <A>(x: Maybe<A>) => boolean
+
+declare export var equals: <A>(x: Maybe<A>, y: Maybe<A>) => boolean
