@@ -6,7 +6,7 @@ export default {
   output: {
     file: 'fp-flow.js',
     format: 'umd',
-    name: 'FPFlow'
+    name: 'FpFlow'
   },
   plugins: [
     resolve(),
