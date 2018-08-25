@@ -44,7 +44,7 @@ export type NotAsked = {|
   +tag: 'NotAsked'
 |}
 
-export type RemoteData<A, E> =
+export type RemoteData<E, A> =
   | Success<A>
   | Failure<E>
   | Loading
