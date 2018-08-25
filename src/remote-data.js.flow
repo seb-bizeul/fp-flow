@@ -20,7 +20,7 @@ export type NotAsked = {|
   +tag: 'NotAsked'
 |}
 
-export type RemoteData<A, E> =
+export type RemoteData<E, A> =
   | Success<A>
   | Failure<E>
   | Loading
@@ -33,62 +33,62 @@ type Cases<A, B, E> = {|
   NotAsked: () => B
 |}
 
-declare export var pure: <A, E>(x: A) => RemoteData<A, E>
+declare export var pure: <A, E>(x: A) => RemoteData<E, A>
 
-declare export var success: <A, E>(x: A) => RemoteData<A, E>
+declare export var success: <A, E>(x: A) => RemoteData<E, A>
 
-declare export var of: <A, E>(x: A) => RemoteData<A, E>
+declare export var of: <A, E>(x: A) => RemoteData<E, A>
 
-declare export var failure: <A, E>(err: E) => RemoteData<A, E>
+declare export var failure: <A, E>(err: E) => RemoteData<E, A>
 
-declare export var notAsked: <A, E>() => RemoteData<A, E>
+declare export var notAsked: <A, E>() => RemoteData<E, A>
 
-declare export var loading: <A, E>() => RemoteData<A, E>
+declare export var loading: <A, E>() => RemoteData<E, A>
 
-declare export var fromNullable: <A, E>(x: A) => RemoteData<A, E>
+declare export var fromNullable: <A, E>(x: A) => RemoteData<E, A>
 
 declare export var fold:
-  & (<A, B, E>(cases: Cases<A, B, E>, rd: RemoteData<A, E>) => B)
-  & (<A, B, E>(cases: Cases<A, B, E>) => (rd: RemoteData<A, E>) => B)
+  & (<A, B, E>(cases: Cases<A, B, E>, rd: RemoteData<E, A>) => B)
+  & (<A, B, E>(cases: Cases<A, B, E>) => (rd: RemoteData<E, A>) => B)
 
 declare export var map:
-  & (<A, B, E>(f: A => B, x: RemoteData<A, E>) => RemoteData<B, E>)
-  & (<A, B, E>(f: A => B) => (x: RemoteData<A, E>) => RemoteData<B, E>)
+  & (<A, B, E>(f: A => B, x: RemoteData<E, A>) => RemoteData<B, E>)
+  & (<A, B, E>(f: A => B) => (x: RemoteData<E, A>) => RemoteData<B, E>)
 
 declare export var mapLeft:
-  & (<A, E, F>(f: E => F, x: RemoteData<A, E>) => RemoteData<A, F>)
-  & (<A, E, F>(f: E => F) => (x: RemoteData<A, E>) => RemoteData<A, F>)
+  & (<A, E, F>(f: E => F, x: RemoteData<E, A>) => RemoteData<A, F>)
+  & (<A, E, F>(f: E => F) => (x: RemoteData<E, A>) => RemoteData<A, F>)
 
 declare export var chain:
-  & (<A, B, E>(f: A => RemoteData<B, E>, x: RemoteData<A, E>) => RemoteData<B, E>)
-  & (<A, B, E>(f: A => RemoteData<B, E>) => (x: RemoteData<A, E>) => RemoteData<B, E>)
+  & (<A, B, E>(f: A => RemoteData<B, E>, x: RemoteData<E, A>) => RemoteData<B, E>)
+  & (<A, B, E>(f: A => RemoteData<B, E>) => (x: RemoteData<E, A>) => RemoteData<B, E>)
 
 declare export var flatMap:
-  & (<A, B, E>(f: A => RemoteData<B, E>, x: RemoteData<A, E>) => RemoteData<B, E>)
-  & (<A, B, E>(f: A => RemoteData<B, E>) => (x: RemoteData<A, E>) => RemoteData<B, E>)
+  & (<A, B, E>(f: A => RemoteData<B, E>, x: RemoteData<E, A>) => RemoteData<B, E>)
+  & (<A, B, E>(f: A => RemoteData<B, E>) => (x: RemoteData<E, A>) => RemoteData<B, E>)
 
 declare export var ap:
-  & (<A, B, E>(f: RemoteData<A => B, E>, x: RemoteData<A, E>) => RemoteData<B, E>)
-  & (<A, B, E>(f: RemoteData<A => B, E>) => (x: RemoteData<A, E>) => RemoteData<B, E>)
+  & (<A, B, E>(f: RemoteData<E, A => B>, x: RemoteData<E, A>) => RemoteData<B, E>)
+  & (<A, B, E>(f: RemoteData<E, A => B>) => (x: RemoteData<E, A>) => RemoteData<B, E>)
 
 declare export var unsafeGet: <A, E>(RemoteData<A, E>) => A
 
 declare export var getOrElse:
-  & (<A, B, E>(f: () => B, x: RemoteData<A, E>) => B)
-  & (<A, B, E>(f: () => B) => (x: RemoteData<A, E>) => B)
+  & (<A, B, E>(f: () => B, x: RemoteData<E, A>) => B)
+  & (<A, B, E>(f: () => B) => (x: RemoteData<E, A>) => B)
 
-declare export var isSuccess: <A, E>(RemoteData<A, E>) => boolean
+declare export var isSuccess: <A, E>(RemoteData<E, A>) => boolean
 
-declare export var isFailure: <A, E>(RemoteData<A, E>) => boolean
+declare export var isFailure: <A, E>(RemoteData<E, A>) => boolean
 
-declare export var isLoading: <A, E>(RemoteData<A, E>) => boolean
+declare export var isLoading: <A, E>(RemoteData<E, A>) => boolean
 
-declare export var isNotAsked: <A, E>(RemoteData<A, E>) => boolean
+declare export var isNotAsked: <A, E>(RemoteData<E, A>) => boolean
 
-declare export var equals: <A, E>(RemoteData<A, E>, RemoteData<A, E>) => boolean
+declare export var equals: <A, E>(RemoteData<E, A>, RemoteData<E, A>) => boolean
 
-declare export var toMaybe: (<A, E>(x: RemoteData<A, E>) => Maybe<A>)
+declare export var toMaybe: (<A, E>(x: RemoteData<E, A>) => Maybe<A>)
 
-declare export var fromMaybe: (<A, E>(fallback: E, x: Maybe<A>) => RemoteData<A, E>)
+declare export var fromMaybe: (<A, E>(fallback: E, x: Maybe<A>) => RemoteData<E, A>)
 
-declare export var fromEither: (<A, E>(x: Either<A, E>) => RemoteData<A, E>)
+declare export var fromEither: (<A, E>(x: Either<A, E>) => RemoteData<E, A>)
