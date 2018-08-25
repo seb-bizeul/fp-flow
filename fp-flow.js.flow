@@ -152,40 +152,40 @@ declare export var maybe: {
 }
 
 declare export var remoteData: {
-  pure: <A, E>(x: A) => RemoteData<A, E>,
-  success: <A, E>(x: A) => RemoteData<A, E>,
-  of: <A, E>(x: A) => RemoteData<A, E>,
-  failure: <A, E>(err: E) => RemoteData<A, E>,
-  notAsked: <A, E>() => RemoteData<A, E>,
-  loading: <A, E>() => RemoteData<A, E>,
-  fromNullable: <A, E>(x: A) => RemoteData<A, E>,
+  pure: <A, E>(x: A) => RemoteData<E, A>,
+  success: <A, E>(x: A) => RemoteData<E, A>,
+  of: <A, E>(x: A) => RemoteData<E, A>,
+  failure: <A, E>(err: E) => RemoteData<E, A>,
+  notAsked: <A, E>() => RemoteData<E, A>,
+  loading: <A, E>() => RemoteData<E, A>,
+  fromNullable: <A, E>(x: A) => RemoteData<E, A>,
   fold:
-    & (<A, B, E>(cases: Cases<A, B, E>, rd: RemoteData<A, E>) => B)
-    & (<A, B, E>(cases: Cases<A, B, E>) => (rd: RemoteData<A, E>) => B),
+    & (<A, B, E>(cases: Cases<A, B, E>, rd: RemoteData<E, A>) => B)
+    & (<A, B, E>(cases: Cases<A, B, E>) => (rd: RemoteData<E, A>) => B),
   map:
-    & (<A, B, E>(f: A => B, x: RemoteData<A, E>) => RemoteData<B, E>)
-    & (<A, B, E>(f: A => B) => (x: RemoteData<A, E>) => RemoteData<B, E>),
+    & (<A, B, E>(f: A => B, x: RemoteData<E, A>) => RemoteData<E, B>)
+    & (<A, B, E>(f: A => B) => (x: RemoteData<E, A>) => RemoteData<E, B>),
   mapLeft:
-    & (<A, E, F>(f: E => F, x: RemoteData<A, E>) => RemoteData<A, F>)
-    & (<A, E, F>(f: E => F) => (x: RemoteData<A, E>) => RemoteData<A, F>),
+    & (<A, E, F>(f: E => F, x: RemoteData<E, A>) => RemoteData<F, A>)
+    & (<A, E, F>(f: E => F) => (x: RemoteData<E, A>) => RemoteData<F, A>),
   chain:
-    & (<A, B, E>(f: A => RemoteData<B, E>, x: RemoteData<A, E>) => RemoteData<B, E>)
-    & (<A, B, E>(f: A => RemoteData<B, E>) => (x: RemoteData<A, E>) => RemoteData<B, E>),
+    & (<A, B, E>(f: A => RemoteData<E, B>, x: RemoteData<E, A>) => RemoteData<E, B>)
+    & (<A, B, E>(f: A => RemoteData<E, B>) => (x: RemoteData<E, A>) => RemoteData<E, B>),
   flatMap:
-    & (<A, B, E>(f: A => RemoteData<B, E>, x: RemoteData<A, E>) => RemoteData<B, E>)
-    & (<A, B, E>(f: A => RemoteData<B, E>) => (x: RemoteData<A, E>) => RemoteData<B, E>),
+    & (<A, B, E>(f: A => RemoteData<E, B>, x: RemoteData<E, A>) => RemoteData<B, E>)
+    & (<A, B, E>(f: A => RemoteData<E, B>) => (x: RemoteData<E, A>) => RemoteData<B, E>),
   ap:
-    & (<A, B, E>(f: RemoteData<A, E> => B, x: RemoteData<A, E>) => RemoteData<B, E>)
-    & (<A, B, E>(f: RemoteData<A, E> => B) => (x: RemoteData<A, E>) => RemoteData<B, E>),
-  unsafeGet: <A, E>(RemoteData<A, E>) => A,
+    & (<A, B, E>(f: RemoteData<E, A => B>, x: RemoteData<E, A>) => RemoteData<E, B>)
+    & (<A, B, E>(f: RemoteData<E, A => B>) => (x: RemoteData<E, A>) => RemoteData<E, B>),
+  unsafeGet: <A, E>(RemoteData<E, A>) => A,
   getOrElse:
-    & (<A, B, E>(f: () => B, x: RemoteData<A, E>) => B)
-    & (<A, B, E>(f: () => B) => (x: RemoteData<A, E>) => B),
-  isSuccess: <A, E>(RemoteData<A, E>) => boolean,
-  isFailure: <A, E>(RemoteData<A, E>) => boolean,
-  isLoading: <A, E>(RemoteData<A, E>) => boolean,
-  isNotAsked: <A, E>(RemoteData<A, E>) => boolean,
-  toMaybe: (<A, E>(x: RemoteData<A, E>) => Maybe<A>),
-  fromMaybe: (<A, E>(fallback: E, x: Maybe<A>) => RemoteData<A, E>),
-  fromEither: (<A, E>(x: Either<A, E>) => RemoteData<A, E>)
+    & (<A, B, E>(f: () => B, x: RemoteData<E, A>) => B)
+    & (<A, B, E>(f: () => B) => (x: RemoteData<E, A>) => B),
+  isSuccess: <A, E>(RemoteData<E, A>) => boolean,
+  isFailure: <A, E>(RemoteData<E, A>) => boolean,
+  isLoading: <A, E>(RemoteData<E, A>) => boolean,
+  isNotAsked: <A, E>(RemoteData<E, A>) => boolean,
+  toMaybe: (<A, E>(x: RemoteData<E, A>) => Maybe<A>),
+  fromMaybe: (<A, E>(fallback: E, x: Maybe<A>) => RemoteData<E, A>),
+  fromEither: (<A, E>(x: Either<A, E>) => RemoteData<E, A>)
 }
