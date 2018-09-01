@@ -16,7 +16,7 @@ export const of = pure
 
 export const nothing = () => ({ tag: Nothing })
 
-export const fromNullable = x => x == null ? just(x) : nothing()
+export const fromNullable = x => x == null ? nothing() : just(x)
 
 export const map = curry((f, x) => {
   switch (x.tag) {
