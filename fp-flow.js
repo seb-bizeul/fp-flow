@@ -936,6 +936,30 @@
        });
 
        /**
+        * Returns a new list containing the contents of the given list, followed by
+        * the given element.
+        *
+        * @func
+        * @memberOf R
+        * @since v0.1.0
+        * @category List
+        * @sig a -> [a] -> [a]
+        * @param {*} el The element to add to the end of the new list.
+        * @param {Array} list The list of elements to add a new item to.
+        *        list.
+        * @return {Array} A new list containing the elements of the old list followed by `el`.
+        * @see R.prepend
+        * @example
+        *
+        *      R.append('tests', ['write', 'more']); //=> ['write', 'more', 'tests']
+        *      R.append('tests', []); //=> ['tests']
+        *      R.append(['tests'], ['write', 'more']); //=> ['write', 'more', ['tests']]
+        */
+       var append = /*#__PURE__*/_curry2(function append(el, list) {
+         return _concat(list, [el]);
+       });
+
+       /**
         * Determine if the passed argument is an integer.
         *
         * @private
@@ -3389,7 +3413,7 @@
 
        const nothing$1 = () => ({ tag: Nothing$1 });
 
-       const fromNullable$1 = x => x == null ? just$1(x) : nothing$1();
+       const fromNullable$1 = x => x == null ? nothing$1() : just$1(x);
 
        const map$2 = curry((f, x) => {
          switch (x.tag) {
@@ -3397,6 +3421,22 @@
          case Nothing$1: return x
          }
        });
+
+       const all$1 = curry((f, arr) => {
+         return arr.reduce((acc, it) => {
+           return ap$2(map$2(append, it), acc)
+         }, of$2([]))
+       });
+
+       const mapAll = curry((f, arr) => {
+         return arr.reduce((acc, it) => ap$2(map$2(append, map$2(f, it)), acc), of$2([]))
+       });
+
+       const map2 = curry((f, m1, m2) => mapAll(f, [m1, m2]));
+
+       const map3 = curry((f, m1, m2, m3) => mapAll(f, [m1, m2, m3]));
+
+       const map4 = curry((f, m1, m2, m3, m4) => mapAll(f, [m1, m2, m3, m4]));
 
        const chain$2 = curry((f, x) => {
          switch (x.tag) {
@@ -3416,7 +3456,7 @@
          }
        });
 
-       const ap$2 = curry((f, x) => map$2(f.value, x));
+       const ap$2 = curry((f, x) => isJust(f) ? map$2(f.value, x) : nothing$1());
 
        const unsafeGet$1 = x => {
          switch (x.tag) {
@@ -3469,6 +3509,9 @@
               nothing: nothing$1,
               fromNullable: fromNullable$1,
               map: map$2,
+              map2: map2,
+              map3: map3,
+              map4: map4,
               chain: chain$2,
               flatMap: flatMap$1,
               bind: bind$2,
@@ -3544,7 +3587,14 @@
          }
        });
 
-       const ap$3 = curry((f, rd) => map$3(f.value, rd));
+       const ap$3 = curry((f, rd) => {
+         switch (f.tag) {
+         case Success: return map$3(f.value, rd)
+         case Failure: return f
+         case NotAsked: return f
+         case Loading: return f
+         }
+       });
 
        const flatMap$2 = ap$3;
 
@@ -3583,10 +3633,10 @@
          }
        };
 
-       const fromMaybe$1 = (error, maybe) => {
+       const fromMaybe$1 = (fallback, maybe) => {
          switch (maybe.tag) {
          case Just: return success(maybe.value)
-         case Nothing: return failure(error)
+         case Nothing: return failure(fallback)
          }
        };
 

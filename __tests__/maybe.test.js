@@ -43,6 +43,14 @@ test('maybe of', t => {
   t.end()
 })
 
+test('maybe from nullable', t => {
+  const just = maybe.fromNullable(x)
+  t.deepEqual(just, maybe.just(x))
+  const nothing = maybe.fromNullable(null)
+  t.deepEqual(nothing, maybe.nothing())
+  t.end()
+})
+
 test('maybe map', t => {
   const output = pipe(
     maybe.of,
