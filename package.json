@@ -1,7 +1,7 @@
 {
   "name": "@sbizeul/fp-flow",
-  "version": "0.0.3",
-  "description": "Collection of algebraic data types to use with Flow",
+  "version": "0.0.4",
+  "description": "Collection of algebraic data types to use with Flow or in plain JS",
   "main": "fp-flow.js",
   "scripts": {
     "test": "tape -r @babel/register __tests__/*.test.js | tap-spec",
@@ -22,8 +22,7 @@
   "license": "ISC",
   "dependencies": {
     "fast-deep-equal": "^2.0.1",
-    "ramda": "^0.25.0",
-    "rollup-plugin-babel": "^4.0.3"
+    "ramda": "^0.25.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -33,6 +32,7 @@
     "flow-bin": "^0.78.0",
     "rollup": "^0.64.1",
     "rollup-plugin-commonjs": "^9.1.5",
+    "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-node-resolve": "^3.3.0",
     "tap-spec": "^5.0.0",
     "tape": "^4.9.1",
