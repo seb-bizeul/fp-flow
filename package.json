@@ -1,6 +1,6 @@
 {
   "name": "@sbizeul/fp-flow",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Collection of algebraic data types to use with Flow",
   "main": "fp-flow.js",
   "scripts": {
@@ -22,7 +22,8 @@
   "license": "ISC",
   "dependencies": {
     "fast-deep-equal": "^2.0.1",
-    "ramda": "^0.25.0"
+    "ramda": "^0.25.0",
+    "rollup-plugin-babel": "^4.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
