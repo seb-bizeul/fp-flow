@@ -3270,110 +3270,127 @@
          return a!==a && b!==b;
        };
 
-       const Left$1 = 'Left';
-       const Right$1 = 'Right';
-
-       const pure = x => ({
-         tag: Right$1,
-         value: x
-       });
-
-       const right$1 = pure;
-
-       const of$1 = pure;
-
-       const left$1 = x => ({
-         tag: Left$1,
-         value: x
-       });
-
-       const fromNullable = x => x == null ? left$1(x) : right$1(x);
-
-       const tryCatch$1 = curry((l, r) => {
+       var Left$1 = 'Left';
+       var Right$1 = 'Right';
+       var pure = function pure(x) {
+         return {
+           tag: Right$1,
+           value: x
+         };
+       };
+       var right$1 = pure;
+       var of$1 = pure;
+       var left$1 = function left(x) {
+         return {
+           tag: Left$1,
+           value: x
+         };
+       };
+       var fromNullable = function fromNullable(x) {
+         return x == null ? left$1(x) : right$1(x);
+       };
+       var tryCatch$1 = curry(function (l, r) {
          try {
-           return right$1(r())
-         }
-         catch (err) {
+           return right$1(r());
+         } catch (err) {
            left$1(l(err));
          }
        });
-
-       const fromMaybe = curry((err, maybe) => {
+       var fromMaybe = curry(function (err, maybe) {
          switch (maybe.tag) {
-         case 'Just': return right$1(maybe.value)
-         case 'Nothing': return typeof err === 'function' ? left$1(err()) : left$1(err)
+           case 'Just':
+             return right$1(maybe.value);
+
+           case 'Nothing':
+             return typeof err === 'function' ? left$1(err()) : left$1(err);
          }
        });
-
-       const toMaybe = x => {
+       var toMaybe = function toMaybe(x) {
          switch (x.tag) {
-         case Left$1: return nothing()
-         case Right$1: return just(maybe.value)
+           case Left$1:
+             return nothing();
+
+           case Right$1:
+             return just(maybe.value);
          }
        };
-
-       const map$1 = curry((f, x) => {
+       var map$1 = curry(function (f, x) {
          switch (x.tag) {
-         case Left$1: return x
-         case Right$1: return right$1(f(x.value))
+           case Left$1:
+             return x;
+
+           case Right$1:
+             return right$1(f(x.value));
          }
        });
-
-       const mapLeft = curry((f, x) => {
+       var mapLeft = curry(function (f, x) {
          switch (x.tag) {
-         case Left$1: return left$1(f(x.value))
-         case Right$1: return x
+           case Left$1:
+             return left$1(f(x.value));
+
+           case Right$1:
+             return x;
          }
        });
-
-       const bimap = curry((f, g, x) => {
+       var bimap = curry(function (f, g, x) {
          switch (x.tag) {
-         case Left$1: return left$1(f(x.value))
-         case Right$1: return right$1(f(x.value))
+           case Left$1:
+             return left$1(f(x.value));
+
+           case Right$1:
+             return right$1(f(x.value));
          }
        });
-
-       const fold = curry((l, r, x) => {
+       var fold = curry(function (l, r, x) {
          switch (x.tag) {
-         case Left$1: return l(x.value)
-         case Right$1: return r(x.value)
+           case Left$1:
+             return l(x.value);
+
+           case Right$1:
+             return r(x.value);
          }
        });
-
-       const chain$1 = curry((f, x) => {
+       var chain$1 = curry(function (f, x) {
          switch (x.tag) {
-         case Left$1: return x
-         case Right$1: return f(x.value)
+           case Left$1:
+             return x;
+
+           case Right$1:
+             return f(x.value);
          }
        });
-
-       const flatMap = chain$1;
-
-       const bind$1 = chain$1;
-
-       const ap$1 = curry((f, x) => {
-         return map$1(f.value, x)
+       var flatMap = chain$1;
+       var bind$1 = chain$1;
+       var ap$1 = curry(function (f, x) {
+         return map$1(f.value, x);
        });
-
-       const unsafeGet = x => {
+       var unsafeGet = function unsafeGet(x) {
          switch (x.tag) {
-         case Right$1: return x.value
-         case Left$1: throw new Error(`Cannot extract the value of a ${x.tag}`)
+           case Right$1:
+             return x.value;
+
+           case Left$1:
+             throw new Error("Cannot extract the value of a ".concat(x.tag));
          }
        };
-
-       const getOrElse = curry((f, x) => {
+       var getOrElse = curry(function (f, x) {
          switch (x.tag) {
-         case Right$1: return x.value
-         case Left$1: return f(x.value)
+           case Right$1:
+             return x.value;
+
+           case Left$1:
+             return f(x.value);
          }
        });
-
-       const isLeft = x => x.tag === Left$1;
-
-       const isRight = x => x.tag === Right$1;
-
-       const equals$1 = (x, y) => x === y || fastDeepEqual(x, y);
+       var isLeft = function isLeft(x) {
+         return x.tag === Left$1;
+       };
+       var isRight = function isRight(x) {
+         return x.tag === Right$1;
+       };
+       var equals$1 = function equals$$1(x, y) {
+         return x === y || fastDeepEqual(x, y);
+       };
 
        var either$2 = /*#__PURE__*/Object.freeze({
               pure: pure,
@@ -3399,106 +3416,124 @@
               equals: equals$1
        });
 
-       const Just$1 = 'Just';
-       const Nothing$1 = 'Nothing';
-
-       const pure$1 = x => ({
-         value: x,
-         tag: Just$1,
-       });
-
-       const just$1 = pure$1;
-
-       const of$2 = pure$1;
-
-       const nothing$1 = () => ({ tag: Nothing$1 });
-
-       const fromNullable$1 = x => x == null ? nothing$1() : just$1(x);
-
-       const map$2 = curry((f, x) => {
+       var Just$1 = 'Just';
+       var Nothing$1 = 'Nothing';
+       var pure$1 = function pure(x) {
+         return {
+           value: x,
+           tag: Just$1
+         };
+       };
+       var just$1 = pure$1;
+       var of$2 = pure$1;
+       var nothing$1 = function nothing() {
+         return {
+           tag: Nothing$1
+         };
+       };
+       var fromNullable$1 = function fromNullable(x) {
+         return x == null ? nothing$1() : just$1(x);
+       };
+       var map$2 = curry(function (f, x) {
          switch (x.tag) {
-         case Just$1: return just$1(f(x.value))
-         case Nothing$1: return x
+           case Just$1:
+             return just$1(f(x.value));
+
+           case Nothing$1:
+             return x;
          }
        });
-
-       const all$1 = curry((f, arr) => {
-         return arr.reduce((acc, it) => {
-           return ap$2(map$2(append, it), acc)
-         }, of$2([]))
+       var all$1 = curry(function (f, arr) {
+         return arr.reduce(function (acc, it) {
+           return ap$2(map$2(append, it), acc);
+         }, of$2([]));
        });
-
-       const mapAll = curry((f, arr) => {
-         return arr.reduce((acc, it) => ap$2(map$2(append, map$2(f, it)), acc), of$2([]))
+       var mapAll = curry(function (f, arr) {
+         return arr.reduce(function (acc, it) {
+           return ap$2(map$2(append, map$2(f, it)), acc);
+         }, of$2([]));
        });
-
-       const map2 = curry((f, m1, m2) => mapAll(f, [m1, m2]));
-
-       const map3 = curry((f, m1, m2, m3) => mapAll(f, [m1, m2, m3]));
-
-       const map4 = curry((f, m1, m2, m3, m4) => mapAll(f, [m1, m2, m3, m4]));
-
-       const chain$2 = curry((f, x) => {
+       var map2 = curry(function (f, m1, m2) {
+         return mapAll(f, [m1, m2]);
+       });
+       var map3 = curry(function (f, m1, m2, m3) {
+         return mapAll(f, [m1, m2, m3]);
+       });
+       var map4 = curry(function (f, m1, m2, m3, m4) {
+         return mapAll(f, [m1, m2, m3, m4]);
+       });
+       var chain$2 = curry(function (f, x) {
          switch (x.tag) {
-         case Just$1: return f(x.value)
-         case Nothing$1: return x
+           case Just$1:
+             return f(x.value);
+
+           case Nothing$1:
+             return x;
          }
        });
-
-       const flatMap$1 = chain$2;
-
-       const bind$2 = chain$2;
-
-       const fold$1 = curry((n, j, x) => {
+       var flatMap$1 = chain$2;
+       var bind$2 = chain$2;
+       var fold$1 = curry(function (n, j, x) {
          switch (x.tag) {
-         case Just$1: return j(x.value)
-         case Nothing$1: return n()
+           case Just$1:
+             return j(x.value);
+
+           case Nothing$1:
+             return n();
          }
        });
-
-       const ap$2 = curry((f, x) => isJust(f) ? map$2(f.value, x) : nothing$1());
-
-       const unsafeGet$1 = x => {
+       var ap$2 = curry(function (f, x) {
+         return isJust(f) ? map$2(f.value, x) : nothing$1();
+       });
+       var unsafeGet$1 = function unsafeGet(x) {
          switch (x.tag) {
-         case Just$1: return x.value
-         case Nothing$1: throw new TypeError(`Cannot extract the value of a ${x.tag}`)
+           case Just$1:
+             return x.value;
+
+           case Nothing$1:
+             throw new TypeError("Cannot extract the value of a ".concat(x.tag));
          }
        };
-
-       const getOrElse$1 = curry((f, x) => {
+       var getOrElse$1 = curry(function (f, x) {
          switch (x.tag) {
-         case Just$1: return x.value
-         case Nothing$1: return f()
+           case Just$1:
+             return x.value;
+
+           case Nothing$1:
+             return f();
          }
        });
-
-       const isJust = x => x.tag === Just$1;
-
-       const isNothing = x => x.tag === Nothing$1;
-
-       const equals$2 = (x, y) => {
+       var isJust = function isJust(x) {
+         return x.tag === Just$1;
+       };
+       var isNothing = function isNothing(x) {
+         return x.tag === Nothing$1;
+       };
+       var equals$2 = function equals$$1(x, y) {
          if (isNothing(x) && isNothing(y)) {
-           return true
-         }
-         else if (isJust(x) && isJust(y)) {
-           return x === y || fastDeepEqual(x, y)
-         }
-         else {
-           return false
+           return true;
+         } else if (isJust(x) && isJust(y)) {
+           return x === y || fastDeepEqual(x, y);
+         } else {
+           return false;
          }
        };
-
-       const fromEither = either => {
+       var fromEither = function fromEither(either) {
          switch (either.tag) {
-         case 'Left': return nothing$1()
-         case 'Right': return just$1(either.value)
+           case 'Left':
+             return nothing$1();
+
+           case 'Right':
+             return just$1(either.value);
          }
        };
-
-       const toEither = curry((err, x) => {
+       var toEither = curry(function (err, x) {
          switch (x.tag) {
-         case Just$1: return right(either.value)
-         case Nothing$1: return typeof err === 'function' ? left(err()) : left(err)
+           case Just$1:
+             return right(either.value);
+
+           case Nothing$1:
+             return typeof err === 'function' ? left(err()) : left(err);
          }
        });
 
@@ -3526,124 +3561,182 @@
               toEither: toEither
        });
 
-       const Success = 'Success';
-       const Failure = 'Failure';
-       const NotAsked = 'NotAsked';
-       const Loading = 'Loading';
-
-       const pure$2 = x => ({
-         value: x,
-         tag: Success
-       });
-
-       const success = pure$2;
-
-       const of$3 = success;
-
-       const failure = err => ({
-         value: err,
-         tag: Failure
-       });
-
-       const notAsked = () => ({ tag: NotAsked });
-
-       const loading = () => ({ tag: Loading });
-
-       const fromNullable$2 = x => x == null ? notAsked() : success(x);
-
-       const fold$2 = curry((cases, rd) => {
+       var Success = 'Success';
+       var Failure = 'Failure';
+       var NotAsked = 'NotAsked';
+       var Loading = 'Loading';
+       var pure$2 = function pure(x) {
+         return {
+           value: x,
+           tag: Success
+         };
+       };
+       var success = pure$2;
+       var of$3 = success;
+       var failure = function failure(err) {
+         return {
+           value: err,
+           tag: Failure
+         };
+       };
+       var notAsked = function notAsked() {
+         return {
+           tag: NotAsked
+         };
+       };
+       var loading = function loading() {
+         return {
+           tag: Loading
+         };
+       };
+       var fromNullable$2 = function fromNullable(x) {
+         return x == null ? notAsked() : success(x);
+       };
+       var fold$2 = curry(function (cases, rd) {
          switch (rd.tag) {
-         case Success: return cases.Success(rd.value)
-         case Failure: return cases.Failure(rd.value)
-         case NotAsked: return cases.NotAsked()
-         case Loading: return cases.Loading()
+           case Success:
+             return cases.Success(rd.value);
+
+           case Failure:
+             return cases.Failure(rd.value);
+
+           case NotAsked:
+             return cases.NotAsked();
+
+           case Loading:
+             return cases.Loading();
          }
        });
-
-       const map$3 = curry((f, x) => {
+       var map$3 = curry(function (f, x) {
          switch (x.tag) {
-         case Success: return success(f(x.value))
-         case Failure: return x
-         case NotAsked: return x
-         case Loading: return x
+           case Success:
+             return success(f(x.value));
+
+           case Failure:
+             return x;
+
+           case NotAsked:
+             return x;
+
+           case Loading:
+             return x;
          }
        });
-
-       const mapLeft$1 = curry((f, rd) => {
+       var mapLeft$1 = curry(function (f, rd) {
          switch (rd.tag) {
-         case Success: return rd
-         case Failure: return failure(f(rd.value))
-         case NotAsked: return rd
-         case Loading: return rd
+           case Success:
+             return rd;
+
+           case Failure:
+             return failure(f(rd.value));
+
+           case NotAsked:
+             return rd;
+
+           case Loading:
+             return rd;
          }
        });
-
-       const chain$3 = curry((f, rd) => {
+       var chain$3 = curry(function (f, rd) {
          switch (rd.tag) {
-         case Success: return f(rd.value)
-         case Failure: return rd
-         case NotAsked: return rd
-         case Loading: return rd
+           case Success:
+             return f(rd.value);
+
+           case Failure:
+             return rd;
+
+           case NotAsked:
+             return rd;
+
+           case Loading:
+             return rd;
          }
        });
-
-       const ap$3 = curry((f, rd) => {
+       var ap$3 = curry(function (f, rd) {
          switch (f.tag) {
-         case Success: return map$3(f.value, rd)
-         case Failure: return f
-         case NotAsked: return f
-         case Loading: return f
+           case Success:
+             return map$3(f.value, rd);
+
+           case Failure:
+             return f;
+
+           case NotAsked:
+             return f;
+
+           case Loading:
+             return f;
          }
        });
-
-       const flatMap$2 = ap$3;
-
-       const bind$3 = ap$3;
-
-       const unsafeGet$2 = rd => {
+       var flatMap$2 = ap$3;
+       var bind$3 = ap$3;
+       var unsafeGet$2 = function unsafeGet(rd) {
          switch (rd.tag) {
-         case Success: return rd.value
-         default: throw new Error(`Cannot extract the value of a ${rd.tag}`)
+           case Success:
+             return rd.value;
+
+           default:
+             throw new Error("Cannot extract the value of a ".concat(rd.tag));
          }
        };
-
-       const getOrElse$2 = curry((x, rd) => {
+       var getOrElse$2 = curry(function (x, rd) {
          switch (rd.tag) {
-         case Success: return rd.value
-         default: return x()
+           case Success:
+             return rd.value;
+
+           default:
+             return x();
          }
        });
-
-       const isSuccess = ({ tag }) => tag === Success;
-
-       const isFailure = ({ tag }) => tag === Failure;
-
-       const isLoading = ({ tag }) => tag === Loading;
-
-       const isNotAsked = ({ tag }) => tag === NotAsked;
-
-       const equals$3 = (x, y) => x === y || fastDeepEqual(x, y);
-
-       const toMaybe$1 = rd => {
+       var isSuccess = function isSuccess(_ref) {
+         var tag = _ref.tag;
+         return tag === Success;
+       };
+       var isFailure = function isFailure(_ref2) {
+         var tag = _ref2.tag;
+         return tag === Failure;
+       };
+       var isLoading = function isLoading(_ref3) {
+         var tag = _ref3.tag;
+         return tag === Loading;
+       };
+       var isNotAsked = function isNotAsked(_ref4) {
+         var tag = _ref4.tag;
+         return tag === NotAsked;
+       };
+       var equals$3 = function equals$$1(x, y) {
+         return x === y || fastDeepEqual(x, y);
+       };
+       var toMaybe$1 = function toMaybe(rd) {
          switch (rd.tag) {
-         case Success: return just$1(rd.value)
-         case Failure: return nothing$1()
-         case NotAsked: return nothing$1()
-         case Loading: return nothing$1()
+           case Success:
+             return just$1(rd.value);
+
+           case Failure:
+             return nothing$1();
+
+           case NotAsked:
+             return nothing$1();
+
+           case Loading:
+             return nothing$1();
          }
        };
-
-       const fromMaybe$1 = (fallback, maybe) => {
+       var fromMaybe$1 = function fromMaybe(fallback, maybe) {
          switch (maybe.tag) {
-         case Just: return success(maybe.value)
-         case Nothing: return failure(fallback)
+           case Just:
+             return success(maybe.value);
+
+           case Nothing:
+             return failure(fallback);
          }
        };
-
-       const fromEither$1 = (either) => {
+       var fromEither$1 = function fromEither$$1(either) {
          switch (either.tag) {
-         case Left: return failure(either.value)
-         case Right: return success(either.value)
+           case Left:
+             return failure(either.value);
+
+           case Right:
+             return success(either.value);
          }
        };
 
@@ -3677,7 +3770,7 @@
        var main = {
          either: either$2,
          maybe: maybe$1,
-         remoteData
+         remoteData: remoteData
        };
 
        return main;
