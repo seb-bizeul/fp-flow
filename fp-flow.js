@@ -3767,10 +3767,35 @@
               fromEither: fromEither$1
        });
 
+       var pipe$1 = function pipe() {
+         for (var _len = arguments.length, funs = new Array(_len), _key = 0; _key < _len; _key++) {
+           funs[_key] = arguments[_key];
+         }
+
+         return function (x) {
+           return funs.reduce(function (acc, f) {
+             return f(acc);
+           }, x);
+         };
+       };
+       var compose$1 = function compose() {
+         for (var _len2 = arguments.length, funs = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+           funs[_key2] = arguments[_key2];
+         }
+
+         return function (x) {
+           return funs.reduceRight(function (acc, f) {
+             return f(acc);
+           }, x);
+         };
+       };
+
        var main = {
          either: either$2,
          maybe: maybe$1,
-         remoteData: remoteData
+         remoteData: remoteData,
+         pipe: pipe$1,
+         compose: compose$1
        };
 
        return main;
