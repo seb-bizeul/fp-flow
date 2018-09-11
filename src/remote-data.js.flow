@@ -71,6 +71,8 @@ declare export var ap:
   & (<A, B, E>(f: RemoteData<E, A => B>, x: RemoteData<E, A>) => RemoteData<B, E>)
   & (<A, B, E>(f: RemoteData<E, A => B>) => (x: RemoteData<E, A>) => RemoteData<B, E>)
 
+declare export var all: (<A, E>(arr: RemoteData<E, A>[]) => RemoteData<E, A>)
+
 declare export var unsafeGet: <A, E>(RemoteData<A, E>) => A
 
 declare export var getOrElse:

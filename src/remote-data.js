@@ -1,4 +1,4 @@
-import { curry } from 'ramda'
+import { curry, prepend } from 'ramda'
 import { just, nothing } from './maybe'
 import deepEqual from 'fast-deep-equal'
 
@@ -73,6 +73,10 @@ export const ap = curry((f, rd) => {
   case Loading: return f
   }
 })
+
+export const all = arr => {
+  return arr.reduceRight((acc, it) => ap(map(prepend, it), acc), of([]))
+}
 
 export const flatMap = ap
 

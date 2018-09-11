@@ -123,6 +123,42 @@ test('remote data ap', t => {
   t.end()
 })
 
+test('remote data all success', t => {
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.of(x + 1)
+  const output = remoteData.all([rd1, rd2])
+  const expected = remoteData.success([x, x + 1])
+  t.deepEqual(output, expected)
+  t.end()
+})
+
+test('remote data all failure', t => {
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.failure(x)
+  const output = remoteData.all([rd1, rd2])
+  const expected = remoteData.failure(x)
+  t.deepEqual(output, expected)
+  t.end()
+})
+
+test('remote data all loading', t => {
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.loading()
+  const output = remoteData.all([rd1, rd2])
+  const expected = remoteData.loading()
+  t.deepEqual(output, expected)
+  t.end()
+})
+
+test('remote data all notAsked', t => {
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.notAsked()
+  const output = remoteData.all([rd1, rd2])
+  const expected = remoteData.notAsked()
+  t.deepEqual(output, expected)
+  t.end()
+})
+
 test('fold success', t => {
   const output = pipe(
     remoteData.success,
