@@ -2967,6 +2967,27 @@
        });
 
        /**
+        * Returns a new list with the given element at the front, followed by the
+        * contents of the list.
+        *
+        * @func
+        * @memberOf R
+        * @since v0.1.0
+        * @category List
+        * @sig a -> [a] -> [a]
+        * @param {*} el The item to add to the head of the output list.
+        * @param {Array} list The array to add to the tail of the output list.
+        * @return {Array} A new array.
+        * @see R.append
+        * @example
+        *
+        *      R.prepend('fee', ['fi', 'fo', 'fum']); //=> ['fee', 'fi', 'fo', 'fum']
+        */
+       var prepend = /*#__PURE__*/_curry2(function prepend(el, list) {
+         return _concat([el], list);
+       });
+
+       /**
         * Multiplies together all the elements of a list.
         *
         * @func
@@ -3669,6 +3690,11 @@
              return f;
          }
        });
+       var all$2 = function all$$1(arr) {
+         return arr.reduceRight(function (acc, it) {
+           return ap$3(map$3(prepend, it), acc);
+         }, of$3([]));
+       };
        var flatMap$2 = ap$3;
        var bind$3 = ap$3;
        var unsafeGet$2 = function unsafeGet(rd) {
@@ -3755,6 +3781,7 @@
               mapLeft: mapLeft$1,
               chain: chain$3,
               ap: ap$3,
+              all: all$2,
               flatMap: flatMap$2,
               bind: bind$3,
               unsafeGet: unsafeGet$2,

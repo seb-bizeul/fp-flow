@@ -1,7 +1,7 @@
 {
   "name": "@sbizeul/fp-flow",
-  "version": "0.0.5",
-  "description": "Collection of algebraic data types to use with Flow or in plain JS",
+  "version": "0.0.6",
+  "description": "Collection of algebraic data types to use with Flow",
   "main": "fp-flow.js",
   "scripts": {
     "test": "tape -r @babel/register __tests__/*.test.js | tap-spec",

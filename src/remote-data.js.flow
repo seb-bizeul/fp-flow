@@ -52,24 +52,26 @@ declare export var fold:
   & (<A, B, E>(cases: Cases<A, B, E>) => (rd: RemoteData<E, A>) => B)
 
 declare export var map:
-  & (<A, B, E>(f: A => B, x: RemoteData<E, A>) => RemoteData<B, E>)
-  & (<A, B, E>(f: A => B) => (x: RemoteData<E, A>) => RemoteData<B, E>)
+  & (<A, B, E>(f: A => B, x: RemoteData<E, A>) => RemoteData<E, B>)
+  & (<A, B, E>(f: A => B) => (x: RemoteData<E, A>) => RemoteData<E, B>)
 
 declare export var mapLeft:
-  & (<A, E, F>(f: E => F, x: RemoteData<E, A>) => RemoteData<A, F>)
-  & (<A, E, F>(f: E => F) => (x: RemoteData<E, A>) => RemoteData<A, F>)
+  & (<A, E, F>(f: E => F, x: RemoteData<E, A>) => RemoteData<F, A>)
+  & (<A, E, F>(f: E => F) => (x: RemoteData<E, A>) => RemoteData<F, A>)
 
 declare export var chain:
-  & (<A, B, E>(f: A => RemoteData<B, E>, x: RemoteData<E, A>) => RemoteData<B, E>)
-  & (<A, B, E>(f: A => RemoteData<B, E>) => (x: RemoteData<E, A>) => RemoteData<B, E>)
+  & (<A, B, E>(f: A => RemoteData<B, E>, x: RemoteData<E, A>) => RemoteData<E, B>)
+  & (<A, B, E>(f: A => RemoteData<B, E>) => (x: RemoteData<E, A>) => RemoteData<E, B>)
 
 declare export var flatMap:
-  & (<A, B, E>(f: A => RemoteData<B, E>, x: RemoteData<E, A>) => RemoteData<B, E>)
-  & (<A, B, E>(f: A => RemoteData<B, E>) => (x: RemoteData<E, A>) => RemoteData<B, E>)
+  & (<A, B, E>(f: A => RemoteData<B, E>, x: RemoteData<E, A>) => RemoteData<E, B>)
+  & (<A, B, E>(f: A => RemoteData<B, E>) => (x: RemoteData<E, A>) => RemoteData<E, B>)
 
 declare export var ap:
-  & (<A, B, E>(f: RemoteData<E, A => B>, x: RemoteData<E, A>) => RemoteData<B, E>)
-  & (<A, B, E>(f: RemoteData<E, A => B>) => (x: RemoteData<E, A>) => RemoteData<B, E>)
+  & (<A, B, E>(f: RemoteData<E, A => B>, x: RemoteData<E, A>) => RemoteData<E, B>)
+  & (<A, B, E>(f: RemoteData<E, A => B>) => (x: RemoteData<E, A>) => RemoteData<E, B>)
+
+declare export var all: (<A, E>(arr: RemoteData<E, A>[]) => RemoteData<E, A[]>)
 
 declare export var unsafeGet: <A, E>(RemoteData<A, E>) => A
 
