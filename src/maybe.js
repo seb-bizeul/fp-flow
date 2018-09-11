@@ -2,8 +2,8 @@ import { curry, append } from 'ramda'
 import deepEqual from 'fast-deep-equal'
 
 
-const Just = 'Just'
-const Nothing = 'Nothing'
+export const Just = 'Just'
+export const Nothing = 'Nothing'
 
 export const pure = x => ({
   value: x,

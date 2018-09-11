@@ -3,6 +3,7 @@ import test from 'tape'
 import { pipe } from 'ramda'
 
 import * as remoteData from '../src/remote-data'
+import * as maybe from '../src/maybe'
 
 const x = 5
 const zero = () => 0
@@ -22,7 +23,7 @@ test('success constructor', t => {
   t.end()
 })
 
-test('either of', t => {
+test('remote data of', t => {
   t.deepEqual(remoteData.of(x), remoteData.pure(x))
   t.end()
 })
@@ -336,5 +337,23 @@ test('getOrElse not asked', t => {
     remoteData.getOrElse(zero)
   )(x)
   t.deepEqual(output, zero())
+  t.end()
+})
+
+test('remote data from maybe nothing', t => {
+  const output = pipe(
+    maybe.nothing,
+    remoteData.fromMaybe
+  )()
+  t.deepEqual(output, remoteData.notAsked())
+  t.end()
+})
+
+test('remote data from maybe just', t => {
+  const output = pipe(
+    maybe.just,
+    remoteData.fromMaybe
+  )(x)
+  t.deepEqual(output, remoteData.success(x))
   t.end()
 })

@@ -89,6 +89,6 @@ declare export var equals: <A, E>(RemoteData<E, A>, RemoteData<E, A>) => boolean
 
 declare export var toMaybe: (<A, E>(x: RemoteData<E, A>) => Maybe<A>)
 
-declare export var fromMaybe: (<A, E>(fallback: E, x: Maybe<A>) => RemoteData<E, A>)
+declare export var fromMaybe: (<A, E>(x: Maybe<A>) => RemoteData<E, A>)
 
 declare export var fromEither: (<A, E>(x: Either<A, E>) => RemoteData<E, A>)
