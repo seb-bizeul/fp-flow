@@ -172,12 +172,12 @@ declare export var remoteData: {
     & (<A, B, E>(f: A => RemoteData<E, B>, x: RemoteData<E, A>) => RemoteData<E, B>)
     & (<A, B, E>(f: A => RemoteData<E, B>) => (x: RemoteData<E, A>) => RemoteData<E, B>),
   flatMap:
-    & (<A, B, E>(f: A => RemoteData<E, B>, x: RemoteData<E, A>) => RemoteData<B, E>)
-    & (<A, B, E>(f: A => RemoteData<E, B>) => (x: RemoteData<E, A>) => RemoteData<B, E>),
+    & (<A, B, E>(f: A => RemoteData<E, B>, x: RemoteData<E, A>) => RemoteData<E, B>)
+    & (<A, B, E>(f: A => RemoteData<E, B>) => (x: RemoteData<E, A>) => RemoteData<E, B>),
   ap:
     & (<A, B, E>(f: RemoteData<E, A => B>, x: RemoteData<E, A>) => RemoteData<E, B>)
     & (<A, B, E>(f: RemoteData<E, A => B>) => (x: RemoteData<E, A>) => RemoteData<E, B>),
-  all: (<A, E>(arr: RemoteData<E, A>[]) => RemoteData<E, A>),
+  all: (<A, E>(arr: RemoteData<E, A>[]) => RemoteData<E, A[]>),
   unsafeGet: <A, E>(RemoteData<E, A>) => A,
   getOrElse:
     & (<A, B, E>(f: () => B, x: RemoteData<E, A>) => B)
