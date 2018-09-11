@@ -186,7 +186,7 @@ declare export var remoteData: {
   isLoading: <A, E>(RemoteData<E, A>) => boolean,
   isNotAsked: <A, E>(RemoteData<E, A>) => boolean,
   toMaybe: (<A, E>(x: RemoteData<E, A>) => Maybe<A>),
-  fromMaybe: (<A, E>(fallback: E, x: Maybe<A>) => RemoteData<E, A>),
+  fromMaybe: (<A, E>(x: Maybe<A>) => RemoteData<E, A>),
   fromEither: (<A, E>(x: Either<A, E>) => RemoteData<E, A>)
 }
 

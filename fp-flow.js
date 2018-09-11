@@ -3416,19 +3416,19 @@
               equals: equals$1
        });
 
-       var Just$1 = 'Just';
-       var Nothing$1 = 'Nothing';
+       var Just = 'Just';
+       var Nothing = 'Nothing';
        var pure$1 = function pure(x) {
          return {
            value: x,
-           tag: Just$1
+           tag: Just
          };
        };
        var just$1 = pure$1;
        var of$2 = pure$1;
        var nothing$1 = function nothing() {
          return {
-           tag: Nothing$1
+           tag: Nothing
          };
        };
        var fromNullable$1 = function fromNullable(x) {
@@ -3436,10 +3436,10 @@
        };
        var map$2 = curry(function (f, x) {
          switch (x.tag) {
-           case Just$1:
+           case Just:
              return just$1(f(x.value));
 
-           case Nothing$1:
+           case Nothing:
              return x;
          }
        });
@@ -3464,10 +3464,10 @@
        });
        var chain$2 = curry(function (f, x) {
          switch (x.tag) {
-           case Just$1:
+           case Just:
              return f(x.value);
 
-           case Nothing$1:
+           case Nothing:
              return x;
          }
        });
@@ -3475,10 +3475,10 @@
        var bind$2 = chain$2;
        var fold$1 = curry(function (n, j, x) {
          switch (x.tag) {
-           case Just$1:
+           case Just:
              return j(x.value);
 
-           case Nothing$1:
+           case Nothing:
              return n();
          }
        });
@@ -3487,27 +3487,27 @@
        });
        var unsafeGet$1 = function unsafeGet(x) {
          switch (x.tag) {
-           case Just$1:
+           case Just:
              return x.value;
 
-           case Nothing$1:
+           case Nothing:
              throw new TypeError("Cannot extract the value of a ".concat(x.tag));
          }
        };
        var getOrElse$1 = curry(function (f, x) {
          switch (x.tag) {
-           case Just$1:
+           case Just:
              return x.value;
 
-           case Nothing$1:
+           case Nothing:
              return f();
          }
        });
        var isJust = function isJust(x) {
-         return x.tag === Just$1;
+         return x.tag === Just;
        };
        var isNothing = function isNothing(x) {
-         return x.tag === Nothing$1;
+         return x.tag === Nothing;
        };
        var equals$2 = function equals$$1(x, y) {
          if (isNothing(x) && isNothing(y)) {
@@ -3529,15 +3529,17 @@
        };
        var toEither = curry(function (err, x) {
          switch (x.tag) {
-           case Just$1:
+           case Just:
              return right(either.value);
 
-           case Nothing$1:
+           case Nothing:
              return typeof err === 'function' ? left(err()) : left(err);
          }
        });
 
        var maybe$1 = /*#__PURE__*/Object.freeze({
+              Just: Just,
+              Nothing: Nothing,
               pure: pure$1,
               just: just$1,
               of: of$2,
@@ -3721,13 +3723,13 @@
              return nothing$1();
          }
        };
-       var fromMaybe$1 = function fromMaybe(fallback, maybe) {
+       var fromMaybe$1 = function fromMaybe(maybe) {
          switch (maybe.tag) {
            case Just:
              return success(maybe.value);
 
            case Nothing:
-             return failure(fallback);
+             return notAsked();
          }
        };
        var fromEither$1 = function fromEither$$1(either) {

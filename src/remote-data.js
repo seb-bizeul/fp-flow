@@ -2,6 +2,7 @@ import { curry } from 'ramda'
 import { just, nothing } from './maybe'
 import deepEqual from 'fast-deep-equal'
 
+import { Just, Nothing } from './maybe'
 
 const Success = 'Success'
 const Failure = 'Failure'
@@ -110,10 +111,10 @@ export const toMaybe = rd => {
   }
 }
 
-export const fromMaybe = (fallback, maybe) => {
+export const fromMaybe = maybe => {
   switch (maybe.tag) {
   case Just: return success(maybe.value)
-  case Nothing: return failure(fallback)
+  case Nothing: return notAsked()
   }
 }
 
