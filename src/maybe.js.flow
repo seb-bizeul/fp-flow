@@ -61,9 +61,9 @@ declare export var ap:
   & (<A, B>(f: Maybe<A => B>) => (x: Maybe<A>) => Maybe<B>)
 
 declare export var fold:
-  & (<A, B>(n: () => B, j: A => B, x: Maybe<A>) => Maybe<B>)
-  & (<A, B>(n: () => B, j: A => B) => (x: Maybe<A>) => Maybe<B>)
-  & (<A, B>(n: () => B) => (j: A => B) => (x: Maybe<A>) => Maybe<B>)
+  & (<A, B>(n: () => B, j: A => B, x: Maybe<A>) => B)
+  & (<A, B>(n: () => B, j: A => B) => (x: Maybe<A>) => B)
+  & (<A, B>(n: () => B) => (j: A => B) => (x: Maybe<A>) => B)
 
 declare export var unsafeGet: <A>(x: Maybe<A>) => A
 

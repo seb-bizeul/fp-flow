@@ -139,9 +139,9 @@ declare export var maybe: {
     & (<A, B>(f: Maybe<A => B>, x: Maybe<A>) => Maybe<B>)
     & (<A, B>(f: Maybe<A => B>) => (x: Maybe<A>) => Maybe<B>),
   fold:
-    & (<A, B>(n: () => B, j: A => B, x: Maybe<A>) => Maybe<B>)
-    & (<A, B>(n: () => B, j: A => B) => (x: Maybe<A>) => Maybe<B>)
-    & (<A, B>(n: () => B) => (j: A => B) => (x: Maybe<A>) => Maybe<B>),
+    & (<A, B>(n: () => B, j: A => B, x: Maybe<A>) => B)
+    & (<A, B>(n: () => B, j: A => B) => (x: Maybe<A>) => B)
+    & (<A, B>(n: () => B) => (j: A => B) => (x: Maybe<A>) => B),
   unsafeGet: <A>(x: Maybe<A>) => A,
   getOrElse:
     & (<A>(f: () => A, x: Maybe<A>) => A)
