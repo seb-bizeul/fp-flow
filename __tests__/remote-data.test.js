@@ -1,8 +1,7 @@
 // @flow
 import test from 'tape'
-import { pipe } from 'ramda'
 
-import { remoteData, maybe } from '../src'
+import { remoteData, maybe, pipe } from '../src'
 
 const x = 5
 const zero = () => 0
@@ -85,7 +84,7 @@ test('remote data chain', t => {
 test('remote data flatMap', t => {
   const output = pipe(
     remoteData.of,
-    remoteData.chain(x => remoteData.of(double(x)))
+    remoteData.flatMap(x => remoteData.of(double(x)))
   )(x)
   const expected = pipe(
     double,
@@ -98,7 +97,7 @@ test('remote data flatMap', t => {
 test('remote data bind', t => {
   const output = pipe(
     remoteData.of,
-    remoteData.chain(x => remoteData.of(double(x)))
+    remoteData.bind(x => remoteData.of(double(x)))
   )(x)
   const expected = pipe(
     double,
@@ -187,29 +186,25 @@ test('fold failure', t => {
 })
 
 test('fold not asked', t => {
-  const output = pipe(
-    remoteData.notAsked,
-    remoteData.fold({
-      Success: triple,
-      Failure: double,
-      NotAsked: zero,
-      Loading: one
-    })
-  )(x)
+  const notAsked = remoteData.notAsked()
+  const output = remoteData.fold({
+    Success: triple,
+    Failure: double,
+    NotAsked: zero,
+    Loading: one
+  }, notAsked)
   t.deepEqual(output, zero())
   t.end()
 })
 
 test('fold loading', t => {
-  const output = pipe(
-    remoteData.loading,
-    remoteData.fold({
-      Success: triple,
-      Failure: double,
-      NotAsked: zero,
-      Loading: one
-    })
-  )(x)
+  const loading = remoteData.loading()
+  const output = remoteData.fold({
+    Success: triple,
+    Failure: double,
+    NotAsked: zero,
+    Loading: one
+  }, loading)
   t.deepEqual(output, one())
   t.end()
 })
@@ -233,20 +228,14 @@ test('remote data is failure ?', t => {
 })
 
 test('remote data is not asked ?', t => {
-  const output = pipe(
-    remoteData.notAsked,
-    remoteData.isNotAsked
-  )(x)
-  t.isEqual(output, true)
+  const notAsked = remoteData.notAsked()
+  t.isEqual(remoteData.isNotAsked(notAsked), true)
   t.end()
 })
 
 test('remote data is loading ?', t => {
-  const output = pipe(
-    remoteData.loading,
-    remoteData.isLoading
-  )(x)
-  t.isEqual(output, true)
+  const loading = remoteData.loading()
+  t.isEqual(remoteData.isLoading(loading), true)
   t.end()
 })
 
@@ -318,20 +307,12 @@ test('unsafeGet failure', t => {
 })
 
 test('unsafeGet not asked', t => {
-  const fn = pipe(
-    remoteData.notAsked,
-    remoteData.unsafeGet
-  )
-  t.throws(fn)
+  t.throws(() => remoteData.unsafeGet(remoteData.notAsked()))
   t.end()
 })
 
 test('unsafeGet loading', t => {
-  const fn = pipe(
-    remoteData.loading,
-    remoteData.unsafeGet
-  )
-  t.throws(fn)
+  t.throws(() => remoteData.unsafeGet(remoteData.loading()))
   t.end()
 })
 
@@ -356,31 +337,28 @@ test('getOrElse failure', t => {
 })
 
 test('getOrElse loading', t => {
+  const loading = remoteData.loading()
   const output = pipe(
-    remoteData.loading,
     remoteData.map(double),
     remoteData.getOrElse(zero)
-  )(x)
+  )(loading)
   t.deepEqual(output, zero())
   t.end()
 })
 
 test('getOrElse not asked', t => {
+  const notAsked = remoteData.notAsked()
   const output = pipe(
-    remoteData.notAsked,
     remoteData.map(double),
     remoteData.getOrElse(zero)
-  )(x)
+  )(notAsked)
   t.deepEqual(output, zero())
   t.end()
 })
 
 test('remote data from maybe nothing', t => {
-  const output = pipe(
-    maybe.nothing,
-    remoteData.fromMaybe
-  )()
-  t.deepEqual(output, remoteData.notAsked())
+  const nothing = maybe.nothing()
+  t.deepEqual(remoteData.fromMaybe(nothing), remoteData.notAsked())
   t.end()
 })
 

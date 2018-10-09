@@ -1,8 +1,7 @@
 // @flow
 import test from 'tape'
-import { pipe } from 'ramda'
 
-import { either } from '../src'
+import { either, pipe } from '../src'
 
 const x = 5
 const double = x => x * 2
