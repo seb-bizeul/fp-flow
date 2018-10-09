@@ -2,7 +2,7 @@
 import test from 'tape'
 import { pipe } from 'ramda'
 
-import * as either from '../src/either'
+import { either } from '../src'
 
 const x = 5
 const double = x => x * 2

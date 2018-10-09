@@ -2,8 +2,7 @@
 import test from 'tape'
 import { pipe } from 'ramda'
 
-import * as remoteData from '../src/remote-data'
-import * as maybe from '../src/maybe'
+import { remoteData, maybe } from '../src'
 
 const x = 5
 const zero = () => 0

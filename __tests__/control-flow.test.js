@@ -1,7 +1,7 @@
 // @flow
 import test from 'tape'
 
-import { pipe, compose } from '../src/control-flow'
+import { pipe, compose } from '../src'
 
 const x = 0
 const add = x => y => x + y
