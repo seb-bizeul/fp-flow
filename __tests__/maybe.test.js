@@ -2,7 +2,7 @@
 import test from 'tape'
 import { pipe } from 'ramda'
 
-import * as maybe from '../src/maybe'
+import { maybe } from '../src'
 
 const x = 5
 const zero = () => 0
