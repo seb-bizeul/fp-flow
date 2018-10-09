@@ -1,9 +1,11 @@
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import babel from 'rollup-plugin-babel'
+import copy from 'rollup-plugin-copy'
+
 
 export default {
-  input: 'src/main.js',
+  input: 'src/index.js',
   output: {
     file: 'fp-flow.js',
     format: 'umd',
@@ -18,6 +20,10 @@ export default {
     }),
     babel({
       exclude: 'node_modules/**'
+    }),
+    copy({
+      'src/index.js.flow': './fp-flow.js.flow',
+      verbose: true
     })
   ]
 }
