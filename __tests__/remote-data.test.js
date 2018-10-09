@@ -1,8 +1,7 @@
 // @flow
 import test from 'tape'
-import { pipe } from 'ramda'
 
-import { remoteData, maybe } from '../src'
+import { remoteData, maybe, pipe } from '../src'
 
 const x = 5
 const zero = () => 0
