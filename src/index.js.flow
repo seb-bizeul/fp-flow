@@ -1,0 +1,197 @@
+// @flow
+export type Right<A> = {|
+  +value: A,
+  +tag: 'Right'
+|}
+
+export type Left<E> = {|
+  +value: E,
+  +tag: 'Left'
+|}
+
+export type Either<E, A> =
+  | Left<E>
+  | Right<A>
+
+export type Just<A> = {|
+  +value: A,
+  +tag: 'Just'
+|}
+
+export type Nothing = {|
+  +tag: 'Nothing'
+|}
+
+export type Maybe<A> =
+  | Just<A>
+  | Nothing
+
+export type Success<A> = {|
+  +value: A,
+  +tag: 'Success'
+|}
+
+export type Failure<E> = {|
+  +value: E,
+  +tag: 'Failure'
+|}
+
+export type Loading = {|
+  +tag: 'Loading'
+|}
+
+export type NotAsked = {|
+  +tag: 'NotAsked'
+|}
+
+export type RemoteData<E, A> =
+  | Success<A>
+  | Failure<E>
+  | Loading
+  | NotAsked
+
+type Cases<A, B, E> = {|
+  Success: A => B,
+  Failure: E => B,
+  Loading: () => B,
+  NotAsked: () => B
+|}
+
+
+declare export var either: {
+  pure: <E, A>(x: A) => Either<E, A>,
+  right: <E, A>(x: A) => Either<E, A>,
+  of: <E, A>(x: A) => Either<E, A>,
+  left: <E, A>(x: E) => Either<E, A>,
+  tryCatch: <E, A>(l: any => E, x: any => A) => Either<E, A>,
+  fromNullable: <E, A>(x: A) => Either<E, A>,
+  fromMaybe: <E, A>(x: Maybe<A>) => Either<E, A>,
+  toMaybe: <E, A>(x: Either<E, A>) => Maybe<A>,
+  map:
+    & (<E, A, B>(f: (A => B), x: Either<E, A>) => Either<E, B>)
+    & (<E, A, B>(f: (A => B)) => (x: Either<E, A>) => Either<E, B>),
+  mapLeft:
+    & (<E, F, A>(f: (E => F), x: Either<E, A>) => Either<F, A>)
+    & (<E, F, A>(f: (E => F)) => (x: Either<E, A>) => Either<F, A>),
+  bimap:
+    & (<E, F, A, B>(l: (E => F), r: (A => B), x: Either<E, A>) => Either<F, B>)
+    & (<E, F, A, B>(l: E => F, r: A => B) => (x: Either<E, A>) => Either<F, B>)
+    & (<E, F, A, B>(l: E => F) => (r: A => B, x: Either<E, A>) => Either<F, B>),
+  chain:
+    & (<E, A, B>(f: (A => Either<E, B>), x: Either<E, A>) => Either<E, B>)
+    & (<E, A, B>(f: A => Either<E, B>) => (x: Either<E, A>) => Either<E, B>),
+  flatMap:
+    & (<E, A, B>(f: (A => Either<E, B>), x: Either<E, A>) => Either<E, B>)
+    & (<E, A, B>(f: A => Either<E, B>) => (x: Either<E, A>) => Either<E, B>),
+  bind:
+    & (<E, A, B>(f: (A => Either<E, B>), x: Either<E, A>) => Either<E, B>)
+    & (<E, A, B>(f: A => Either<E, B>) => (x: Either<E, A>) => Either<E, B>),
+  ap:
+    & (<E, A, B>(f: (Either<E, A => B>), x: Either<E, A>) => Either<E, B>)
+    & (<E, A, B>(f: Either<E, A => B>) => (x: Either<E, A>) => Either<E, B>),
+  fold:
+    & (<E, F, A, B>(left: (E => F), right: (A => B), x: Either<E, A>) => Either<F, B>)
+    & (<E, F, A, B>(left: E => F, right: A => B) => (x: Either<E, A>) => Either<F, B>)
+    & (<E, F, A, B>(left: E => F) => (right: (A => B), x: Either<E, A>) => Either<F, B>),
+  unsafeGet: <E, A>(x: Either<E, A>) => A,
+  getOrElse:
+    & (<E, A>(f: (E) => A, x: Either<E, A>) => A)
+    & (<E, A>(f: (E) => A) => (x: Either<E, A>) => A),
+  isLeft: <E, A>(x: Either<E, A>) => boolean,
+  isRight: <E, A>(x: Either<E, A>) => boolean,
+  equals: <E, A>(x: Either<E, A>, y: Either<E, A>) => boolean
+}
+
+declare export var maybe: {
+  pure: <A>(x: A) => Maybe<A>,
+  just: <A>(x: A) => Maybe<A>,
+  of: <A>(x: A) => Maybe<A>,
+  nothing: <A>() => Maybe<A>,
+  fromNullable: <A>(x: A) => Maybe<A>,
+  map:
+    & (<A, B>(f: (A => B), x: Maybe<A>) => Maybe<B>)
+    & (<A, B>(f: (A) => B) => (x: Maybe<A>) => Maybe<B>),
+  map2:
+    & (<A, B>(f: (A => B), m1: Maybe<A>, m2: Maybe<A>) => Maybe<B>[])
+    & (<A, B>(f: (A) => B) => (m1: Maybe<A>, m2: Maybe<A>) => Maybe<B>[])
+    & (<A, B>(f: (A) => B) => (m1: Maybe<A>) => (m2: Maybe<A>) => Maybe<B>[]),
+  map3:
+    & (<A, B>(f: (A => B), m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>) => Maybe<B>[])
+    & (<A, B>(f: (A) => B, m1: Maybe<A>, m2: Maybe<A>) => (m3: Maybe<A>) => Maybe<B>[])
+    & (<A, B>(f: (A) => B, m1: Maybe<A>) => (m2: Maybe<A>, m3: Maybe<A>) => Maybe<B>[])
+    & (<A, B>(f: (A) => B) => (m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>) => Maybe<B>[]),
+  map4:
+    & (<A, B>(f: (A => B), m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>, m4: Maybe<A>) => Maybe<B>[])
+    & (<A, B>(f: (A) => B, m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>) => (m4: Maybe<A>) => Maybe<B>[])
+    & (<A, B>(f: (A) => B, m1: Maybe<A>, m2: Maybe<A>) => (m3: Maybe<A>, m4: Maybe<A>) => Maybe<B>[])
+    & (<A, B>(f: (A) => B, m1: Maybe<A>) => (m2: Maybe<A>, m3: Maybe<A>, m4: Maybe<A>) => Maybe<B>[])
+    & (<A, B>(f: (A) => B) => (m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>, m4: Maybe<A>) => Maybe<B>[]),
+  chain:
+    & (<A, B>(f: (A => Maybe<B>), x: Maybe<A>) => Maybe<B>)
+    & (<A, B>(f: (A) => Maybe<B>) => (x: Maybe<A>) => Maybe<B>),
+  flatMap:
+    & (<A, B>(f: (A => Maybe<B>), x: Maybe<A>) => Maybe<B>)
+    & (<A, B>(f: (A) => Maybe<B>) => (x: Maybe<A>) => Maybe<B>),
+  bind:
+    & (<A, B>(f: (A => Maybe<B>), x: Maybe<A>) => Maybe<B>)
+    & (<A, B>(f: (A) => Maybe<B>) => (x: Maybe<A>) => Maybe<B>),
+  ap:
+    & (<A, B>(f: Maybe<A => B>, x: Maybe<A>) => Maybe<B>)
+    & (<A, B>(f: Maybe<A => B>) => (x: Maybe<A>) => Maybe<B>),
+  fold:
+    & (<A, B>(n: () => B, j: A => B, x: Maybe<A>) => B)
+    & (<A, B>(n: () => B, j: A => B) => (x: Maybe<A>) => B)
+    & (<A, B>(n: () => B) => (j: A => B) => (x: Maybe<A>) => B),
+  unsafeGet: <A>(x: Maybe<A>) => A,
+  getOrElse:
+    & (<A>(f: () => A, x: Maybe<A>) => A)
+    & (<A>(f: () => A) => (x: Maybe<A>) => A),
+  isJust: <A>(x: Maybe<A>) => boolean,
+  isNothing: <A>(x: Maybe<A>) => boolean,
+  equals: <A>(x: Maybe<A>, y: Maybe<A>) => boolean
+}
+
+declare export var remoteData: {
+  pure: <A, E>(x: A) => RemoteData<E, A>,
+  success: <A, E>(x: A) => RemoteData<E, A>,
+  of: <A, E>(x: A) => RemoteData<E, A>,
+  failure: <A, E>(err: E) => RemoteData<E, A>,
+  notAsked: <A, E>() => RemoteData<E, A>,
+  loading: <A, E>() => RemoteData<E, A>,
+  fromNullable: <A, E>(x: A) => RemoteData<E, A>,
+  fold:
+    & (<A, B, E>(cases: Cases<A, B, E>, rd: RemoteData<E, A>) => B)
+    & (<A, B, E>(cases: Cases<A, B, E>) => (rd: RemoteData<E, A>) => B),
+  map:
+    & (<A, B, E>(f: A => B, x: RemoteData<E, A>) => RemoteData<E, B>)
+    & (<A, B, E>(f: A => B) => (x: RemoteData<E, A>) => RemoteData<E, B>),
+  mapLeft:
+    & (<A, E, F>(f: E => F, x: RemoteData<E, A>) => RemoteData<F, A>)
+    & (<A, E, F>(f: E => F) => (x: RemoteData<E, A>) => RemoteData<F, A>),
+  chain:
+    & (<A, B, E>(f: A => RemoteData<E, B>, x: RemoteData<E, A>) => RemoteData<E, B>)
+    & (<A, B, E>(f: A => RemoteData<E, B>) => (x: RemoteData<E, A>) => RemoteData<E, B>),
+  flatMap:
+    & (<A, B, E>(f: A => RemoteData<E, B>, x: RemoteData<E, A>) => RemoteData<E, B>)
+    & (<A, B, E>(f: A => RemoteData<E, B>) => (x: RemoteData<E, A>) => RemoteData<E, B>),
+  ap:
+    & (<A, B, E>(f: RemoteData<E, A => B>, x: RemoteData<E, A>) => RemoteData<E, B>)
+    & (<A, B, E>(f: RemoteData<E, A => B>) => (x: RemoteData<E, A>) => RemoteData<E, B>),
+  all: (<A, E>(arr: RemoteData<E, A>[]) => RemoteData<E, A[]>),
+  equals: <A, E>(RemoteData<E, A>, RemoteData<E, A>) => boolean,
+  unsafeGet: <A, E>(RemoteData<E, A>) => A,
+  getOrElse:
+    & (<A, B, E>(f: () => B, x: RemoteData<E, A>) => B)
+    & (<A, B, E>(f: () => B) => (x: RemoteData<E, A>) => B),
+  isSuccess: <A, E>(RemoteData<E, A>) => boolean,
+  isFailure: <A, E>(RemoteData<E, A>) => boolean,
+  isLoading: <A, E>(RemoteData<E, A>) => boolean,
+  isNotAsked: <A, E>(RemoteData<E, A>) => boolean,
+  toMaybe: (<A, E>(x: RemoteData<E, A>) => Maybe<A>),
+  fromMaybe: (<A, E>(x: Maybe<A>) => RemoteData<E, A>),
+  fromEither: (<A, E>(x: Either<A, E>) => RemoteData<E, A>)
+}
+
+declare export var pipe: $ComposeReverse
+
+declare export var compose: $Compose
