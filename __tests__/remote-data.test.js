@@ -84,7 +84,7 @@ test('remote data chain', t => {
 test('remote data flatMap', t => {
   const output = pipe(
     remoteData.of,
-    remoteData.chain(x => remoteData.of(double(x)))
+    remoteData.flatMap(x => remoteData.of(double(x)))
   )(x)
   const expected = pipe(
     double,
@@ -97,7 +97,7 @@ test('remote data flatMap', t => {
 test('remote data bind', t => {
   const output = pipe(
     remoteData.of,
-    remoteData.chain(x => remoteData.of(double(x)))
+    remoteData.bind(x => remoteData.of(double(x)))
   )(x)
   const expected = pipe(
     double,

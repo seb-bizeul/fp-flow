@@ -78,9 +78,9 @@ export const all = arr => {
   return arr.reduceRight((acc, it) => ap(map(prepend, it), acc), of([]))
 }
 
-export const flatMap = ap
+export const flatMap = chain
 
-export const bind = ap
+export const bind = chain
 
 export const unsafeGet = rd => {
   switch (rd.tag) {
