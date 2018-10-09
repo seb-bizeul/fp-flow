@@ -3819,7 +3819,7 @@
          };
        };
 
-       var main = {
+       var index = {
          either: either$2,
          maybe: maybe$1,
          remoteData: remoteData,
@@ -3827,6 +3827,6 @@
          compose: compose$1
        };
 
-       return main;
+       return index;
 
 })));
