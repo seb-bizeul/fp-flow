@@ -163,19 +163,15 @@ test('maybe ap with nothing', t => {
 })
 
 test('maybe fold', t => {
-  const output = pipe(
-    maybe.nothing,
-    maybe.fold(zero, triple)
-  )(x)
+  const nothing = maybe.nothing()
+  const output = maybe.fold(zero, triple, nothing)
   t.deepEqual(output, zero())
   t.end()
 })
 
 test('maybe is nothing ?', t => {
-  const output = pipe(
-    maybe.nothing,
-    maybe.isNothing
-  )()
+  const nothing = maybe.nothing()
+  const output = maybe.isNothing(nothing)
   t.deepEqual(output, true)
   t.end()
 })
@@ -235,20 +231,17 @@ test('unsafeGet just', t => {
 })
 
 test('unsafeGet nothing', t => {
-  const fn = pipe(
-    maybe.nothing,
-    maybe.unsafeGet
-  )
-  t.throws(fn)
+  const nothing = maybe.nothing() 
+  t.throws(() => maybe.unsafeGet(nothing))
   t.end()
 })
 
 test('getOrElse nothing', t => {
+  const nothing = maybe.nothing()
   const output = pipe(
-    maybe.nothing,
     maybe.map(double),
     maybe.getOrElse(zero)
-  )(x)
+  )(nothing)
   t.deepEqual(output, zero())
   t.end()
 })
