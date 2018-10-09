@@ -1,4 +1,5 @@
-import { curry, append } from 'ramda'
+import { default as curry } from 'ramda/src/curry'
+import { default as append } from 'ramda/src/append'
 import deepEqual from 'fast-deep-equal'
 
 

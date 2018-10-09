@@ -1,4 +1,5 @@
-import { curry, prepend } from 'ramda'
+import { default as curry } from 'ramda/src/curry'
+import { default as prepend } from 'ramda/src/prepend'
 import { just, nothing } from './maybe'
 import deepEqual from 'fast-deep-equal'
 
