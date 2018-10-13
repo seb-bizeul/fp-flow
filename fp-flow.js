@@ -912,6 +912,11 @@
            return f(x.effect());
          });
        });
+       var ap$3 = curry_1(function (f, x) {
+         return from(function () {
+           return run(f)(run(x));
+         });
+       });
        var chain$3 = curry_1(function (f, x) {
          return f(x.effect());
        });
@@ -923,6 +928,7 @@
               from: from,
               of: of$3,
               map: map$3,
+              ap: ap$3,
               chain: chain$3,
               run: run
        });
