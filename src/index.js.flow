@@ -207,6 +207,9 @@ declare export var io: {
   map:
     & (<A, B>(f: (A) => B, x: IO<A>) => IO<B>)
     & (<A, B>(f: (A) => B) => (x: IO<A>) => IO<B>),
+  ap:
+    & (<A, B>(f: IO<A => B>, x: IO<A>) => IO<B>)
+    & (<A, B>(f: IO<A => B>) => (x: IO<A>) => IO<B>),
   chain:
     & (<A, B>(f: (A) => IO<B>, x: IO<A>) => IO<B>)
     & (<A, B>(f: (A) => IO<B>) => (x: IO<A>) => IO<B>),

@@ -33,6 +33,16 @@ test('io - IO is a functor', t => {
   t.end()
 })
 
+test('io - IO is applicative', t => {
+  const output = pipe(
+    io.from,
+    io.ap(io.of(tostr)),
+    io.run
+  )(effect)
+  t.deepEqual(output, '0')
+  t.end()
+})
+
 test('io - chain IO', t => {
   const output = pipe(
     io.from,
@@ -43,7 +53,7 @@ test('io - chain IO', t => {
   t.end()
 })
 
-test('io - execute IO', t => {
+test('io - run IO', t => {
   const output = pipe(
     io.from,
     io.run
