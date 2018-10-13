@@ -893,6 +893,46 @@
               fromEither: fromEither$1
        });
 
+       var from = function from(effect) {
+         return {
+           tag: 'IO',
+           effect: effect
+         };
+       };
+       var of$3 = function of(x) {
+         return {
+           tag: 'IO',
+           effect: function effect() {
+             return x;
+           }
+         };
+       };
+       var map$3 = curry_1(function (f, x) {
+         return from(function () {
+           return f(x.effect());
+         });
+       });
+       var ap$3 = curry_1(function (f, x) {
+         return from(function () {
+           return run(f)(run(x));
+         });
+       });
+       var chain$3 = curry_1(function (f, x) {
+         return f(x.effect());
+       });
+       var run = function run(x) {
+         return x.effect();
+       };
+
+       var io = /*#__PURE__*/Object.freeze({
+              from: from,
+              of: of$3,
+              map: map$3,
+              ap: ap$3,
+              chain: chain$3,
+              run: run
+       });
+
        var pipe = function pipe() {
          for (var _len = arguments.length, funs = new Array(_len), _key = 0; _key < _len; _key++) {
            funs[_key] = arguments[_key];
@@ -920,6 +960,7 @@
        exports.either = either$1;
        exports.maybe = maybe$1;
        exports.remoteData = remoteData;
+       exports.io = io;
        exports.pipe = pipe;
        exports.compose = compose;
 

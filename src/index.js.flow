@@ -57,6 +57,12 @@ type Cases<A, B, E> = {|
   NotAsked: () => B
 |}
 
+export type Effect<A> = () => A
+
+export type IO<A> = {|
+  +tag: 'IO',
+  +effect: Effect<A>
+|}
 
 declare export var either: {
   pure: <E, A>(x: A) => Either<E, A>,
@@ -193,6 +199,21 @@ declare export var remoteData: {
   toMaybe: (<A, E>(x: RemoteData<E, A>) => Maybe<A>),
   fromMaybe: (<A, E>(x: Maybe<A>) => RemoteData<E, A>),
   fromEither: (<A, E>(x: Either<A, E>) => RemoteData<E, A>)
+}
+
+declare export var io: {
+  from: (<A>(Effect<A>) => IO<A>),
+  of: (<A>(A) => IO<A>),
+  map:
+    & (<A, B>(f: (A) => B, x: IO<A>) => IO<B>)
+    & (<A, B>(f: (A) => B) => (x: IO<A>) => IO<B>),
+  ap:
+    & (<A, B>(f: IO<A => B>, x: IO<A>) => IO<B>)
+    & (<A, B>(f: IO<A => B>) => (x: IO<A>) => IO<B>),
+  chain:
+    & (<A, B>(f: (A) => IO<B>, x: IO<A>) => IO<B>)
+    & (<A, B>(f: (A) => IO<B>) => (x: IO<A>) => IO<B>),
+  run: <A>(x: IO<A>) => A
 }
 
 declare export var pipe: $ComposeReverse
