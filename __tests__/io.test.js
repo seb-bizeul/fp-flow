@@ -3,7 +3,8 @@ import test from 'tape'
 
 import { io, pipe } from '../src'
 
-const effect = () => 0
+const queryDatabase = x => 0
+const effect = () => queryDatabase('id')
 const inc = x => x + 1
 const tostr = x => x.toString()
 
@@ -46,10 +47,10 @@ test('io - IO is applicative', t => {
 test('io - chain IO', t => {
   const output = pipe(
     io.from,
-    io.chain(x => io.from(() => inc(x))),
+    io.chain(x => io.from(() => tostr(x))),
     io.run
   )(effect)
-  t.deepEqual(output, 1)
+  t.deepEqual(output, '0')
   t.end()
 })
 
