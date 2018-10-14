@@ -1,6 +1,6 @@
 {
   "name": "@sbizeul/fp-flow",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Collection of algebraic data types to use with Flow",
   "main": "fp-flow.js",
   "scripts": {
@@ -19,8 +19,8 @@
     "remote data",
     "io"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "Sebastien Bizeul - seb.bizeul@gmail.com",
+  "license": "MIT",
   "dependencies": {
     "fast-deep-equal": "^2.0.1",
     "ramda": "^0.25.0"

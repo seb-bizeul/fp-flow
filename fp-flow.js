@@ -546,11 +546,6 @@
              return x;
          }
        });
-       var all = curry_1(function (f, arr) {
-         return arr.reduce(function (acc, it) {
-           return ap$1(map$1(append_1, it), acc);
-         }, of$1([]));
-       });
        var mapAll = curry_1(function (f, arr) {
          return arr.reduce(function (acc, it) {
            return ap$1(map$1(append_1, map$1(f, it)), acc);
@@ -790,7 +785,7 @@
              return f;
          }
        });
-       var all$1 = function all(arr) {
+       var all = function all(arr) {
          return arr.reduceRight(function (acc, it) {
            return ap$2(map$2(prepend_1, it), acc);
          }, of$2([]));
@@ -896,7 +891,7 @@
               mapLeft: mapLeft$1,
               chain: chain$2,
               ap: ap$2,
-              all: all$1,
+              all: all,
               flatMap: flatMap$2,
               bind: bind$2,
               unsafeGet: unsafeGet$2,

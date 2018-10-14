@@ -25,12 +25,6 @@ export const map = curry((f, x) => {
   }
 })
 
-const all = curry((f, arr) => {
-  return arr.reduce((acc, it) => {
-    return ap(map(append, it), acc)
-  }, of([]))
-})
-
 const mapAll = curry((f, arr) => {
   return arr.reduce((acc, it) => ap(map(append, map(f, it)), acc), of([]))
 })

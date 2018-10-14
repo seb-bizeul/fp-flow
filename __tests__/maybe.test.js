@@ -154,10 +154,8 @@ test('maybe ap', t => {
 
 test('maybe ap with nothing', t => {
   const wrappedDouble = maybe.of(double)
-  const output = pipe(
-    maybe.of,
-    maybe.ap(maybe.nothing())
-  )(x)
+  const nothing = maybe.nothing()
+  const output = maybe.ap(wrappedDouble, nothing)
   t.deepEqual(output, maybe.nothing())
   t.end()
 })
