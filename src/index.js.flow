@@ -198,6 +198,7 @@ declare export var remoteData: {
   isNotAsked: <A, E>(RemoteData<E, A>) => boolean,
   toMaybe: (<A, E>(x: RemoteData<E, A>) => Maybe<A>),
   fromMaybe: (<A, E>(x: Maybe<A>) => RemoteData<E, A>),
+  toEither: (<A, E>(x: RemoteData<E, A>) => Either<E, A>),
   fromEither: (<A, E>(x: Either<A, E>) => RemoteData<E, A>)
 }
 
@@ -219,3 +220,7 @@ declare export var io: {
 declare export var pipe: $ComposeReverse
 
 declare export var compose: $Compose
+
+declare export var tap:
+  & <A>(f: any => any, x: A) => A
+  & <A>(f: any => any) => (x: A) => A

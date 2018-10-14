@@ -35,6 +35,7 @@
     "rollup-plugin-commonjs": "^9.1.5",
     "rollup-plugin-copy": "^0.2.3",
     "rollup-plugin-node-resolve": "^3.3.0",
+    "sinon": "^6.3.5",
     "tap-spec": "^5.0.0",
     "tape": "^4.9.1",
     "webpack": "^4.16.5"

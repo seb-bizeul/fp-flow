@@ -1,9 +1,11 @@
 import { default as curry } from 'ramda/src/curry'
 import deepEqual from 'fast-deep-equal'
 
+import { Just, Nothing } from './maybe'
 
-const Left = 'Left'
-const Right = 'Right'
+
+export const Left = 'Left'
+export const Right = 'Right'
 
 export const pure = x => ({
   tag: Right,
@@ -32,8 +34,8 @@ export const tryCatch = curry((l, r) => {
 
 export const fromMaybe = curry((err, maybe) => {
   switch (maybe.tag) {
-  case 'Just': return right(maybe.value)
-  case 'Nothing': return typeof err === 'function' ? left(err()) : left(err)
+  case Just: return right(maybe.value)
+  case Nothing: return typeof err === 'function' ? left(err()) : left(err)
   }
 })
 

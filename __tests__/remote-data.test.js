@@ -1,7 +1,7 @@
 // @flow
 import test from 'tape'
 
-import { remoteData, maybe, pipe } from '../src'
+import { remoteData, maybe, pipe, either } from '../src'
 
 const x = 5
 const zero = () => 0
@@ -368,5 +368,55 @@ test('remote data from maybe just', t => {
     remoteData.fromMaybe
   )(x)
   t.deepEqual(output, remoteData.success(x))
+  t.end()
+})
+
+test('remote data from either right', t => {
+  const output = pipe(
+    either.right,
+    remoteData.fromEither
+  )(x)
+  t.deepEqual(output, remoteData.success(x))
+  t.end()
+})
+
+test('remote data from either left', t => {
+  const output = pipe(
+    either.left,
+    remoteData.fromEither
+  )(x)
+  t.deepEqual(output, remoteData.failure(x))
+  t.end()
+})
+
+test('remote data success to maybe', t => {
+  const output = pipe(
+    remoteData.success,
+    remoteData.toMaybe
+  )(x)
+  t.deepEqual(output, maybe.just(x))
+  t.end()
+})
+
+test('remote data failure to maybe', t => {
+  const output = pipe(
+    remoteData.failure,
+    remoteData.toMaybe
+  )(x)
+  t.deepEqual(output, maybe.nothing())
+  t.end()
+})
+
+test('remote data not asked to maybe', t => {
+  const notAsked = remoteData.notAsked()
+  const output = remoteData.toMaybe(notAsked)
+  t.deepEqual(output, maybe.nothing())
+  t.end()
+})
+
+test('remote data loading to maybe', t => {
+  const loading = remoteData.loading()
+  const output = remoteData.toMaybe(loading)
+  t.deepEqual(output, maybe.nothing())
   t.end()
 })
