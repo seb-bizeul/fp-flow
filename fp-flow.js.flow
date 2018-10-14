@@ -64,6 +64,13 @@ export type IO<A> = {|
   +effect: Effect<A>
 |}
 
+type Ordering =
+  | 'GT'
+  | 'LT'
+  | 'EQ'
+
+type Comparable = number | string
+
 declare export var either: {
   pure: <E, A>(x: A) => Either<E, A>,
   right: <E, A>(x: A) => Either<E, A>,
@@ -217,6 +224,15 @@ declare export var io: {
   run: <A>(x: IO<A>) => A
 }
 
+declare export var ordering: {
+  GT: Ordering,
+  LT: Ordering,
+  EQ: Ordering,
+  compare:
+    & (x: Comparable, y: Comparable) => Ordering
+    & (x: Comparable) => (y: Comparable) => Ordering
+}
+
 declare export var pipe: $ComposeReverse
 
 declare export var compose: $Compose
@@ -224,3 +240,6 @@ declare export var compose: $Compose
 declare export var tap:
   & <A>(f: any => any, x: A) => A
   & <A>(f: any => any) => (x: A) => A
+
+declare export var flip:
+  <A, B, C>(f: (x: A, y: B, ...z: *[]) => C) => ((x: B, y: C, ...z: *[]) => C)
