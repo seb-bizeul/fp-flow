@@ -17,7 +17,7 @@ test('compose 1', t => {
 test('compose 2', t => {
   const y = compose(
     decrement,
-    decrement,
+    decrement
   )(x)
   t.equal(y, -2)
   t.end()
