@@ -1,0 +1,12 @@
+{
+  "parser": "babel-eslint",
+  "plugins": [
+    "flowtype"
+  ],
+  "rules": {
+    "semi": [1, "never"],
+    "no-trailing-spaces": "warn",
+    "eol-last": ["warn", "always"],
+    "no-unused-vars": "warn"
+  }
+}

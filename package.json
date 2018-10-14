@@ -1,11 +1,12 @@
 {
   "name": "@sbizeul/fp-flow",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Collection of algebraic data types to use with Flow",
   "main": "fp-flow.js",
   "scripts": {
     "test": "tape -r @babel/register __tests__/*.test.js | tap-spec",
-    "build": "rollup --config rollup.config.js"
+    "build": "rollup --config rollup.config.js",
+    "lint": "eslint src/** __tests__/**"
   },
   "keywords": [
     "adt",
@@ -28,6 +29,9 @@
     "@babel/core": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/register": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.7.0",
+    "eslint-plugin-flowtype": "^3.0.0",
     "flow-bin": "0.83.0",
     "rollup": "0.66.6",
     "rollup-plugin-babel": "^4.0.3",

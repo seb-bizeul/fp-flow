@@ -16,7 +16,7 @@ test('pipe 1', t => {
 test('pipe 2', t => {
   const y = pipe(
     increment,
-    increment,
+    increment
   )(x)
   t.equal(y, 2)
   t.end()

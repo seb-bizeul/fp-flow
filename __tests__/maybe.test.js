@@ -231,7 +231,7 @@ test('unsafeGet just', t => {
 })
 
 test('unsafeGet nothing', t => {
-  const nothing = maybe.nothing() 
+  const nothing = maybe.nothing()
   t.throws(() => maybe.unsafeGet(nothing))
   t.end()
 })
