@@ -2,11 +2,8 @@ import { default as curry } from 'ramda/src/curry'
 import { default as append } from 'ramda/src/append'
 import deepEqual from 'fast-deep-equal'
 
-import { Left, Right } from './either'
+import { Just, Nothing, Left, Right } from './constants'
 
-
-export const Just = 'Just'
-export const Nothing = 'Nothing'
 
 export const pure = x => ({
   value: x,
