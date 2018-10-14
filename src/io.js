@@ -1,12 +1,14 @@
 import { default as curry } from 'ramda/src/curry'
 
+import { IO } from './constants'
+
 export const from = effect => ({
-  tag: 'IO',
+  tag: IO,
   effect
 })
 
 export const of = x => ({
-  tag: 'IO',
+  tag: IO,
   effect: () => x
 })
 

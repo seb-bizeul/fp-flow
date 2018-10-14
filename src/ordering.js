@@ -1,9 +1,6 @@
 import { default as curry } from 'ramda/src/curry'
 
-
-export const GT = 'GT'
-export const LT = 'LT'
-export const EQ = 'EQ'
+import { GT, LT, EQ } from './constants'
 
 
 export const compare = curry((x, y) => {
@@ -11,3 +8,9 @@ export const compare = curry((x, y) => {
   else if (x < y) return LT
   else return EQ
 })
+
+export {
+  GT,
+  LT,
+  EQ
+}

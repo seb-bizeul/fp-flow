@@ -3,14 +3,16 @@ import { default as prepend } from 'ramda/src/prepend'
 import deepEqual from 'fast-deep-equal'
 
 import { just, nothing } from './maybe'
-import { Just, Nothing } from './maybe'
-import { Left, Right } from './either'
-
-
-const Success = 'Success'
-const Failure = 'Failure'
-const NotAsked = 'NotAsked'
-const Loading = 'Loading'
+import {
+  Just,
+  Nothing,
+  Left,
+  Right,
+  Success,
+  Failure,
+  NotAsked,
+  Loading
+} from './constants'
 
 export const pure = x => ({
   value: x,
