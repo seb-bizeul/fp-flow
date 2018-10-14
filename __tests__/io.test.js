@@ -3,9 +3,8 @@ import test from 'tape'
 
 import { io, pipe } from '../src'
 
-const queryDatabase = x => 0
+const queryDatabase = x => 0 // eslint-disable-line no-unused-vars
 const effect = () => queryDatabase('id')
-const inc = x => x + 1
 const tostr = x => x.toString()
 
 test('io - from creates IO instance', t => {
