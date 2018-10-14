@@ -1,9 +1,11 @@
 import { default as curry } from 'ramda/src/curry'
 import { default as prepend } from 'ramda/src/prepend'
-import { just, nothing } from './maybe'
 import deepEqual from 'fast-deep-equal'
 
+import { just, nothing } from './maybe'
 import { Just, Nothing } from './maybe'
+import { Left, Right } from './either'
+
 
 const Success = 'Success'
 const Failure = 'Failure'
@@ -120,6 +122,15 @@ export const fromMaybe = maybe => {
   switch (maybe.tag) {
   case Just: return success(maybe.value)
   case Nothing: return notAsked()
+  }
+}
+
+export const toEither = (rd, fallback) => {
+  switch (rd.tag) {
+  case Success: return right(rd.value)
+  case Failure: return left(rd.value)
+  case NotAsked: return left(fallback())
+  case Loading: return left(fallback())
   }
 }
 
