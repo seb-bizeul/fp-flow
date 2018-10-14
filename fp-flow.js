@@ -951,6 +951,20 @@
               run: run
        });
 
+       var GT = 'GT';
+       var LT = 'LT';
+       var EQ = 'EQ';
+       var compare = curry_1(function (x, y) {
+         if (x > y) return GT;else if (x < y) return LT;else return EQ;
+       });
+
+       var ordering = /*#__PURE__*/Object.freeze({
+              GT: GT,
+              LT: LT,
+              EQ: EQ,
+              compare: compare
+       });
+
        var pipe = function pipe() {
          for (var _len = arguments.length, funs = new Array(_len), _key = 0; _key < _len; _key++) {
            funs[_key] = arguments[_key];
@@ -980,6 +994,16 @@
          return x;
        });
 
+       var flip = function flip(f) {
+         return function (x, y) {
+           for (var _len = arguments.length, rest = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+             rest[_key - 2] = arguments[_key];
+           }
+
+           return f.apply(void 0, [y, x].concat(rest));
+         };
+       };
+
        // @flow
 
        exports.either = either$1;
@@ -989,6 +1013,8 @@
        exports.pipe = pipe;
        exports.compose = compose;
        exports.tap = tap;
+       exports.ordering = ordering;
+       exports.flip = flip;
 
        Object.defineProperty(exports, '__esModule', { value: true });
 
