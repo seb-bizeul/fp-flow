@@ -50,7 +50,7 @@ export type RemoteData<E, A> =
   | Loading
   | NotAsked
 
-type Cases<A, B, E> = {|
+type Cases<A, B, E> = {| // eslint-disable-line no-unused-vars
   Success: A => B,
   Failure: E => B,
   Loading: () => B,
@@ -64,14 +64,14 @@ export type IO<A> = {|
   +effect: Effect<A>
 |}
 
-type Ordering =
+export type Ordering =
   | 'GT'
   | 'LT'
   | 'EQ'
 
-type Comparable = number | string
+type Comparable = number | string // eslint-disable-line no-unused-vars
 
-declare export var either: {
+declare export var either: { // eslint-disable-line no-unused-vars
   pure: <E, A>(x: A) => Either<E, A>,
   right: <E, A>(x: A) => Either<E, A>,
   of: <E, A>(x: A) => Either<E, A>,
@@ -115,7 +115,7 @@ declare export var either: {
   equals: <E, A>(x: Either<E, A>, y: Either<E, A>) => boolean
 }
 
-declare export var maybe: {
+declare export var maybe: { // eslint-disable-line no-unused-vars
   pure: <A>(x: A) => Maybe<A>,
   just: <A>(x: A) => Maybe<A>,
   of: <A>(x: A) => Maybe<A>,
@@ -164,7 +164,7 @@ declare export var maybe: {
   equals: <A>(x: Maybe<A>, y: Maybe<A>) => boolean
 }
 
-declare export var remoteData: {
+declare export var remoteData: { // eslint-disable-line no-unused-vars
   pure: <A, E>(x: A) => RemoteData<E, A>,
   success: <A, E>(x: A) => RemoteData<E, A>,
   of: <A, E>(x: A) => RemoteData<E, A>,
@@ -209,7 +209,7 @@ declare export var remoteData: {
   fromEither: (<A, E>(x: Either<A, E>) => RemoteData<E, A>)
 }
 
-declare export var io: {
+declare export var io: { // eslint-disable-line no-unused-vars
   from: (<A>(Effect<A>) => IO<A>),
   of: (<A>(A) => IO<A>),
   map:
@@ -224,7 +224,7 @@ declare export var io: {
   run: <A>(x: IO<A>) => A
 }
 
-declare export var ordering: {
+declare export var ordering: { // eslint-disable-line no-unused-vars
   GT: Ordering,
   LT: Ordering,
   EQ: Ordering,
@@ -233,13 +233,13 @@ declare export var ordering: {
     & (x: Comparable) => (y: Comparable) => Ordering
 }
 
-declare export var pipe: $ComposeReverse
+declare export var pipe: $ComposeReverse // eslint-disable-line no-unused-vars
 
-declare export var compose: $Compose
+declare export var compose: $Compose // eslint-disable-line no-unused-vars
 
-declare export var tap:
+declare export var tap: // eslint-disable-line no-unused-vars
   & <A>(f: any => any, x: A) => A
   & <A>(f: any => any) => (x: A) => A
 
-declare export var flip:
+declare export var flip: // eslint-disable-line no-unused-vars
   <A, B, C>(f: (x: A, y: B, ...z: *[]) => C) => ((x: B, y: C, ...z: *[]) => C)
