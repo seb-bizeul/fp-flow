@@ -2,6 +2,8 @@ import { default as curry } from 'ramda/src/curry'
 import { default as append } from 'ramda/src/append'
 import deepEqual from 'fast-deep-equal'
 
+import { Left, Right } from './either'
+
 
 export const Just = 'Just'
 export const Nothing = 'Nothing'
@@ -94,8 +96,8 @@ export const equals = (x, y) => {
 
 export const fromEither = either => {
   switch (either.tag) {
-  case 'Left': return nothing()
-  case 'Right': return just(either.value)
+  case Left: return nothing()
+  case Right: return just(either.value)
   }
 }
 
