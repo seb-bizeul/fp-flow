@@ -409,7 +409,7 @@
        var ap = curry_1(function (f, x) {
          return map(f.value, x);
        });
-       var unsafeGet = function unsafeGet(x) {
+       var get = function get(x) {
          switch (x.tag) {
            case Right:
              return x.value;
@@ -454,7 +454,7 @@
               flatMap: flatMap,
               bind: bind,
               ap: ap,
-              unsafeGet: unsafeGet,
+              get: get,
               getOrElse: getOrElse,
               isLeft: isLeft,
               isRight: isRight,
@@ -583,7 +583,7 @@
        var ap$1 = curry_1(function (f, x) {
          return isJust(f) ? map$1(f.value, x) : nothing$1();
        });
-       var unsafeGet$1 = function unsafeGet(x) {
+       var get$1 = function get(x) {
          switch (x.tag) {
            case Just:
              return x.value;
@@ -650,7 +650,7 @@
               bind: bind$1,
               fold: fold$1,
               ap: ap$1,
-              unsafeGet: unsafeGet$1,
+              get: get$1,
               getOrElse: getOrElse$1,
               isJust: isJust,
               isNothing: isNothing,
@@ -792,7 +792,7 @@
        };
        var flatMap$2 = chain$2;
        var bind$2 = chain$2;
-       var unsafeGet$2 = function unsafeGet(rd) {
+       var get$2 = function get(rd) {
          switch (rd.tag) {
            case Success:
              return rd.value;
@@ -894,7 +894,7 @@
               all: all,
               flatMap: flatMap$2,
               bind: bind$2,
-              unsafeGet: unsafeGet$2,
+              get: get$2,
               getOrElse: getOrElse$2,
               isSuccess: isSuccess,
               isFailure: isFailure,
