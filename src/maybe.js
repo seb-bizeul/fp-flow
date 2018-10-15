@@ -55,7 +55,7 @@ export const fold = curry((n, j, x) => {
 
 export const ap = curry((f, x) => isJust(f) ? map(f.value, x) : nothing())
 
-export const unsafeGet = x => {
+export const get = x => {
   switch (x.tag) {
   case Just: return x.value
   case Nothing: throw new TypeError(`Cannot extract the value of a ${x.tag}`)

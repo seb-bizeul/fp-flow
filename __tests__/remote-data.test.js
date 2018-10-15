@@ -288,31 +288,31 @@ test('success and failure are not equals', t => {
   t.end()
 })
 
-test('unsafeGet success', t => {
+test('get success', t => {
   const output = pipe(
     remoteData.of,
-    remoteData.unsafeGet
+    remoteData.get
   )(x)
   t.deepEqual(output, x)
   t.end()
 })
 
-test('unsafeGet failure', t => {
+test('get failure', t => {
   const fn = pipe(
     remoteData.failure,
-    remoteData.unsafeGet
+    remoteData.get
   )
   t.throws(fn)
   t.end()
 })
 
-test('unsafeGet not asked', t => {
-  t.throws(() => remoteData.unsafeGet(remoteData.notAsked()))
+test('get not asked', t => {
+  t.throws(() => remoteData.get(remoteData.notAsked()))
   t.end()
 })
 
-test('unsafeGet loading', t => {
-  t.throws(() => remoteData.unsafeGet(remoteData.loading()))
+test('get loading', t => {
+  t.throws(() => remoteData.get(remoteData.loading()))
   t.end()
 })
 

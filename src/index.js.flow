@@ -106,7 +106,7 @@ declare export var either: { // eslint-disable-line no-unused-vars
     & (<E, F, A, B>(left: (E => F), right: (A => B), x: Either<E, A>) => Either<F, B>)
     & (<E, F, A, B>(left: E => F, right: A => B) => (x: Either<E, A>) => Either<F, B>)
     & (<E, F, A, B>(left: E => F) => (right: (A => B), x: Either<E, A>) => Either<F, B>),
-  unsafeGet: <E, A>(x: Either<E, A>) => A,
+  get: <E, A>(x: Either<E, A>) => A,
   getOrElse:
     & (<E, A>(f: (E) => A, x: Either<E, A>) => A)
     & (<E, A>(f: (E) => A) => (x: Either<E, A>) => A),
@@ -155,7 +155,7 @@ declare export var maybe: { // eslint-disable-line no-unused-vars
     & (<A, B>(n: () => B, j: A => B, x: Maybe<A>) => B)
     & (<A, B>(n: () => B, j: A => B) => (x: Maybe<A>) => B)
     & (<A, B>(n: () => B) => (j: A => B) => (x: Maybe<A>) => B),
-  unsafeGet: <A>(x: Maybe<A>) => A,
+  get: <A>(x: Maybe<A>) => A,
   getOrElse:
     & (<A>(f: () => A, x: Maybe<A>) => A)
     & (<A>(f: () => A) => (x: Maybe<A>) => A),
@@ -195,7 +195,7 @@ declare export var remoteData: { // eslint-disable-line no-unused-vars
     & (<A, B, E>(f: RemoteData<E, A => B>) => (x: RemoteData<E, A>) => RemoteData<E, B>),
   all: (<A, E>(arr: RemoteData<E, A>[]) => RemoteData<E, A[]>),
   equals: <A, E>(RemoteData<E, A>, RemoteData<E, A>) => boolean,
-  unsafeGet: <A, E>(RemoteData<E, A>) => A,
+  get: <A, E>(RemoteData<E, A>) => A,
   getOrElse:
     & (<A, B, E>(f: () => B, x: RemoteData<E, A>) => B)
     & (<A, B, E>(f: () => B) => (x: RemoteData<E, A>) => B),

@@ -219,18 +219,18 @@ test('nothing and just are not equals', t => {
   t.end()
 })
 
-test('unsafeGet just', t => {
+test('get just', t => {
   const output = pipe(
     maybe.of,
-    maybe.unsafeGet
+    maybe.get
   )(x)
   t.deepEqual(output, x)
   t.end()
 })
 
-test('unsafeGet nothing', t => {
+test('get nothing', t => {
   const nothing = maybe.nothing()
-  t.throws(() => maybe.unsafeGet(nothing))
+  t.throws(() => maybe.get(nothing))
   t.end()
 })
 

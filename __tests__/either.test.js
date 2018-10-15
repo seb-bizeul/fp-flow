@@ -234,19 +234,19 @@ test('left and right are not equals', t => {
   t.end()
 })
 
-test('unsafeGet right', t => {
+test('get right', t => {
   const output = pipe(
     either.of,
-    either.unsafeGet
+    either.get
   )(x)
   t.deepEqual(output, x)
   t.end()
 })
 
-test('unsafeGet left', t => {
+test('get left', t => {
   const fn = pipe(
     either.left,
-    either.unsafeGet
+    either.get
   )
   t.throws(fn)
   t.end()
