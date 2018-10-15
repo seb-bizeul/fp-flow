@@ -87,7 +87,7 @@ export const flatMap = chain
 
 export const bind = chain
 
-export const unsafeGet = rd => {
+export const get = rd => {
   switch (rd.tag) {
   case Success: return rd.value
   default: throw new Error(`Cannot extract the value of a ${rd.tag}`)

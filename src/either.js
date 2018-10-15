@@ -86,7 +86,7 @@ export const ap = curry((f, x) => {
   return map(f.value, x)
 })
 
-export const unsafeGet = x => {
+export const get = x => {
   switch (x.tag) {
   case Right: return x.value
   case Left: throw new Error(`Cannot extract the value of a ${x.tag}`)
