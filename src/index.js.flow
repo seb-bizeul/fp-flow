@@ -50,7 +50,7 @@ export type RemoteData<E, A> =
   | Loading
   | NotAsked
 
-type Cases<A, B, E> = {| // eslint-disable-line no-unused-vars
+export type Cases<A, B, E> = {|
   Success: A => B,
   Failure: E => B,
   Loading: () => B,
