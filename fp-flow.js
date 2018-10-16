@@ -9,16 +9,6 @@
        }
        var _isPlaceholder_1 = _isPlaceholder;
 
-       /**
-        * Optimized internal one-arity curry function.
-        *
-        * @private
-        * @category Function
-        * @param {Function} fn The function to curry.
-        * @return {Function} The curried function.
-        */
-
-
        function _curry1(fn) {
          return function f1(a) {
            if (arguments.length === 0 || _isPlaceholder_1(a)) {
@@ -31,7 +21,6 @@
        var _curry1_1 = _curry1;
 
        function _arity(n, fn) {
-         /* eslint-disable no-unused-vars */
          switch (n) {
            case 0:
              return function () {
@@ -83,16 +72,6 @@
        }
        var _arity_1 = _arity;
 
-       /**
-        * Optimized internal two-arity curry function.
-        *
-        * @private
-        * @category Function
-        * @param {Function} fn The function to curry.
-        * @return {Function} The curried function.
-        */
-
-
        function _curry2(fn) {
          return function f2(a, b) {
            switch (arguments.length) {
@@ -112,18 +91,6 @@
          };
        }
        var _curry2_1 = _curry2;
-
-       /**
-        * Internal curryN function.
-        *
-        * @private
-        * @category Function
-        * @param {Number} length The arity of the curried function.
-        * @param {Array} received An array of arguments received thus far.
-        * @param {Function} fn The function to curry.
-        * @return {Function} The curried function.
-        */
-
 
        function _curryN(length, received, fn) {
          return function () {
@@ -150,51 +117,7 @@
        }
        var _curryN_1 = _curryN;
 
-       /**
-        * Returns a curried equivalent of the provided function, with the specified
-        * arity. The curried function has two unusual capabilities. First, its
-        * arguments needn't be provided one at a time. If `g` is `R.curryN(3, f)`, the
-        * following are equivalent:
-        *
-        *   - `g(1)(2)(3)`
-        *   - `g(1)(2, 3)`
-        *   - `g(1, 2)(3)`
-        *   - `g(1, 2, 3)`
-        *
-        * Secondly, the special placeholder value [`R.__`](#__) may be used to specify
-        * "gaps", allowing partial application of any combination of arguments,
-        * regardless of their positions. If `g` is as above and `_` is [`R.__`](#__),
-        * the following are equivalent:
-        *
-        *   - `g(1, 2, 3)`
-        *   - `g(_, 2, 3)(1)`
-        *   - `g(_, _, 3)(1)(2)`
-        *   - `g(_, _, 3)(1, 2)`
-        *   - `g(_, 2)(1)(3)`
-        *   - `g(_, 2)(1, 3)`
-        *   - `g(_, 2)(_, 3)(1)`
-        *
-        * @func
-        * @memberOf R
-        * @since v0.5.0
-        * @category Function
-        * @sig Number -> (* -> a) -> (* -> a)
-        * @param {Number} length The arity for the returned function.
-        * @param {Function} fn The function to curry.
-        * @return {Function} A new, curried function.
-        * @see R.curry
-        * @example
-        *
-        *      var sumArgs = (...args) => R.sum(args);
-        *
-        *      var curriedAddFourNumbers = R.curryN(4, sumArgs);
-        *      var f = curriedAddFourNumbers(1, 2);
-        *      var g = f(3);
-        *      g(4); //=> 10
-        */
-
-
-       var curryN = /*#__PURE__*/_curry2_1(function curryN(length, fn) {
+       var curryN =              _curry2_1(function curryN(length, fn) {
          if (length === 1) {
            return _curry1_1(fn);
          }
@@ -202,50 +125,7 @@
        });
        var curryN_1 = curryN;
 
-       /**
-        * Returns a curried equivalent of the provided function. The curried function
-        * has two unusual capabilities. First, its arguments needn't be provided one
-        * at a time. If `f` is a ternary function and `g` is `R.curry(f)`, the
-        * following are equivalent:
-        *
-        *   - `g(1)(2)(3)`
-        *   - `g(1)(2, 3)`
-        *   - `g(1, 2)(3)`
-        *   - `g(1, 2, 3)`
-        *
-        * Secondly, the special placeholder value [`R.__`](#__) may be used to specify
-        * "gaps", allowing partial application of any combination of arguments,
-        * regardless of their positions. If `g` is as above and `_` is [`R.__`](#__),
-        * the following are equivalent:
-        *
-        *   - `g(1, 2, 3)`
-        *   - `g(_, 2, 3)(1)`
-        *   - `g(_, _, 3)(1)(2)`
-        *   - `g(_, _, 3)(1, 2)`
-        *   - `g(_, 2)(1)(3)`
-        *   - `g(_, 2)(1, 3)`
-        *   - `g(_, 2)(_, 3)(1)`
-        *
-        * @func
-        * @memberOf R
-        * @since v0.1.0
-        * @category Function
-        * @sig (* -> a) -> (* -> a)
-        * @param {Function} fn The function to curry.
-        * @return {Function} A new, curried function.
-        * @see R.curryN
-        * @example
-        *
-        *      var addFourNumbers = (a, b, c, d) => a + b + c + d;
-        *
-        *      var curriedAddFourNumbers = R.curry(addFourNumbers);
-        *      var f = curriedAddFourNumbers(1, 2);
-        *      var g = f(3);
-        *      g(4); //=> 10
-        */
-
-
-       var curry = /*#__PURE__*/_curry1_1(function curry(fn) {
+       var curry =              _curry1_1(function curry(fn) {
          return curryN_1(fn.length, fn);
        });
        var curry_1 = curry;
@@ -253,17 +133,14 @@
        var isArray = Array.isArray;
        var keyList = Object.keys;
        var hasProp = Object.prototype.hasOwnProperty;
-
        var fastDeepEqual = function equal(a, b) {
          if (a === b) return true;
-
          if (a && b && typeof a == 'object' && typeof b == 'object') {
            var arrA = isArray(a)
              , arrB = isArray(b)
              , i
              , length
              , key;
-
            if (arrA && arrB) {
              length = a.length;
              if (length != b.length) return false;
@@ -271,36 +148,27 @@
                if (!equal(a[i], b[i])) return false;
              return true;
            }
-
            if (arrA != arrB) return false;
-
            var dateA = a instanceof Date
              , dateB = b instanceof Date;
            if (dateA != dateB) return false;
            if (dateA && dateB) return a.getTime() == b.getTime();
-
            var regexpA = a instanceof RegExp
              , regexpB = b instanceof RegExp;
            if (regexpA != regexpB) return false;
            if (regexpA && regexpB) return a.toString() == b.toString();
-
            var keys = keyList(a);
            length = keys.length;
-
            if (length !== keyList(b).length)
              return false;
-
            for (i = length; i-- !== 0;)
              if (!hasProp.call(b, keys[i])) return false;
-
            for (i = length; i-- !== 0;) {
              key = keys[i];
              if (!equal(a[key], b[key])) return false;
            }
-
            return true;
          }
-
          return a!==a && b!==b;
        };
 
@@ -345,7 +213,6 @@
          switch (maybe.tag) {
            case Just:
              return right$1(maybe.value);
-
            case Nothing:
              return typeof err === 'function' ? left$1(err()) : left$1(err);
          }
@@ -354,7 +221,6 @@
          switch (x.tag) {
            case Left:
              return nothing();
-
            case Right:
              return just(maybe.value);
          }
@@ -363,7 +229,6 @@
          switch (x.tag) {
            case Left:
              return x;
-
            case Right:
              return right$1(f(x.value));
          }
@@ -372,7 +237,6 @@
          switch (x.tag) {
            case Left:
              return left$1(f(x.value));
-
            case Right:
              return x;
          }
@@ -381,7 +245,6 @@
          switch (x.tag) {
            case Left:
              return left$1(f(x.value));
-
            case Right:
              return right$1(f(x.value));
          }
@@ -390,7 +253,6 @@
          switch (x.tag) {
            case Left:
              return l(x.value);
-
            case Right:
              return r(x.value);
          }
@@ -399,7 +261,6 @@
          switch (x.tag) {
            case Left:
              return x;
-
            case Right:
              return f(x.value);
          }
@@ -413,7 +274,6 @@
          switch (x.tag) {
            case Right:
              return x.value;
-
            case Left:
              throw new Error("Cannot extract the value of a ".concat(x.tag));
          }
@@ -422,7 +282,6 @@
          switch (x.tag) {
            case Right:
              return x.value;
-
            case Left:
              return f(x.value);
          }
@@ -461,17 +320,6 @@
               equals: equals
        });
 
-       /**
-        * Private `concat` function to merge two array-like objects.
-        *
-        * @private
-        * @param {Array|Arguments} [set1=[]] An array-like object.
-        * @param {Array|Arguments} [set2=[]] An array-like object.
-        * @return {Array} A new, merged array.
-        * @example
-        *
-        *      _concat([4, 5, 6], [1, 2, 3]); //=> [4, 5, 6, 1, 2, 3]
-        */
        function _concat(set1, set2) {
          set1 = set1 || [];
          set2 = set2 || [];
@@ -479,7 +327,6 @@
          var len1 = set1.length;
          var len2 = set2.length;
          var result = [];
-
          idx = 0;
          while (idx < len1) {
            result[result.length] = set1[idx];
@@ -494,29 +341,7 @@
        }
        var _concat_1 = _concat;
 
-       /**
-        * Returns a new list containing the contents of the given list, followed by
-        * the given element.
-        *
-        * @func
-        * @memberOf R
-        * @since v0.1.0
-        * @category List
-        * @sig a -> [a] -> [a]
-        * @param {*} el The element to add to the end of the new list.
-        * @param {Array} list The list of elements to add a new item to.
-        *        list.
-        * @return {Array} A new list containing the elements of the old list followed by `el`.
-        * @see R.prepend
-        * @example
-        *
-        *      R.append('tests', ['write', 'more']); //=> ['write', 'more', 'tests']
-        *      R.append('tests', []); //=> ['tests']
-        *      R.append(['tests'], ['write', 'more']); //=> ['write', 'more', ['tests']]
-        */
-
-
-       var append = /*#__PURE__*/_curry2_1(function append(el, list) {
+       var append =              _curry2_1(function append(el, list) {
          return _concat_1(list, [el]);
        });
        var append_1 = append;
@@ -541,7 +366,6 @@
          switch (x.tag) {
            case Just:
              return just$1(f(x.value));
-
            case Nothing:
              return x;
          }
@@ -564,7 +388,6 @@
          switch (x.tag) {
            case Just:
              return f(x.value);
-
            case Nothing:
              return x;
          }
@@ -575,7 +398,6 @@
          switch (x.tag) {
            case Just:
              return j(x.value);
-
            case Nothing:
              return n();
          }
@@ -587,7 +409,6 @@
          switch (x.tag) {
            case Just:
              return x.value;
-
            case Nothing:
              throw new TypeError("Cannot extract the value of a ".concat(x.tag));
          }
@@ -596,7 +417,6 @@
          switch (x.tag) {
            case Just:
              return x.value;
-
            case Nothing:
              return f();
          }
@@ -620,7 +440,6 @@
          switch (either.tag) {
            case Left:
              return nothing$1();
-
            case Right:
              return just$1(either.value);
          }
@@ -629,7 +448,6 @@
          switch (x.tag) {
            case Just:
              return right(either.value);
-
            case Nothing:
              return typeof err === 'function' ? left(err()) : left(err);
          }
@@ -659,26 +477,7 @@
               toEither: toEither
        });
 
-       /**
-        * Returns a new list with the given element at the front, followed by the
-        * contents of the list.
-        *
-        * @func
-        * @memberOf R
-        * @since v0.1.0
-        * @category List
-        * @sig a -> [a] -> [a]
-        * @param {*} el The item to add to the head of the output list.
-        * @param {Array} list The array to add to the tail of the output list.
-        * @return {Array} A new array.
-        * @see R.append
-        * @example
-        *
-        *      R.prepend('fee', ['fi', 'fo', 'fum']); //=> ['fee', 'fi', 'fo', 'fum']
-        */
-
-
-       var prepend = /*#__PURE__*/_curry2_1(function prepend(el, list) {
+       var prepend =              _curry2_1(function prepend(el, list) {
          return _concat_1([el], list);
        });
        var prepend_1 = prepend;
@@ -714,13 +513,10 @@
          switch (rd.tag) {
            case Success:
              return cases.Success(rd.value);
-
            case Failure:
              return cases.Failure(rd.value);
-
            case NotAsked:
              return cases.NotAsked();
-
            case Loading:
              return cases.Loading();
          }
@@ -729,13 +525,10 @@
          switch (x.tag) {
            case Success:
              return success(f(x.value));
-
            case Failure:
              return x;
-
            case NotAsked:
              return x;
-
            case Loading:
              return x;
          }
@@ -744,13 +537,10 @@
          switch (rd.tag) {
            case Success:
              return rd;
-
            case Failure:
              return failure(f(rd.value));
-
            case NotAsked:
              return rd;
-
            case Loading:
              return rd;
          }
@@ -759,13 +549,10 @@
          switch (rd.tag) {
            case Success:
              return f(rd.value);
-
            case Failure:
              return rd;
-
            case NotAsked:
              return rd;
-
            case Loading:
              return rd;
          }
@@ -774,13 +561,10 @@
          switch (f.tag) {
            case Success:
              return map$2(f.value, rd);
-
            case Failure:
              return f;
-
            case NotAsked:
              return f;
-
            case Loading:
              return f;
          }
@@ -796,7 +580,6 @@
          switch (rd.tag) {
            case Success:
              return rd.value;
-
            default:
              throw new Error("Cannot extract the value of a ".concat(rd.tag));
          }
@@ -805,7 +588,6 @@
          switch (rd.tag) {
            case Success:
              return rd.value;
-
            default:
              return x();
          }
@@ -833,13 +615,10 @@
          switch (rd.tag) {
            case Success:
              return just$1(rd.value);
-
            case Failure:
              return nothing$1();
-
            case NotAsked:
              return nothing$1();
-
            case Loading:
              return nothing$1();
          }
@@ -848,7 +627,6 @@
          switch (maybe.tag) {
            case Just:
              return success(maybe.value);
-
            case Nothing:
              return notAsked();
          }
@@ -857,13 +635,10 @@
          switch (rd.tag) {
            case Success:
              return right(rd.value);
-
            case Failure:
              return left(rd.value);
-
            case NotAsked:
              return left(fallback());
-
            case Loading:
              return left(fallback());
          }
@@ -872,7 +647,6 @@
          switch (either.tag) {
            case Left:
              return failure(either.value);
-
            case Right:
              return success(either.value);
          }
@@ -962,7 +736,6 @@
          for (var _len = arguments.length, funs = new Array(_len), _key = 0; _key < _len; _key++) {
            funs[_key] = arguments[_key];
          }
-
          return function (x) {
            return funs.reduce(function (acc, f) {
              return f(acc);
@@ -974,7 +747,6 @@
          for (var _len = arguments.length, funs = new Array(_len), _key = 0; _key < _len; _key++) {
            funs[_key] = arguments[_key];
          }
-
          return function (x) {
            return funs.reduceRight(function (acc, f) {
              return f(acc);
@@ -992,12 +764,9 @@
            for (var _len = arguments.length, rest = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
              rest[_key - 2] = arguments[_key];
            }
-
            return f.apply(void 0, [y, x].concat(rest));
          };
        };
-
-       // @flow
 
        exports.either = either$1;
        exports.maybe = maybe$1;
