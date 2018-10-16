@@ -2,6 +2,7 @@ import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import babel from 'rollup-plugin-babel'
 import copy from 'rollup-plugin-copy'
+import cleanup from 'rollup-plugin-cleanup'
 
 
 export default {
@@ -24,6 +25,12 @@ export default {
     copy({
       'src/index.js.flow': './fp-flow.js.flow',
       verbose: true
+    }),
+    cleanup({
+      extensions: [
+        '.js',
+        '.js.flow'
+      ]
     })
   ]
 }
