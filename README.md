@@ -6,9 +6,9 @@
 
 #### Construct
 
-    Nothing :: () -> Maybe ()
+    nothing :: () -> Maybe ()
 
-    Just :: a -> Maybe a 
+    just :: a -> Maybe a 
 
     of :: a -> Maybe a
 
