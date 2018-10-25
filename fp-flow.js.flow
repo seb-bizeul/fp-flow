@@ -125,20 +125,20 @@ declare export var maybe: { // eslint-disable-line no-unused-vars
     & (<A, B>(f: (A => B), x: Maybe<A>) => Maybe<B>)
     & (<A, B>(f: (A) => B) => (x: Maybe<A>) => Maybe<B>),
   map2:
-    & (<A, B>(f: (A => B), m1: Maybe<A>, m2: Maybe<A>) => Maybe<B>[])
-    & (<A, B>(f: (A) => B) => (m1: Maybe<A>, m2: Maybe<A>) => Maybe<B>[])
-    & (<A, B>(f: (A) => B) => (m1: Maybe<A>) => (m2: Maybe<A>) => Maybe<B>[]),
+    & (<A, B>(f: (A => B), m1: Maybe<A>, m2: Maybe<A>) => Maybe<B[]>)
+    & (<A, B>(f: (A) => B) => (m1: Maybe<A>, m2: Maybe<A>) => Maybe<B[]>)
+    & (<A, B>(f: (A) => B) => (m1: Maybe<A>) => (m2: Maybe<A>) => Maybe<B[]>),
   map3:
-    & (<A, B>(f: (A => B), m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>) => Maybe<B>[])
-    & (<A, B>(f: (A) => B, m1: Maybe<A>, m2: Maybe<A>) => (m3: Maybe<A>) => Maybe<B>[])
-    & (<A, B>(f: (A) => B, m1: Maybe<A>) => (m2: Maybe<A>, m3: Maybe<A>) => Maybe<B>[])
-    & (<A, B>(f: (A) => B) => (m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>) => Maybe<B>[]),
+    & (<A, B>(f: (A => B), m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>) => Maybe<B[]>)
+    & (<A, B>(f: (A) => B, m1: Maybe<A>, m2: Maybe<A>) => (m3: Maybe<A>) => Maybe<B[]>)
+    & (<A, B>(f: (A) => B, m1: Maybe<A>) => (m2: Maybe<A>, m3: Maybe<A>) => Maybe<B[]>)
+    & (<A, B>(f: (A) => B) => (m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>) => Maybe<B[]>),
   map4:
-    & (<A, B>(f: (A => B), m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>, m4: Maybe<A>) => Maybe<B>[])
-    & (<A, B>(f: (A) => B, m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>) => (m4: Maybe<A>) => Maybe<B>[])
-    & (<A, B>(f: (A) => B, m1: Maybe<A>, m2: Maybe<A>) => (m3: Maybe<A>, m4: Maybe<A>) => Maybe<B>[])
-    & (<A, B>(f: (A) => B, m1: Maybe<A>) => (m2: Maybe<A>, m3: Maybe<A>, m4: Maybe<A>) => Maybe<B>[])
-    & (<A, B>(f: (A) => B) => (m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>, m4: Maybe<A>) => Maybe<B>[]),
+    & (<A, B>(f: (A => B), m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>, m4: Maybe<A>) => Maybe<B[]>)
+    & (<A, B>(f: (A) => B, m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>) => (m4: Maybe<A>) => Maybe<B[]>)
+    & (<A, B>(f: (A) => B, m1: Maybe<A>, m2: Maybe<A>) => (m3: Maybe<A>, m4: Maybe<A>) => Maybe<B[]>)
+    & (<A, B>(f: (A) => B, m1: Maybe<A>) => (m2: Maybe<A>, m3: Maybe<A>, m4: Maybe<A>) => Maybe<B[]>)
+    & (<A, B>(f: (A) => B) => (m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>, m4: Maybe<A>) => Maybe<B[]>),
   chain:
     & (<A, B>(f: (A => Maybe<B>), x: Maybe<A>) => Maybe<B>)
     & (<A, B>(f: (A) => Maybe<B>) => (x: Maybe<A>) => Maybe<B>),
