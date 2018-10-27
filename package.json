@@ -1,12 +1,14 @@
 {
   "name": "@sbizeul/fp-flow",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Collection of algebraic data types to use with Flow",
   "main": "fp-flow.js",
   "scripts": {
     "test": "tape -r @babel/register __tests__/*.test.js | tap-spec",
     "build": "rollup --config rollup.config.js",
-    "lint": "eslint src/** __tests__/**"
+    "lint": "eslint src/** __tests__/**",
+    "flow": "flow",
+    "prepublish": "yarn test && yarn flow && yarn lint && yarn build"
   },
   "keywords": [
     "adt",
@@ -21,6 +23,10 @@
   ],
   "author": "Sebastien Bizeul - seb.bizeul@gmail.com",
   "license": "MIT",
+  "files": [
+    "fp-flow.js",
+    "fp-flow.js.flow"
+  ],
   "dependencies": {
     "fast-deep-equal": "^2.0.1",
     "ramda": "^0.25.0"
