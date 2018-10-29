@@ -7,5 +7,19 @@ or
 
     yarn add @sbizeul/fp-flow
 
+## Build
+    npm run build
+
+or
+
+    yarn build
+
+## Test
+    npm run test
+
+or
+
+    yarn test
+
 ## Documentation
 * [API Reference](https://github.com/seb-bizeul/fp-flow/wiki)
