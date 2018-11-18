@@ -1,13 +1,13 @@
 {
   "name": "@sbizeul/fp-flow",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Collection of algebraic data types to use with Flow",
   "main": "fp-flow.js",
   "scripts": {
     "test": "tape -r @babel/register __tests__/*.test.js | tap-spec",
     "build": "rollup --config rollup.config.js",
     "lint": "eslint src/** __tests__/**",
-    "flow": "flow",
+    "flow": "flow check",
     "prepublish": "yarn test && yarn flow && yarn lint && yarn build"
   },
   "keywords": [
@@ -28,25 +28,29 @@
     "fp-flow.js.flow"
   ],
   "dependencies": {
-    "fast-deep-equal": "^2.0.1",
-    "ramda": "^0.25.0"
+    "fast-deep-equal": "2.0.1",
+    "ramda": "0.26.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "@babel/register": "^7.0.0",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.7.0",
-    "eslint-plugin-flowtype": "^3.0.0",
-    "flow-bin": "0.83.0",
-    "rollup": "0.66.6",
-    "rollup-plugin-babel": "^4.0.3",
-    "rollup-plugin-cleanup": "^3.0.0",
-    "rollup-plugin-commonjs": "^9.1.5",
-    "rollup-plugin-copy": "^0.2.3",
-    "rollup-plugin-node-resolve": "^3.3.0",
-    "sinon": "7.0.0",
-    "tap-spec": "^5.0.0",
-    "tape": "^4.9.1"
+    "@babel/core": "7.1.6",
+    "@babel/preset-env": "7.1.6",
+    "@babel/register": "7.0.0",
+    "babel-eslint": "10.0.1",
+    "eslint": "5.9.0",
+    "eslint-plugin-flowtype": "3.2.0",
+    "flow-bin": "0.86.0",
+    "rollup": "0.67.3",
+    "rollup-plugin-babel": "4.0.3",
+    "rollup-plugin-cleanup": "3.0.0",
+    "rollup-plugin-commonjs": "9.1.5",
+    "rollup-plugin-copy": "0.2.3",
+    "rollup-plugin-node-resolve": "3.3.0",
+    "sinon": "7.1.1",
+    "tap-spec": "5.0.0",
+    "tape": "4.9.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seb-bizeul/fp-flow.git"
   }
 }
