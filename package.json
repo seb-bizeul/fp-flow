@@ -1,6 +1,6 @@
 {
   "name": "@sbizeul/fp-flow",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Collection of algebraic data types to use with Flow",
   "main": "fp-flow.js",
   "scripts": {
@@ -48,5 +48,9 @@
     "sinon": "7.1.1",
     "tap-spec": "^5.0.0",
     "tape": "^4.9.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seb-bizeul/fp-flow.git"
   }
 }
