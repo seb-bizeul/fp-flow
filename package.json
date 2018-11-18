@@ -7,7 +7,7 @@
     "test": "tape -r @babel/register __tests__/*.test.js | tap-spec",
     "build": "rollup --config rollup.config.js",
     "lint": "eslint src/** __tests__/**",
-    "flow": "flow",
+    "flow": "flow check",
     "prepublish": "yarn test && yarn flow && yarn lint && yarn build"
   },
   "keywords": [
