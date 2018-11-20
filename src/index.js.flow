@@ -103,9 +103,9 @@ declare export var either: { // eslint-disable-line no-unused-vars
     & (<E, A, B>(f: (Either<E, A => B>), x: Either<E, A>) => Either<E, B>)
     & (<E, A, B>(f: Either<E, A => B>) => (x: Either<E, A>) => Either<E, B>),
   fold:
-    & (<E, F, A, B>(left: (E => F), right: (A => B), x: Either<E, A>) => Either<F, B>)
-    & (<E, F, A, B>(left: E => F, right: A => B) => (x: Either<E, A>) => Either<F, B>)
-    & (<E, F, A, B>(left: E => F) => (right: (A => B), x: Either<E, A>) => Either<F, B>),
+    & (<E, A, B>(left: (E => B), right: (A => B), x: Either<E, A>) => B)
+    & (<E, A, B>(left: E => B, right: A => B) => (x: Either<E, A>) => B)
+    & (<E, A, B>(left: E => B) => (right: (A => B), x: Either<E, A>) => B),
   get: <E, A>(x: Either<E, A>) => A,
   getOrElse:
     & (<E, A>(f: (E) => A, x: Either<E, A>) => A)
