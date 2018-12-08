@@ -1,6 +1,6 @@
 {
   "name": "@sbizeul/fp-flow",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Collection of algebraic data types to use with Flow",
   "main": "fp-flow.js",
   "scripts": {
