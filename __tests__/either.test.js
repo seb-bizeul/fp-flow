@@ -73,7 +73,7 @@ test('map left value', t => {
 test('bimap left value', t => {
   const output = pipe(
     either.left,
-    either.bimap(double, double)
+    either.bimap(double, () => null)
   )(x)
   const expected = pipe(
     double,
@@ -86,7 +86,7 @@ test('bimap left value', t => {
 test('bimap right value', t => {
   const output = pipe(
     either.of,
-    either.bimap(double, double)
+    either.bimap(() => null, double)
   )(x)
   const expected = pipe(
     double,

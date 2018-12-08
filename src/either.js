@@ -60,7 +60,7 @@ export const mapLeft = curry((f, x) => {
 export const bimap = curry((f, g, x) => {
   switch (x.tag) {
   case Left: return left(f(x.value))
-  case Right: return right(f(x.value))
+  case Right: return right(g(x.value))
   }
 })
 
