@@ -1,1 +1,5 @@
 language: node_js
+deploy:
+  provider: npm
+  email: "seb.bizeul@gmail.com"
+  api_key: "b44a6264-5912-4caf-afc4-a9dfa98100a0"
