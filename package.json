@@ -8,7 +8,7 @@
     "build": "rollup --config rollup.config.js",
     "lint": "eslint src/** __tests__/**",
     "flow": "flow check",
-    "prepublish": "yarn && yarn test && yarn flow && yarn lint && yarn build"
+    "prepare": "yarn test && yarn flow && yarn lint && yarn build"
   },
   "keywords": [
     "adt",
