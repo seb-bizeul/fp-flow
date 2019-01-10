@@ -1,5 +1,5 @@
 import { default as curry } from 'ramda/src/curry'
-import { default as prepend } from 'ramda/src/prepend'
+import { default as partial } from 'ramda/src/partial'
 import deepEqual from 'fast-deep-equal'
 
 import { just, nothing } from './maybe'
@@ -13,6 +13,11 @@ import {
   NotAsked,
   Loading
 } from './constants'
+import { pipe } from './pipe'
+
+
+const curryAndWrap = pipe(curry, pure)
+
 
 export const pure = x => ({
   value: x,
@@ -70,18 +75,51 @@ export const chain = curry((f, rd) => {
   }
 })
 
-export const ap = curry((f, rd) => {
-  switch (f.tag) {
-  case Success: return map(f.value, rd)
-  case Failure: return f
-  case NotAsked: return f
-  case Loading: return f
+export const ap = curry((rd, rdf) => {
+  switch (rdf.tag) {
+  case Success: return map(rdf.value, rd)
+  case Failure: return rdf
+  case NotAsked: return rdf
+  case Loading: return rdf
   }
 })
 
-export const all = arr => {
-  return arr.reduceRight((acc, it) => ap(map(prepend, it), acc), of([]))
-}
+export const lift2 = curry((f, rd1, rd2) => {
+  switch (f.tag) {
+  case Success: return pipe(curry, pure, ap(rd1), ap(rd2))(f.value)
+  default: return f
+  }
+})
+
+export const lift3 = curry((f, rd1, rd2, rd3) => {
+  switch (f.tag) {
+  case Success: return pipe(curry, pure, ap(rd1), ap(rd2), ap(rd3))(f.value)
+  default: return f
+  }
+})
+
+export const map2 = curry((f, a, b) => lift2(pure(f), a, b))
+
+export const map3 = curry((f, a, b, c) => lift3(pure(f), a, b, c))
+
+export const map4 = (f, rd1, rd2, rd3, rd4) => pipe(
+  curry,
+  pure,
+  ap(rd1),
+  ap(rd2),
+  ap(rd3),  
+  ap(rd4)
+)(f)
+
+export const map5 = (f, rd1, rd2, rd3, rd4, rd5) => pipe(
+  curry,
+  pure,
+  ap(rd1),
+  ap(rd2),
+  ap(rd3),  
+  ap(rd4),
+  ap(rd5)
+)(f)
 
 export const flatMap = chain
 

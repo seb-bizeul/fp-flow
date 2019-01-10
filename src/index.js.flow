@@ -178,6 +178,37 @@ declare export var remoteData: { // eslint-disable-line no-unused-vars
   map:
     & (<A, B, E>(f: A => B, x: RemoteData<E, A>) => RemoteData<E, B>)
     & (<A, B, E>(f: A => B) => (x: RemoteData<E, A>) => RemoteData<E, B>),
+  map2:
+    & (<A, B, C, E>(f: (a: A, b: B) => C, x: RemoteData<E, A>, y: RemoteData<E, B>) => RemoteData<E, C>)
+    & (<A, B, C, E>(f: (a: A, b: B) => C, x: RemoteData<E, A>) => (y: RemoteData<E, B>) => RemoteData<E, C>)
+    & (<A, B, C, E>(f: (a: A, b: B) => C) => (x: RemoteData<E, A>) => (y: RemoteData<E, B>) => RemoteData<E, C>),
+  map3:
+    & (<A, B, C, D, E>(f: (fa: A, fb: B, fc: C) => D, a: RemoteData<E, A>, b: RemoteData<E, B>, c: RemoteData<E, C>) => RemoteData<E, D>)
+    & (<A, B, C, D, E>(f: (fa: A, fb: B, fc: C) => D, a: RemoteData<E, A>, b: RemoteData<E, B>) => (c: RemoteData<E, C>) => RemoteData<E, D>)
+    & (<A, B, C, D, E>(f: (fa: A, fb: B, fc: C) => D, a: RemoteData<E, A>) => (b: RemoteData<E, B>) => (c: RemoteData<E, C>) => RemoteData<E, D>)
+    & (<A, B, C, D, E>(f: (fa: A, fb: B, fc: C) => D) => (a: RemoteData<E, A>) => (b: RemoteData<E, B>) => (c: RemoteData<E, C>) => RemoteData<E, D>),
+  map4:
+    & (<A, B, C, D, F, E>(f: (fa: A, fb: B, fc: C, fd: D) => F, a: RemoteData<E, A>, b: RemoteData<E, B>, c: RemoteData<E, C>, d: RemoteData<E, D>) => RemoteData<E, F>)
+    & (<A, B, C, D, F, E>(f: (fa: A, fb: B, fc: C, fd: D) => F, a: RemoteData<E, A>, b: RemoteData<E, B>, c: RemoteData<E, C>) => (d: RemoteData<E, D>) => RemoteData<E, F>)
+    & (<A, B, C, D, F, E>(f: (fa: A, fb: B, fc: C, fd: D) => F, a: RemoteData<E, A>, b: RemoteData<E, B>) => (c: RemoteData<E, C>) => (d: RemoteData<E, D>) => RemoteData<E, F>)
+    & (<A, B, C, D, F, E>(f: (fa: A, fb: B, fc: C, fd: D) => F, a: RemoteData<E, A>) => (b: RemoteData<E, B>) => (c: RemoteData<E, C>) => (d: RemoteData<E, D>) => RemoteData<E, F>)
+    & (<A, B, C, D, F, E>(f: (fa: A, fb: B, fc: C, fd: D) => F) => (a: RemoteData<E, A>) => (b: RemoteData<E, B>) => (c: RemoteData<E, C>) => (d: RemoteData<E, D>) => RemoteData<E, F>),
+  map5:
+    & (<A, B, C, D, F, G, E>(f: (fa: A, fb: B, fc: C, fd: D, ff: F) => G, a: RemoteData<E, A>, b: RemoteData<E, B>, c: RemoteData<E, C>, d: RemoteData<E, D>, f1: RemoteData<E, F>) => RemoteData<E, G>)
+    & (<A, B, C, D, F, G, E>(f: (fa: A, fb: B, fc: C, fd: D, ff: F) => G, a: RemoteData<E, A>, b: RemoteData<E, B>, c: RemoteData<E, C>, d: RemoteData<E, D>) => (f1: RemoteData<E, F>) => RemoteData<E, G>)
+    & (<A, B, C, D, F, G, E>(f: (fa: A, fb: B, fc: C, fd: D, ff: F) => G, a: RemoteData<E, A>, b: RemoteData<E, B>, c: RemoteData<E, C>) => (d: RemoteData<E, D>) => (f1: RemoteData<E, F>) => RemoteData<E, G>)
+    & (<A, B, C, D, F, G, E>(f: (fa: A, fb: B, fc: C, fd: D, ff: F) => G, a: RemoteData<E, A>, b: RemoteData<E, B>) => (c: RemoteData<E, C>) => (d: RemoteData<E, D>) => (f1: RemoteData<E, F>) => RemoteData<E, G>)
+    & (<A, B, C, D, F, G, E>(f: (fa: A, fb: B, fc: C, fd: D, ff: F) => G, a: RemoteData<E, A>) => (b: RemoteData<E, B>) => (c: RemoteData<E, C>) => (d: RemoteData<E, D>) => (f1: RemoteData<E, F>) => RemoteData<E, G>)
+    & (<A, B, C, D, F, G, E>(f: (fa: A, fb: B, fc: C, fd: D, ff: F) => G) => (a: RemoteData<E, A>) => (b: RemoteData<E, B>) => (c: RemoteData<E, C>) => (d: RemoteData<E, D>) => (f1: RemoteData<E, F>) => RemoteData<E, G>),
+  lift2:
+    & (<A, B, C, E>(f: RemoteData<E, (a: A, b: B) => C>, x: RemoteData<E, A>, y: RemoteData<E, B>) => RemoteData<E, C>)
+    & (<A, B, C, E>(f: RemoteData<E, (a: A, b: B) => C>, x: RemoteData<E, A>) => (y: RemoteData<E, B>) => RemoteData<E, C>)
+    & (<A, B, C, E>(f: RemoteData<E, (a: A, b: B) => C>) => (x: RemoteData<E, A>) => (y: RemoteData<E, B>) => RemoteData<E, C>),
+  lift3:
+    & (<A, B, C, D, E>(f: RemoteData<E, (fa: A, fb: B, fc: C) => D>, a: RemoteData<E, A>, b: RemoteData<E, B>, c: RemoteData<E, C>) => RemoteData<E, D>)
+    & (<A, B, C, D, E>(f: RemoteData<E, (fa: A, fb: B, fc: C) => D>, a: RemoteData<E, A>, b: RemoteData<E, B>) => (c: RemoteData<E, C>) => RemoteData<E, D>)
+    & (<A, B, C, D, E>(f: RemoteData<E, (fa: A, fb: B, fc: C) => D>, a: RemoteData<E, A>) => (b: RemoteData<E, B>) => (c: RemoteData<E, C>) => RemoteData<E, D>)
+    & (<A, B, C, D, E>(f: RemoteData<E, (fa: A, fb: B, fc: C) => D>) => (a: RemoteData<E, A>) => (b: RemoteData<E, B>) => (c: RemoteData<E, C>) => RemoteData<E, D>),
   mapLeft:
     & (<A, E, F>(f: E => F, x: RemoteData<E, A>) => RemoteData<F, A>)
     & (<A, E, F>(f: E => F) => (x: RemoteData<E, A>) => RemoteData<F, A>),
@@ -193,7 +224,6 @@ declare export var remoteData: { // eslint-disable-line no-unused-vars
   ap:
     & (<A, B, E>(f: RemoteData<E, A => B>, x: RemoteData<E, A>) => RemoteData<E, B>)
     & (<A, B, E>(f: RemoteData<E, A => B>) => (x: RemoteData<E, A>) => RemoteData<E, B>),
-  all: (<A, E>(arr: RemoteData<E, A>[]) => RemoteData<E, A[]>),
   equals: <A, E>(RemoteData<E, A>, RemoteData<E, A>) => boolean,
   get: <A, E>(RemoteData<E, A>) => A,
   getOrElse:

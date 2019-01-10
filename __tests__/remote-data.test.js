@@ -8,6 +8,7 @@ const zero = () => 0
 const one = () => 1
 const double = x => x * 2
 const triple = x => x * 3
+const add = (x, y) => x + y
 
 
 test('pure', t => {
@@ -111,8 +112,8 @@ test('remote data ap', t => {
   const wrappedDouble = remoteData.of(double)
   const output = pipe(
     remoteData.of,
-    remoteData.ap(wrappedDouble)
-  )(x)
+    remoteData.ap(remoteData.of(x))
+  )(double)
   const expected = pipe(
     double,
     remoteData.success
@@ -121,39 +122,395 @@ test('remote data ap', t => {
   t.end()
 })
 
-test('remote data all success', t => {
+test('remote data lift2 success', t => {
+  const str = 'test'
   const rd1 = remoteData.of(x)
-  const rd2 = remoteData.of(x + 1)
-  const output = remoteData.all([rd1, rd2])
-  const expected = remoteData.success([x, x + 1])
+  const rd2 = remoteData.of(str)
+  const f = (a, b) => `${a} ${b}`
+  const output = remoteData.lift2(remoteData.of(f), rd1, rd2)
+  const expected = remoteData.success(f(x, str))
   t.deepEqual(output, expected)
   t.end()
 })
 
-test('remote data all failure', t => {
+test('remote data lift2 loading', t => {
+  const str = 'test'
   const rd1 = remoteData.of(x)
-  const rd2 = remoteData.failure(x)
-  const output = remoteData.all([rd1, rd2])
-  const expected = remoteData.failure(x)
-  t.deepEqual(output, expected)
+  const rd2 = remoteData.of(str)
+  const f = remoteData.loading()
+  const output = remoteData.lift2(f, rd1, rd2)
+  t.deepEqual(output, f)
   t.end()
 })
 
-test('remote data all loading', t => {
+test('remote data lift2 notAsked', t => {
+  const str = 'test'
   const rd1 = remoteData.of(x)
+  const rd2 = remoteData.of(str)
+  const f = remoteData.notAsked()
+  const output = remoteData.lift2(f, rd1, rd2)
+  t.deepEqual(output, f)
+  t.end()
+})
+
+test('remote data lift2 failure', t => {
+  const str = 'test'
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.of(str)
+  const f = remoteData.failure('err')
+  const output = remoteData.lift2(f, rd1, rd2)
+  t.deepEqual(output, f)
+  t.end()
+})
+
+test('remote data lift2 with loading first value', t => {
+  const str = 'test'
+  const rd1 = remoteData.loading()
+  const rd2 = remoteData.of(str)
+  const f = (a, b) => `${a} ${b}`
+  const output = remoteData.lift2(remoteData.of(f), rd1, rd2)
+  t.deepEqual(output, rd1)
+  t.end()
+})
+
+test('remote data lift2 with notAsked first value', t => {
+  const str = 'test'
+  const rd1 = remoteData.notAsked()
+  const rd2 = remoteData.of(str)
+  const f = (a, b) => `${a} ${b}`
+  const output = remoteData.lift2(remoteData.of(f), rd1, rd2)
+  t.deepEqual(output, rd1)
+  t.end()
+})
+
+test('remote data lift2 with failure first value', t => {
+  const str = 'test'
+  const rd1 = remoteData.failure('err')
+  const rd2 = remoteData.of(str)
+  const f = (a, b) => `${a} ${b}`
+  const output = remoteData.lift2(remoteData.of(f), rd1, rd2)
+  t.deepEqual(output, rd1)
+  t.end()
+})
+
+test('remote data lift2 loading second value', t => {
+  const str = 'test'
+  const rd1 = remoteData.of(str)
   const rd2 = remoteData.loading()
-  const output = remoteData.all([rd1, rd2])
+  const f = (a, b) => `${a} ${b}`
+  const output = remoteData.lift2(remoteData.of(f), rd1, rd2)
+  t.deepEqual(output, rd2)
+  t.end()
+})
+
+test('remote data lift2 notAsked first value', t => {
+  const str = 'test'
+  const rd1 = remoteData.of(str)
+  const rd2 = remoteData.notAsked()
+  const f = (a, b) => `${a} ${b}`
+  const output = remoteData.lift2(remoteData.of(f), rd1, rd2)
+  t.deepEqual(output, rd2)
+  t.end()
+})
+
+test('remote data lift2 with failure first value', t => {
+  const str = 'test'
+  const rd1 = remoteData.of(str)
+  const rd2 = remoteData.failure('err')
+  const f = (a, b) => `${a} ${b}`
+  const output = remoteData.lift2(remoteData.of(f), rd1, rd2)
+  t.deepEqual(output, rd2)
+  t.end()
+})
+
+test('remote data lift3 success', t => {
+  const str = 'test'
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.of(str)
+  const rd3 = remoteData.of(x)
+  const f = (a, b, c) => `${a} ${b} ${c}`
+  const output = remoteData.lift3(remoteData.of(f), rd1, rd2, rd3)
+  const expected = remoteData.success(f(x, str, x))
+  t.deepEqual(output, expected)
+  t.end()
+})
+
+test('remote data lift3 loading', t => {
+  const str = 'test'
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.of(str)
+  const rd3 = remoteData.of(x)
+  const f = remoteData.loading()
+  const output = remoteData.lift3(f, rd1, rd2, rd3)
   const expected = remoteData.loading()
   t.deepEqual(output, expected)
   t.end()
 })
 
-test('remote data all notAsked', t => {
+test('remote data lift3 with loading first value', t => {
+  const str = 'test'
+  const rd1 = remoteData.loading()
+  const rd2 = remoteData.of(str)
+  const rd3 = remoteData.of(x)
+  const f = (a, b, c) => `${a} ${b} ${c}`
+  const output = remoteData.lift3(remoteData.of(f), rd1, rd2, rd3)
+  t.deepEqual(output, rd1)
+  t.end()
+})
+
+test('remote data lift3 with notAsked first value', t => {
+  const str = 'test'
+  const rd1 = remoteData.notAsked()
+  const rd2 = remoteData.of(str)
+  const rd3 = remoteData.of(x)
+  const f = (a, b, c) => `${a} ${b} ${c}`
+  const output = remoteData.lift3(remoteData.of(f), rd1, rd2, rd3)
+  t.deepEqual(output, rd1)
+  t.end()
+})
+
+test('remote data lift3 with failure first value', t => {
+  const str = 'test'
+  const rd1 = remoteData.failure('err')
+  const rd2 = remoteData.of(str)
+  const rd3 = remoteData.of(x)
+  const f = (a, b, c) => `${a} ${b} ${c}`
+  const output = remoteData.lift3(remoteData.of(f), rd1, rd2, rd3)
+  t.deepEqual(output, rd1)
+  t.end()
+})
+
+test('remote data lift3 second value loading', t => {
+  const str = 'test'
+  const rd1 = remoteData.of(str)
+  const rd2 = remoteData.loading()
+  const rd3 = remoteData.of(x)
+  const f = (a, b, c) => `${a} ${b} ${c}`
+  const output = remoteData.lift3(remoteData.of(f), rd1, rd2, rd3)
+  t.deepEqual(output, rd2)
+  t.end()
+})
+
+test('remote data lift3 with notAsked second value', t => {
+  const str = 'test'
+  const rd1 = remoteData.of(str)
+  const rd2 = remoteData.notAsked()
+  const rd3 = remoteData.of(x)
+  const f = (a, b, c) => `${a} ${b} ${c}`
+  const output = remoteData.lift3(remoteData.of(f), rd1, rd2, rd3)
+  t.deepEqual(output, rd2)
+  t.end()
+})
+
+test('remote data lift3 with failure second value', t => {
+  const str = 'test'
+  const rd1 = remoteData.of(str)
+  const rd2 = remoteData.failure('err')
+  const rd3 = remoteData.of(x)
+  const f = (a, b, c) => `${a} ${b} ${c}`
+  const output = remoteData.lift3(remoteData.of(f), rd1, rd2, rd3)
+  t.deepEqual(output, rd2)
+  t.end()
+})
+
+test('remote data lift3 third value loading', t => {
+  const str = 'test'
+  const rd1 = remoteData.of(str)
+  const rd2 = remoteData.of(x)
+  const rd3 = remoteData.loading()
+  const f = (a, b, c) => `${a} ${b} ${c}`
+  const output = remoteData.lift3(remoteData.of(f), rd1, rd2, rd3)
+  t.deepEqual(output, rd3)
+  t.end()
+})
+
+test('remote data lift3 with notAsked third value', t => {
+  const str = 'test'
+  const rd1 = remoteData.of(str)
+  const rd2 = remoteData.of(x)
+  const rd3 = remoteData.notAsked()
+  const f = (a, b, c) => `${a} ${b} ${c}`
+  const output = remoteData.lift3(remoteData.of(f), rd1, rd2, rd3)
+  t.deepEqual(output, rd3)
+  t.end()
+})
+
+test('remote data lift3 with failure third value', t => {
+  const str = 'test'
+  const rd1 = remoteData.of(str)
+  const rd2 = remoteData.of(x)
+  const rd3 = remoteData.failure('err')
+  const f = (a, b, c) => `${a} ${b} ${c}`
+  const output = remoteData.lift3(remoteData.of(f), rd1, rd2, rd3)
+  t.deepEqual(output, rd3)
+  t.end()
+})
+
+test('remote data map2 success', t => {
+  const str = 'test'
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.of(str)
+  const f = (a, b) => `${a} ${b}`
+  const output = remoteData.map2(f, rd1, rd2)
+  const expected = remoteData.success(f(x, str))
+  t.deepEqual(output, expected)
+  t.end()
+})
+
+test('remote data map2 loading', t => {
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.loading()
+  const f = (a, b) => `${a} ${b}`
+  const output = remoteData.map2(f, rd1, rd2)
+  t.deepEqual(output, rd2)
+  t.end()
+})
+
+test('remote data map2 notAsked', t => {
   const rd1 = remoteData.of(x)
   const rd2 = remoteData.notAsked()
-  const output = remoteData.all([rd1, rd2])
-  const expected = remoteData.notAsked()
+  const f = (a, b) => `${a} ${b}`
+  const output = remoteData.map2(f, rd1, rd2)
+  t.deepEqual(output, rd2)
+  t.end()
+})
+
+test('remote data map2 failure', t => {
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.failure(x)
+  const f = (a, b) => `${a} ${b}`
+  const output = remoteData.map2(f, rd1, rd2)
+  const expected = remoteData.failure(x)
   t.deepEqual(output, expected)
+  t.end()
+})
+
+test('remote data map3 success', t => {
+  const str = 'test'
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.of(x + 1)
+  const rd3 = remoteData.of(str)
+  const f = (a, b, c) => `${a} ${b} ${c}`
+  const output = remoteData.map3(f, rd1, rd2, rd3)
+  const expected = remoteData.success(f(x, x + 1, str))
+  t.deepEqual(output, expected)
+  t.end()
+})
+
+test('remote data map3 failure', t => {
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.of(x)
+  const rd3 = remoteData.failure(x)
+  const output = remoteData.map3(double, rd3, rd1, rd2)
+  t.deepEqual(output, rd3)
+  t.end()
+})
+
+test('remote data map3 notAsked', t => {
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.notAsked()
+  const rd3 = remoteData.of(x)
+  const output = remoteData.map3(double, rd1, rd2, rd3)
+  t.deepEqual(output, rd2)
+  t.end()
+})
+
+test('remote data map3 loading', t => {
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.loading()
+  const rd3 = remoteData.of(x)
+  const output = remoteData.map3(double, rd1, rd2, rd3)
+  t.deepEqual(output, rd2)
+  t.end()
+})
+
+test('remote data map4 success', t => {
+  const str = 'test'
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.of(x + 1)
+  const rd3 = remoteData.of(x)
+  const rd4 = remoteData.of(str)
+  const f = (a, b, c, d) => `${a} ${b} ${c} ${d}`
+  const output = remoteData.map4(f, rd1, rd2, rd3, rd4)
+  const expected = remoteData.success(f(x, x + 1, x, str))
+  t.deepEqual(output, expected)
+  t.end()
+})
+
+test('remote data map4 failure', t => {
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.of(x)
+  const rd3 = remoteData.failure(x)
+  const rd4 = remoteData.of(x)
+  const output = remoteData.map4(double, rd3, rd1, rd2, rd4)
+  t.deepEqual(output, rd3)
+  t.end()
+})
+
+test('remote data map4 notAsked', t => {
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.notAsked()
+  const rd3 = remoteData.of(x)
+  const rd4 = remoteData.of(x)
+  const output = remoteData.map4(double, rd1, rd2, rd3, rd4)
+  t.deepEqual(output, rd2)
+  t.end()
+})
+
+test('remote data map4 loading', t => {
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.loading()
+  const rd3 = remoteData.of(x)
+  const rd4 = remoteData.of(x)
+  const output = remoteData.map4(double, rd1, rd2, rd3, rd4)
+  t.deepEqual(output, rd2)
+  t.end()
+})
+
+test('remote data map5 success', t => {
+  const str = 'test'
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.of(x + 1)
+  const rd3 = remoteData.of(x)
+  const rd4 = remoteData.of(x)
+  const rd5 = remoteData.of(str)
+  const f = (a, b, c, d, e) => `${a} ${b} ${c} ${d} ${e}`
+  const output = remoteData.map5(f, rd1, rd2, rd3, rd4, rd5)
+  const expected = remoteData.success(f(x, x + 1, x, x, str))
+  t.deepEqual(output, expected)
+  t.end()
+})
+
+test('remote data map5 failure', t => {
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.of(x)
+  const rd3 = remoteData.failure(x)
+  const rd4 = remoteData.of(x)
+  const rd5 = remoteData.of(x)
+  const output = remoteData.map5(double, rd3, rd1, rd2, rd4, rd5)
+  t.deepEqual(output, rd3)
+  t.end()
+})
+
+test('remote data map5 notAsked', t => {
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.notAsked()
+  const rd3 = remoteData.of(x)
+  const rd4 = remoteData.of(x)
+  const rd5 = remoteData.of(x)
+  const output = remoteData.map5(double, rd1, rd2, rd3, rd4, rd5)
+  t.deepEqual(output, rd2)
+  t.end()
+})
+
+test('remote data map5 loading', t => {
+  const rd1 = remoteData.of(x)
+  const rd2 = remoteData.loading()
+  const rd3 = remoteData.of(x)
+  const rd4 = remoteData.of(x)
+  const rd5 = remoteData.of(x)
+  const output = remoteData.map5(double, rd1, rd2, rd3, rd4, rd5)
+  t.deepEqual(output, rd2)
   t.end()
 })
 
