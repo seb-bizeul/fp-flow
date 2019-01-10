@@ -1,6 +1,6 @@
 {
   "name": "@sbizeul/fp-flow",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Collection of algebraic data types to use with Flow",
   "main": "fp-flow.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "build": "rollup --config rollup.config.js",
     "lint": "eslint src/** __tests__/**",
     "flow": "flow check",
-    "prepublish": "yarn test && yarn flow && yarn lint && yarn build"
+    "prepare": "yarn test && yarn flow && yarn lint && yarn build"
   },
   "keywords": [
     "adt",
