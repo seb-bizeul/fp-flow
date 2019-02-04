@@ -81,15 +81,46 @@ declare export var either: { // eslint-disable-line no-unused-vars
   fromMaybe: <E, A>(x: Maybe<A>) => Either<E, A>,
   toMaybe: <E, A>(x: Either<E, A>) => Maybe<A>,
   map:
-    & (<E, A, B>(f: (A => B), x: Either<E, A>) => Either<E, B>)
-    & (<E, A, B>(f: (A => B)) => (x: Either<E, A>) => Either<E, B>),
+    & (<E, A, B>(f: (A => B), a: Either<E, A>) => Either<E, B>)
+    & (<E, A, B>(f: (A => B)) => (a: Either<E, A>) => Either<E, B>),
   mapLeft:
-    & (<E, F, A>(f: (E => F), x: Either<E, A>) => Either<F, A>)
-    & (<E, F, A>(f: (E => F)) => (x: Either<E, A>) => Either<F, A>),
+    & (<E, F, A>(f: (E => F), a: Either<E, A>) => Either<F, A>)
+    & (<E, F, A>(f: (E => F)) => (a: Either<E, A>) => Either<F, A>),
   bimap:
     & (<E, F, A, B>(l: (E => F), r: (A => B), x: Either<E, A>) => Either<F, B>)
     & (<E, F, A, B>(l: E => F, r: A => B) => (x: Either<E, A>) => Either<F, B>)
     & (<E, F, A, B>(l: E => F) => (r: A => B, x: Either<E, A>) => Either<F, B>),
+  map2:
+    & (<E, A, B, C>(f: ((fa: A, fb: B) => C), a: Either<E, A>, b: Either<E, C>) => Either<E, C>)
+    & (<E, A, B, C>(f: (fa: A, fb: B) => C) => (a: Either<E, A>, b: Either<E, C>) => Either<E, C>)
+    & (<E, A, B, C>(f: (fa: A, fb: B) => C) => (a: Either<E, A>) => (b: Either<E, C>) => Either<E, C>),
+  map3:
+    & (<E, A, B, C, D>(f: ((fa: A, fb: B, fc: C) => D), a: Either<E, A>, b: Either<E, B>, c: Either<E, C>) => Either<E, D>)
+    & (<E, A, B, C, D>(f: ((fa: A, fb: B, fc: C) => D), a: Either<E, A>, b: Either<E, B>) => (d: Either<E, C>) => Either<E, D>)
+    & (<E, A, B, C, D>(f: ((fa: A, fb: B, fc: C) => D), a: Either<E, A>) => (b: Either<E, B>, c: Either<E, C>) => Either<E, D>)
+    & (<E, A, B, C, D>(f: ((fa: A, fb: B, fc: C) => D)) => (a: Either<E, A>, b: Either<E, B>, c: Either<E, C>) => Either<E, D>),
+  map4:
+    & (<E, A, B, C, D, F>(f: ((fa: A, fb: B, fc: C, fd: D) => F), a: Either<E, A>, b: Either<E, B>, c: Either<E, C>, d: Either<E, D>) => Either<F>)
+    & (<E, A, B, C, D, F>(f: ((fa: A, fb: B, fc: C, fd: D) => F), a: Either<E, A>, b: Either<E, B>, c: Either<E, C>) => (d: Either<E, D>) => Either<E, F>)
+    & (<E, A, B, C, D, F>(f: ((fa: A, fb: B, fc: C, fd: D) => F), a: Either<E, A>, b: Either<E, B>) => (c: Either<E, C>, d: Either<E, D>) => Either<E, F>)
+    & (<E, A, B, C, D, F>(f: ((fa: A, fb: B, fc: C, fd: D) => F), a: Either<E, A>) => (b: Either<E, B>, c: Either<E, C>, d: Either<E, D>) => Either<E, F>)
+    & (<E, A, B, C, D, F>(f: ((fa: A, fb: B, fc: C, fd: D) => F)) => (a: Either<E, A>, b: Either<E, B>, c: Either<E, C>, d: Either<E, D>) => Either<E, F>),
+  map5:
+    & (<E, A, B, C, D, F, G>(f: ((fa: A, fb: B, fc: C, fd: D, ff: F) => G), a: Either<E, A>, b: Either<E, B>, c: Either<E, C>, d: Either<E, D>, f: Either<E, F>) => Either<E, G>)
+    & (<E, A, B, C, D, F, G>(f: ((fa: A, fb: B, fc: C, fd: D, ff: F) => G), a: Either<E, A>, b: Either<E, B>, c: Either<E, C>, d: Either<E, D>) => (f: Either<E, F>) => Either<E, G>)
+    & (<E, A, B, C, D, F, G>(f: ((fa: A, fb: B, fc: C, fd: D, ff: F) => G) => B, a: Either<E, A>, b: Either<E, B>, c: Either<E, C>) => (d: Either<E, D>, f: Either<E, F>) => Either<E, G>)
+    & (<E, A, B, C, D, F, G>(f: ((fa: A, fb: B, fc: C, fd: D, ff: F) => G) => B, a: Either<E, A>, b: Either<E, B>) => (c: Either<E, C>, d: Either<E, D>, f: Either<E, F>) => Either<E, G>)
+    & (<E, A, B, C, D, F, G>(f: ((fa: A, fb: B, fc: C, fd: D, ff: F) => G) => B, a: Either<E, A>) => (b: Either<E, B>, c: Either<E, C>, d: Either<E, D>, f: Either<E, F>) => Either<E, G>)
+    & (<E, A, B, C, D, F, G>(f: ((fa: A, fb: B, fc: C, fd: D, ff: F) => G) => B) => (a: Either<E, A>, b: Either<E, B>, c: Either<E, C>, d: Either<E, D>, f: Either<E, F>) => Either<E, G>),
+  lift2:
+    & (<E, A, B, C>(f: Either<E, (fa: A, fb: B) => C>, a: Either<E, A>, b: Either<E, B>) => Either<E, C>)
+    & (<E, A, B, C>(f: Either<E, (fa: A, fb: B) => C>, a: Either<E, A>) => (b: Either<E, B>) => Either<E, C>)
+    & (<E, A, B, C>(f: Either<E, (fa: A, fb: B) => C>) => (a: Either<E, A>) => (b: Either<E, B>) => Either<E, C>),
+  lift3:
+    & (<E, A, B, C, D>(f: Either<E, (fa: A, fb: B, fc: C) => D>, a: Either<E, A>, b: Either<E, B>, c: Either<E, C>) => Either<E, D>)
+    & (<E, A, B, C, D>(f: Either<E, (fa: A, fb: B, fc: C) => D>, a: Either<E, A>, b: Either<E, B>) => (c: Either<E, C>) => Either<E, D>)
+    & (<E, A, B, C, D>(f: Either<E, (fa: A, fb: B, fc: C) => D>, a: Either<E, A>) => (b: Either<E, B>, c: Either<E, C>) => Either<E, D>)
+    & (<E, A, B, C, D>(f: Either<E, (fa: A, fb: B, fc: C) => D>) => (a: Either<E, A>, b: Either<E, B>, c: Either<E, C>) => Either<E, D>),
   chain:
     & (<E, A, B>(f: (A => Either<E, B>), x: Either<E, A>) => Either<E, B>)
     & (<E, A, B>(f: A => Either<E, B>) => (x: Either<E, A>) => Either<E, B>),
@@ -100,8 +131,8 @@ declare export var either: { // eslint-disable-line no-unused-vars
     & (<E, A, B>(f: (A => Either<E, B>), x: Either<E, A>) => Either<E, B>)
     & (<E, A, B>(f: A => Either<E, B>) => (x: Either<E, A>) => Either<E, B>),
   ap:
-    & (<E, A, B>(f: (Either<E, A => B>), x: Either<E, A>) => Either<E, B>)
-    & (<E, A, B>(f: Either<E, A => B>) => (x: Either<E, A>) => Either<E, B>),
+    & (<E, A, B>(a: Either<E, A>, f: (Either<E, A => B>)) => Either<E, B>)
+    & (<E, A, B>(a: Either<E, A>) => (f: Either<E, A => B>) => Either<E, B>),
   fold:
     & (<E, A, B>(left: (E => B), right: (A => B), x: Either<E, A>) => B)
     & (<E, A, B>(left: E => B, right: A => B) => (x: Either<E, A>) => B)
