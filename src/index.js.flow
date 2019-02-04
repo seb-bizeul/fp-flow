@@ -121,6 +121,15 @@ declare export var maybe: { // eslint-disable-line no-unused-vars
   of: <A>(x: A) => Maybe<A>,
   nothing: <A>() => Maybe<A>,
   fromNullable: <A>(x: A) => Maybe<A>,
+  chain:
+    & (<A, B>(f: (A => Maybe<B>), x: Maybe<A>) => Maybe<B>)
+    & (<A, B>(f: (A) => Maybe<B>) => (x: Maybe<A>) => Maybe<B>),
+  flatMap:
+    & (<A, B>(f: (A => Maybe<B>), x: Maybe<A>) => Maybe<B>)
+    & (<A, B>(f: (A) => Maybe<B>) => (x: Maybe<A>) => Maybe<B>),
+  bind:
+    & (<A, B>(f: (A => Maybe<B>), x: Maybe<A>) => Maybe<B>)
+    & (<A, B>(f: (A) => Maybe<B>) => (x: Maybe<A>) => Maybe<B>),
   map:
     & (<A, B>(f: (A => B), x: Maybe<A>) => Maybe<B>)
     & (<A, B>(f: (A) => B) => (x: Maybe<A>) => Maybe<B>),
@@ -155,15 +164,6 @@ declare export var maybe: { // eslint-disable-line no-unused-vars
     & (<A, B, C, D>(f: Maybe<(fa: A, fb: B, fc: C) => D>, a: Maybe<A>, b: Maybe<B>) => (c: Maybe<C>) => Maybe<D>)
     & (<A, B, C, D>(f: Maybe<(fa: A, fb: B, fc: C) => D>, a: Maybe<A>) => (b: Maybe<B>, c: Maybe<C>) => Maybe<D>)
     & (<A, B, C, D>(f: Maybe<(fa: A, fb: B, fc: C) => D>) => (a: Maybe<A>, b: Maybe<B>, c: Maybe<C>) => Maybe<D>),
-  chain:
-    & (<A, B>(f: (A => Maybe<B>), x: Maybe<A>) => Maybe<B>)
-    & (<A, B>(f: (A) => Maybe<B>) => (x: Maybe<A>) => Maybe<B>),
-  flatMap:
-    & (<A, B>(f: (A => Maybe<B>), x: Maybe<A>) => Maybe<B>)
-    & (<A, B>(f: (A) => Maybe<B>) => (x: Maybe<A>) => Maybe<B>),
-  bind:
-    & (<A, B>(f: (A => Maybe<B>), x: Maybe<A>) => Maybe<B>)
-    & (<A, B>(f: (A) => Maybe<B>) => (x: Maybe<A>) => Maybe<B>),
   ap:
     & (<A, B>(x: Maybe<A>, f: Maybe<A => B>) => Maybe<B>)
     & (<A, B>(x: Maybe<A>) => (f: Maybe<A => B>) => Maybe<B>),
