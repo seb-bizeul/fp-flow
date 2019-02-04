@@ -3,9 +3,20 @@ import test from 'tape'
 
 import { either, pipe } from '../src'
 
+
 const x = 5
+const y = 10
+const z = 100
+const a = 1
+const b = 3
+const err = 'err'
+
 const double = x => x * 2
 const triple = x => x * 3
+const add = (a, b) => a + b
+const add3 = (a, b, c) => add(a, b) + c
+const add4 = (a, b, c, d) => add3(a, b, c) + d
+const add5 = (a, b, c, d, e) => add4(a, b, c, d) + e
 
 
 test('pure', t => {
@@ -96,6 +107,135 @@ test('bimap right value', t => {
   t.end()
 })
 
+test('either - lift2 right', t => {
+  const output = either.lift2(either.of(add), either.of(x), either.of(y))
+  const expected = either.of(add(x, y))
+  t.deepEqual(output, expected)
+  t.end()
+})
+
+test('either - lift2 left', t => {
+  const output = either.lift2(either.left(err), either.of(x), either.left(y))
+  t.deepEqual(output, either.left(err))
+  t.end()
+})
+
+test('either - lift2 left first arg', t => {
+  const output = either.lift2(either.of(add), either.left(err), either.of(y))
+  t.deepEqual(output, either.left(err))
+  t.end()
+})
+
+test('either - lift2 nothing second arg', t => {
+  const output = either.lift2(either.of(add), either.of(x), either.left(err))
+  t.deepEqual(output, either.left(err))
+  t.end()
+})
+
+test('either - lift3 right', t => {
+  const output = either.lift3(either.of(add3), either.of(x), either.of(y), either.of(z))
+  const expected = either.right(add3(x, y, z))
+  t.deepEqual(output, expected)
+  t.end()
+})
+
+test('either - lift3 left', t => {
+  const output = either.lift3(either.left(err), either.of(x), either.of(y), either.of(z))
+  t.deepEqual(output, either.left(err))
+  t.end()
+})
+
+test('either - lift3 left first arg', t => {
+  const output = either.lift3(either.of(add3), either.left(err), either.of(x), either.of(y))
+  t.deepEqual(output, either.left(err))
+  t.end()
+})
+
+test('either - lift3 left second arg', t => {
+  const output = either.lift3(either.of(add3), either.of(x), either.left(err), either.of(y))
+  t.deepEqual(output, either.left(err))
+  t.end()
+})
+
+test('either - lift3 left third arg', t => {
+  const output = either.lift3(either.of(add3), either.of(x), either.of(y), either.left(err))
+  t.deepEqual(output, either.left(err))
+  t.end()
+})
+
+test('either - map2 right', t => {
+  const output = either.map2(add, either.of(x), either.of(y))
+  t.deepEqual(output, either.of(add(x, y)))
+  t.end()
+})
+
+test('either - map2 left', t => {
+  const output = either.map2(add, either.of(x), either.left(err))
+  t.deepEqual(output, either.left(err))
+  t.end()
+})
+
+test('either - map3 right', t => {
+  const output = either.map3(add3, either.of(x), either.of(y), either.of(z))
+  t.deepEqual(output, either.of(add3(x, y, z)))
+  t.end()
+})
+
+test('either - map3 left', t => {
+  const output = either.map3(add3, either.of(x), either.left(err), either.of(y))
+  t.deepEqual(output, either.left(err))
+  t.end()
+})
+
+test('either - map4 just', t => {
+  const output = either.map4(add4, either.of(x), either.of(y), either.of(z), either.of(a))
+  t.deepEqual(output, either.of(add4(x, y, z, a)))
+  t.end()
+})
+
+test('either - map4 left', t => {
+  const output = either.map4(double, either.of(x), either.left(err), either.of(y), either.of(z))
+  t.deepEqual(output, either.left(err))
+  t.end()
+})
+
+test('either - map5 right', t => {
+  const output = either.map5(add5, either.of(x), either.of(y), either.of(z), either.of(a), either.of(b))
+  const expected = either.of(add5(x, y, z, a, b))
+  t.deepEqual(output, expected)
+  t.end()
+})
+
+test('either - map5 left first arg', t => {
+  const output = either.map5(add5, either.left(err), either.of(x), either.of(y), either.of(z), either.of(a))
+  t.deepEqual(output, either.left(err))
+  t.end()
+})
+
+test('either - map5 left second arg', t => {
+  const output = either.map5(add5, either.of(x), either.left(err), either.of(y), either.of(z), either.of(a))
+  t.deepEqual(output, either.left(err))
+  t.end()
+})
+
+test('either - map5 left third arg', t => {
+  const output = either.map5(add5, either.of(x), either.of(y), either.left(err), either.of(z), either.of(a))
+  t.deepEqual(output, either.left(err))
+  t.end()
+})
+
+test('either - map5 left fourth arg', t => {
+  const output = either.map5(add5, either.of(x), either.of(y), either.of(z), either.left(err), either.of(a))
+  t.deepEqual(output, either.left(err))
+  t.end()
+})
+
+test('either - map5 left fifth arg', t => {
+  const output = either.map5(add5, either.of(x), either.of(y), either.of(z), either.of(a), either.left(err))
+  t.deepEqual(output, either.left(err))
+  t.end()
+})
+
 test('either chain', t => {
   const output = pipe(
     either.of,
@@ -137,10 +277,7 @@ test('either bind', t => {
 
 test('either ap', t => {
   const wrappedDouble = either.of(double)
-  const output = pipe(
-    either.of,
-    either.ap(wrappedDouble)
-  )(x)
+  const output = either.ap(either.of(x), wrappedDouble)
   const expected = pipe(
     double,
     either.right

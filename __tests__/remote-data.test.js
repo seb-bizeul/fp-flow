@@ -8,7 +8,6 @@ const zero = () => 0
 const one = () => 1
 const double = x => x * 2
 const triple = x => x * 3
-const add = (x, y) => x + y
 
 
 test('pure', t => {
@@ -109,7 +108,6 @@ test('remote data bind', t => {
 })
 
 test('remote data ap', t => {
-  const wrappedDouble = remoteData.of(double)
   const output = pipe(
     remoteData.of,
     remoteData.ap(remoteData.of(x))

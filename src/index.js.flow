@@ -81,15 +81,46 @@ declare export var either: { // eslint-disable-line no-unused-vars
   fromMaybe: <E, A>(x: Maybe<A>) => Either<E, A>,
   toMaybe: <E, A>(x: Either<E, A>) => Maybe<A>,
   map:
-    & (<E, A, B>(f: (A => B), x: Either<E, A>) => Either<E, B>)
-    & (<E, A, B>(f: (A => B)) => (x: Either<E, A>) => Either<E, B>),
+    & (<E, A, B>(f: (A => B), a: Either<E, A>) => Either<E, B>)
+    & (<E, A, B>(f: (A => B)) => (a: Either<E, A>) => Either<E, B>),
   mapLeft:
-    & (<E, F, A>(f: (E => F), x: Either<E, A>) => Either<F, A>)
-    & (<E, F, A>(f: (E => F)) => (x: Either<E, A>) => Either<F, A>),
+    & (<E, F, A>(f: (E => F), a: Either<E, A>) => Either<F, A>)
+    & (<E, F, A>(f: (E => F)) => (a: Either<E, A>) => Either<F, A>),
   bimap:
     & (<E, F, A, B>(l: (E => F), r: (A => B), x: Either<E, A>) => Either<F, B>)
     & (<E, F, A, B>(l: E => F, r: A => B) => (x: Either<E, A>) => Either<F, B>)
     & (<E, F, A, B>(l: E => F) => (r: A => B, x: Either<E, A>) => Either<F, B>),
+  map2:
+    & (<E, A, B, C>(f: ((fa: A, fb: B) => C), a: Either<E, A>, b: Either<E, C>) => Either<E, C>)
+    & (<E, A, B, C>(f: (fa: A, fb: B) => C) => (a: Either<E, A>, b: Either<E, C>) => Either<E, C>)
+    & (<E, A, B, C>(f: (fa: A, fb: B) => C) => (a: Either<E, A>) => (b: Either<E, C>) => Either<E, C>),
+  map3:
+    & (<E, A, B, C, D>(f: ((fa: A, fb: B, fc: C) => D), a: Either<E, A>, b: Either<E, B>, c: Either<E, C>) => Either<E, D>)
+    & (<E, A, B, C, D>(f: ((fa: A, fb: B, fc: C) => D), a: Either<E, A>, b: Either<E, B>) => (d: Either<E, C>) => Either<E, D>)
+    & (<E, A, B, C, D>(f: ((fa: A, fb: B, fc: C) => D), a: Either<E, A>) => (b: Either<E, B>, c: Either<E, C>) => Either<E, D>)
+    & (<E, A, B, C, D>(f: ((fa: A, fb: B, fc: C) => D)) => (a: Either<E, A>, b: Either<E, B>, c: Either<E, C>) => Either<E, D>),
+  map4:
+    & (<E, A, B, C, D, F>(f: ((fa: A, fb: B, fc: C, fd: D) => F), a: Either<E, A>, b: Either<E, B>, c: Either<E, C>, d: Either<E, D>) => Either<F>)
+    & (<E, A, B, C, D, F>(f: ((fa: A, fb: B, fc: C, fd: D) => F), a: Either<E, A>, b: Either<E, B>, c: Either<E, C>) => (d: Either<E, D>) => Either<E, F>)
+    & (<E, A, B, C, D, F>(f: ((fa: A, fb: B, fc: C, fd: D) => F), a: Either<E, A>, b: Either<E, B>) => (c: Either<E, C>, d: Either<E, D>) => Either<E, F>)
+    & (<E, A, B, C, D, F>(f: ((fa: A, fb: B, fc: C, fd: D) => F), a: Either<E, A>) => (b: Either<E, B>, c: Either<E, C>, d: Either<E, D>) => Either<E, F>)
+    & (<E, A, B, C, D, F>(f: ((fa: A, fb: B, fc: C, fd: D) => F)) => (a: Either<E, A>, b: Either<E, B>, c: Either<E, C>, d: Either<E, D>) => Either<E, F>),
+  map5:
+    & (<E, A, B, C, D, F, G>(f: ((fa: A, fb: B, fc: C, fd: D, ff: F) => G), a: Either<E, A>, b: Either<E, B>, c: Either<E, C>, d: Either<E, D>, f: Either<E, F>) => Either<E, G>)
+    & (<E, A, B, C, D, F, G>(f: ((fa: A, fb: B, fc: C, fd: D, ff: F) => G), a: Either<E, A>, b: Either<E, B>, c: Either<E, C>, d: Either<E, D>) => (f: Either<E, F>) => Either<E, G>)
+    & (<E, A, B, C, D, F, G>(f: ((fa: A, fb: B, fc: C, fd: D, ff: F) => G) => B, a: Either<E, A>, b: Either<E, B>, c: Either<E, C>) => (d: Either<E, D>, f: Either<E, F>) => Either<E, G>)
+    & (<E, A, B, C, D, F, G>(f: ((fa: A, fb: B, fc: C, fd: D, ff: F) => G) => B, a: Either<E, A>, b: Either<E, B>) => (c: Either<E, C>, d: Either<E, D>, f: Either<E, F>) => Either<E, G>)
+    & (<E, A, B, C, D, F, G>(f: ((fa: A, fb: B, fc: C, fd: D, ff: F) => G) => B, a: Either<E, A>) => (b: Either<E, B>, c: Either<E, C>, d: Either<E, D>, f: Either<E, F>) => Either<E, G>)
+    & (<E, A, B, C, D, F, G>(f: ((fa: A, fb: B, fc: C, fd: D, ff: F) => G) => B) => (a: Either<E, A>, b: Either<E, B>, c: Either<E, C>, d: Either<E, D>, f: Either<E, F>) => Either<E, G>),
+  lift2:
+    & (<E, A, B, C>(f: Either<E, (fa: A, fb: B) => C>, a: Either<E, A>, b: Either<E, B>) => Either<E, C>)
+    & (<E, A, B, C>(f: Either<E, (fa: A, fb: B) => C>, a: Either<E, A>) => (b: Either<E, B>) => Either<E, C>)
+    & (<E, A, B, C>(f: Either<E, (fa: A, fb: B) => C>) => (a: Either<E, A>) => (b: Either<E, B>) => Either<E, C>),
+  lift3:
+    & (<E, A, B, C, D>(f: Either<E, (fa: A, fb: B, fc: C) => D>, a: Either<E, A>, b: Either<E, B>, c: Either<E, C>) => Either<E, D>)
+    & (<E, A, B, C, D>(f: Either<E, (fa: A, fb: B, fc: C) => D>, a: Either<E, A>, b: Either<E, B>) => (c: Either<E, C>) => Either<E, D>)
+    & (<E, A, B, C, D>(f: Either<E, (fa: A, fb: B, fc: C) => D>, a: Either<E, A>) => (b: Either<E, B>, c: Either<E, C>) => Either<E, D>)
+    & (<E, A, B, C, D>(f: Either<E, (fa: A, fb: B, fc: C) => D>) => (a: Either<E, A>, b: Either<E, B>, c: Either<E, C>) => Either<E, D>),
   chain:
     & (<E, A, B>(f: (A => Either<E, B>), x: Either<E, A>) => Either<E, B>)
     & (<E, A, B>(f: A => Either<E, B>) => (x: Either<E, A>) => Either<E, B>),
@@ -100,8 +131,8 @@ declare export var either: { // eslint-disable-line no-unused-vars
     & (<E, A, B>(f: (A => Either<E, B>), x: Either<E, A>) => Either<E, B>)
     & (<E, A, B>(f: A => Either<E, B>) => (x: Either<E, A>) => Either<E, B>),
   ap:
-    & (<E, A, B>(f: (Either<E, A => B>), x: Either<E, A>) => Either<E, B>)
-    & (<E, A, B>(f: Either<E, A => B>) => (x: Either<E, A>) => Either<E, B>),
+    & (<E, A, B>(a: Either<E, A>, f: (Either<E, A => B>)) => Either<E, B>)
+    & (<E, A, B>(a: Either<E, A>) => (f: Either<E, A => B>) => Either<E, B>),
   fold:
     & (<E, A, B>(left: (E => B), right: (A => B), x: Either<E, A>) => B)
     & (<E, A, B>(left: E => B, right: A => B) => (x: Either<E, A>) => B)
@@ -121,24 +152,6 @@ declare export var maybe: { // eslint-disable-line no-unused-vars
   of: <A>(x: A) => Maybe<A>,
   nothing: <A>() => Maybe<A>,
   fromNullable: <A>(x: A) => Maybe<A>,
-  map:
-    & (<A, B>(f: (A => B), x: Maybe<A>) => Maybe<B>)
-    & (<A, B>(f: (A) => B) => (x: Maybe<A>) => Maybe<B>),
-  map2:
-    & (<A, B>(f: (A => B), m1: Maybe<A>, m2: Maybe<A>) => Maybe<B[]>)
-    & (<A, B>(f: (A) => B) => (m1: Maybe<A>, m2: Maybe<A>) => Maybe<B[]>)
-    & (<A, B>(f: (A) => B) => (m1: Maybe<A>) => (m2: Maybe<A>) => Maybe<B[]>),
-  map3:
-    & (<A, B>(f: (A => B), m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>) => Maybe<B[]>)
-    & (<A, B>(f: (A) => B, m1: Maybe<A>, m2: Maybe<A>) => (m3: Maybe<A>) => Maybe<B[]>)
-    & (<A, B>(f: (A) => B, m1: Maybe<A>) => (m2: Maybe<A>, m3: Maybe<A>) => Maybe<B[]>)
-    & (<A, B>(f: (A) => B) => (m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>) => Maybe<B[]>),
-  map4:
-    & (<A, B>(f: (A => B), m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>, m4: Maybe<A>) => Maybe<B[]>)
-    & (<A, B>(f: (A) => B, m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>) => (m4: Maybe<A>) => Maybe<B[]>)
-    & (<A, B>(f: (A) => B, m1: Maybe<A>, m2: Maybe<A>) => (m3: Maybe<A>, m4: Maybe<A>) => Maybe<B[]>)
-    & (<A, B>(f: (A) => B, m1: Maybe<A>) => (m2: Maybe<A>, m3: Maybe<A>, m4: Maybe<A>) => Maybe<B[]>)
-    & (<A, B>(f: (A) => B) => (m1: Maybe<A>, m2: Maybe<A>, m3: Maybe<A>, m4: Maybe<A>) => Maybe<B[]>),
   chain:
     & (<A, B>(f: (A => Maybe<B>), x: Maybe<A>) => Maybe<B>)
     & (<A, B>(f: (A) => Maybe<B>) => (x: Maybe<A>) => Maybe<B>),
@@ -148,9 +161,43 @@ declare export var maybe: { // eslint-disable-line no-unused-vars
   bind:
     & (<A, B>(f: (A => Maybe<B>), x: Maybe<A>) => Maybe<B>)
     & (<A, B>(f: (A) => Maybe<B>) => (x: Maybe<A>) => Maybe<B>),
+  map:
+    & (<A, B>(f: (A => B), x: Maybe<A>) => Maybe<B>)
+    & (<A, B>(f: (A) => B) => (x: Maybe<A>) => Maybe<B>),
+  map2:
+    & (<A, B, C>(f: ((fa: A, fb: B) => C), a: Maybe<A>, b: Maybe<C>) => Maybe<C>)
+    & (<A, B, C>(f: (fa: A, fb: B) => C) => (a: Maybe<A>, b: Maybe<C>) => Maybe<C>)
+    & (<A, B, C>(f: (fa: A, fb: B) => C) => (a: Maybe<A>) => (b: Maybe<C>) => Maybe<C>),
+  map3:
+    & (<A, B, C, D>(f: ((fa: A, fb: B, fc: C) => D), a: Maybe<A>, b: Maybe<B>, c: Maybe<C>) => Maybe<D>)
+    & (<A, B, C, D>(f: ((fa: A, fb: B, fc: C) => D), a: Maybe<A>, b: Maybe<B>) => (d: Maybe<C>) => Maybe<D>)
+    & (<A, B, C, D>(f: ((fa: A, fb: B, fc: C) => D), a: Maybe<A>) => (b: Maybe<B>, c: Maybe<C>) => Maybe<D>)
+    & (<A, B, C, D>(f: ((fa: A, fb: B, fc: C) => D)) => (a: Maybe<A>, b: Maybe<B>, c: Maybe<C>) => Maybe<D>),
+  map4:
+    & (<A, B, C, D, E>(f: ((fa: A, fb: B, fc: C, fd: D) => E), a: Maybe<A>, b: Maybe<B>, c: Maybe<B>, d: Maybe<D>) => Maybe<E>)
+    & (<A, B, C, D, E>(f: ((fa: A, fb: B, fc: C, fd: D) => E), a: Maybe<A>, b: Maybe<B>, c: Maybe<C>) => (d: Maybe<D>) => Maybe<E>)
+    & (<A, B, C, D, E>(f: ((fa: A, fb: B, fc: C, fd: D) => E), a: Maybe<A>, b: Maybe<B>) => (c: Maybe<C>, d: Maybe<D>) => Maybe<E>)
+    & (<A, B, C, D, E>(f: ((fa: A, fb: B, fc: C, fd: D) => E), a: Maybe<A>) => (b: Maybe<B>, c: Maybe<C>, d: Maybe<D>) => Maybe<E>)
+    & (<A, B, C, D, E>(f: ((fa: A, fb: B, fc: C, fd: D) => E)) => (a: Maybe<A>, b: Maybe<B>, c: Maybe<C>, d: Maybe<D>) => Maybe<E>),
+  map5:
+    & (<A, B, C, D, E, F>(f: ((fa: A, fb: B, fc: C, fd: D, fe: E) => F), a: Maybe<A>, b: Maybe<B>, c: Maybe<C>, d: Maybe<D>, e: Maybe<E>) => Maybe<F>)
+    & (<A, B, C, D, E, F>(f: ((fa: A, fb: B, fc: C, fd: D, fe: E) => F), a: Maybe<A>, b: Maybe<B>, c: Maybe<C>, d: Maybe<D>) => (e: Maybe<E>) => Maybe<F>)
+    & (<A, B, C, D, E, F>(f: ((fa: A, fb: B, fc: C, fd: D, fe: E) => F) => B, a: Maybe<A>, b: Maybe<B>, c: Maybe<C>) => (d: Maybe<D>, e: Maybe<E>) => Maybe<F>)
+    & (<A, B, C, D, E, F>(f: ((fa: A, fb: B, fc: C, fd: D, fe: E) => F) => B, a: Maybe<A>, b: Maybe<B>) => (c: Maybe<C>, d: Maybe<D>, e: Maybe<E>) => Maybe<F>)
+    & (<A, B, C, D, E, F>(f: ((fa: A, fb: B, fc: C, fd: D, fe: E) => F) => B, a: Maybe<A>) => (b: Maybe<B>, c: Maybe<C>, d: Maybe<D>, e: Maybe<E>) => Maybe<F>)
+    & (<A, B, C, D, E, F>(f: ((fa: A, fb: B, fc: C, fd: D, fe: E) => F) => B) => (a: Maybe<A>, b: Maybe<B>, c: Maybe<C>, d: Maybe<D>, e: Maybe<E>) => Maybe<F>),
+  lift2:
+    & (<A, B, C>(f: Maybe<(fa: A, fb: B) => C>, a: Maybe<A>, b: Maybe<B>) => Maybe<C>)
+    & (<A, B, C>(f: Maybe<(fa: A, fb: B) => C>, a: Maybe<A>) => (b: Maybe<B>) => Maybe<C>)
+    & (<A, B, C>(f: Maybe<(fa: A, fb: B) => C>) => (a: Maybe<A>) => (b: Maybe<B>) => Maybe<C>),
+  lift3:
+    & (<A, B, C, D>(f: Maybe<(fa: A, fb: B, fc: C) => D>, a: Maybe<A>, b: Maybe<B>, c: Maybe<C>) => Maybe<D>)
+    & (<A, B, C, D>(f: Maybe<(fa: A, fb: B, fc: C) => D>, a: Maybe<A>, b: Maybe<B>) => (c: Maybe<C>) => Maybe<D>)
+    & (<A, B, C, D>(f: Maybe<(fa: A, fb: B, fc: C) => D>, a: Maybe<A>) => (b: Maybe<B>, c: Maybe<C>) => Maybe<D>)
+    & (<A, B, C, D>(f: Maybe<(fa: A, fb: B, fc: C) => D>) => (a: Maybe<A>, b: Maybe<B>, c: Maybe<C>) => Maybe<D>),
   ap:
-    & (<A, B>(f: Maybe<A => B>, x: Maybe<A>) => Maybe<B>)
-    & (<A, B>(f: Maybe<A => B>) => (x: Maybe<A>) => Maybe<B>),
+    & (<A, B>(x: Maybe<A>, f: Maybe<A => B>) => Maybe<B>)
+    & (<A, B>(x: Maybe<A>) => (f: Maybe<A => B>) => Maybe<B>),
   fold:
     & (<A, B>(n: () => B, j: A => B, x: Maybe<A>) => B)
     & (<A, B>(n: () => B, j: A => B) => (x: Maybe<A>) => B)
