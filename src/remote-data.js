@@ -1,5 +1,4 @@
 import { default as curry } from 'ramda/src/curry'
-import { default as partial } from 'ramda/src/partial'
 import deepEqual from 'fast-deep-equal'
 
 import { just, nothing } from './maybe'
@@ -14,9 +13,6 @@ import {
   Loading
 } from './constants'
 import { pipe } from './pipe'
-
-
-const curryAndWrap = pipe(curry, pure)
 
 
 export const pure = x => ({
@@ -107,7 +103,7 @@ export const map4 = (f, rd1, rd2, rd3, rd4) => pipe(
   pure,
   ap(rd1),
   ap(rd2),
-  ap(rd3),  
+  ap(rd3),
   ap(rd4)
 )(f)
 
@@ -116,7 +112,7 @@ export const map5 = (f, rd1, rd2, rd3, rd4, rd5) => pipe(
   pure,
   ap(rd1),
   ap(rd2),
-  ap(rd3),  
+  ap(rd3),
   ap(rd4),
   ap(rd5)
 )(f)
