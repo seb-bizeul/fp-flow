@@ -1,8 +1,8 @@
 import { default as curry } from 'ramda/src/curry'
-import { default as append } from 'ramda/src/append'
 import deepEqual from 'fast-deep-equal'
 
 import { Just, Nothing, Left, Right } from './constants'
+import { pipe } from './pipe'
 
 
 export const pure = x => ({
@@ -18,23 +18,6 @@ export const nothing = () => ({ tag: Nothing })
 
 export const fromNullable = x => x == null ? nothing() : just(x)
 
-export const map = curry((f, x) => {
-  switch (x.tag) {
-  case Just: return just(f(x.value))
-  case Nothing: return x
-  }
-})
-
-const mapAll = curry((f, arr) => {
-  return arr.reduce((acc, it) => ap(map(append, map(f, it)), acc), of([]))
-})
-
-export const map2 = curry((f, m1, m2) => mapAll(f, [m1, m2]))
-
-export const map3 = curry((f, m1, m2, m3) => mapAll(f, [m1, m2, m3]))
-
-export const map4 = curry((f, m1, m2, m3, m4) => mapAll(f, [m1, m2, m3, m4]))
-
 export const chain = curry((f, x) => {
   switch (x.tag) {
   case Just: return f(x.value)
@@ -46,6 +29,50 @@ export const flatMap = chain
 
 export const bind = chain
 
+export const map = curry((f, x) => {
+  switch (x.tag) {
+  case Just: return just(f(x.value))
+  case Nothing: return x
+  }
+})
+
+export const lift2 = curry((f, a, b) => {
+  switch (f.tag) {
+  case Just: return pipe(curry, pure, ap(a), ap(b))(f.value)
+  case Nothing: return f
+  }
+})
+
+export const lift3 = curry((f, a, b, c) => {
+  switch (f.tag) {
+  case Just: return pipe(curry, pure, ap(a), ap(b), ap(c))(f.value)
+  case Nothing: return f
+  }
+})
+
+export const map2 = curry((f, a, b) => lift2(pure(f), a, b))
+
+export const map3 = curry((f, a, b, c) => lift3(pure(f), a, b, c))
+
+export const map4 = (f, a, b, c, d) => pipe(
+  curry,
+  pure,
+  ap(a),
+  ap(b),
+  ap(c),
+  ap(d)
+)(f)
+
+export const map5 = (f, a, b, c, d, e) => pipe(
+  curry,
+  pure,
+  ap(a),
+  ap(b),
+  ap(c),
+  ap(d),
+  ap(e)
+)(f)
+
 export const fold = curry((n, j, x) => {
   switch (x.tag) {
   case Just: return j(x.value)
@@ -53,7 +80,7 @@ export const fold = curry((n, j, x) => {
   }
 })
 
-export const ap = curry((f, x) => isJust(f) ? map(f.value, x) : nothing())
+export const ap = curry((x, f) => isJust(f) ? map(f.value, x) : nothing())
 
 export const get = x => {
   switch (x.tag) {
